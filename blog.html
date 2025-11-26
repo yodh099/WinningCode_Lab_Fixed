@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Winning Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo">Winning Code</a>
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                    <li><a href="projects.html" data-i18n="nav_projects">Projects</a></li>
+                    <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+                    <li><a href="blog.html" class="active" data-i18n="nav_blog">Blog</a></li>
+                    <li><a href="about.html" data-i18n="nav_about">About</a></li>
+                    <li><a href="client-space.html" data-i18n="nav_client">Client Space</a></li>
+                </ul>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="fr">FR</button>
+                    <button class="lang-btn" data-lang="ht">HT</button>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                </div>
+            </nav>
+            <div class="header-actions">
+                <a href="just-ask.html" class="btn btn-primary" data-i18n="nav_ask">Just Ask</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="blog-hero">
+            <div class="container">
+                <h1 data-i18n="sec_blog">Latest Insights</h1>
+                <p data-i18n="about_hero_sub">Empowering Innovation, Connecting Ideas</p>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <div class="container">
+                <div class="blog-grid">
+                    <!-- Blog Post 1 -->
+                    <article class="blog-card">
+                        <div class="blog-visual">
+                            <div class="visual-blog-abstract visual-blog-ai"></div>
+                        </div>
+                        <div class="blog-content">
+                            <h3 data-i18n="blog_1_title">The Future of AI in Business</h3>
+                            <p data-i18n="blog_1_desc">How artificial intelligence is reshaping industries and creating
+                                new opportunities.</p>
+                            <a href="blog-post-1.html" class="btn-read-more" data-i18n="btn_read_more">Read More</a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="blog-card">
+                        <div class="blog-visual">
+                            <div class="visual-blog-abstract visual-blog-access"></div>
+                        </div>
+                        <div class="blog-content">
+                            <h3 data-i18n="blog_2_title">Accessible Tech for All</h3>
+                            <p data-i18n="blog_2_desc">Why digital accessibility is not just a requirement, but a moral
+                                imperative.</p>
+                            <a href="blog-post-2.html" class="btn-read-more" data-i18n="btn_read_more">Read More</a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 3 -->
+                    <article class="blog-card">
+                        <div class="blog-visual">
+                            <div class="visual-blog-abstract visual-blog-design"></div>
+                        </div>
+                        <div class="blog-content">
+                            <h3 data-i18n="blog_3_title">Simplicity in Design</h3>
+                            <p data-i18n="blog_3_desc">The art of removing the unnecessary to reveal the essential.</p>
+                            <a href="blog-post-3.html" class="btn-read-more" data-i18n="btn_read_more">Read More</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">Winning Code</a>
+                    <p class="mini-tagline" data-i18n="footer_tagline">Every Move Builds the Future</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon">X</a>
+                    <a href="#" class="social-icon">In</a>
+                    <a href="#" class="social-icon">Ig</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="copyright">&copy; 2025 Winning Code. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

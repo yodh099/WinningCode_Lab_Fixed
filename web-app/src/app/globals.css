@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+
+  --font-heading: var(--font-space-grotesk);
+  --font-body: var(--font-inter-tight);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+}
+
+:root {
+  /* Winning Code Premium Dark Theme */
+  --background: #0B1120;
+  /* Deep Navy/Black for depth */
+  --foreground: #F8FAFC;
+  /* Crisp White/Blue-ish Grey */
+
+  --primary: #38BDF8;
+  /* Sky Blue - Professional & Tech-forward */
+  --primary-foreground: #0F172A;
+
+  --secondary: #1E293B;
+  /* Slate 800 */
+  --secondary-foreground: #F1F5F9;
+
+  --muted: #334155;
+  /* Slate 700 */
+  --muted-foreground: #94A3B8;
+  /* Slate 400 */
+
+  --accent: #0EA5E9;
+  /* Sky 500 */
+  --accent-foreground: #FFFFFF;
+
+  --card: #1E293B;
+  /* Slate 800 - Card Background */
+  --card-foreground: #F8FAFC;
+
+  --border: #334155;
+  /* Slate 700 */
+  --input: #1E293B;
+}
+
+/* Professional Light Mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #FFFFFF;
+    --foreground: #0F172A;
+    /* Slate 900 */
+
+    --primary: #0284C7;
+    /* Sky 600 - Darker for light mode contrast */
+    --primary-foreground: #FFFFFF;
+
+    --secondary: #F1F5F9;
+    /* Slate 100 */
+    --secondary-foreground: #0F172A;
+
+    --muted: #F8FAFC;
+    /* Slate 50 */
+    --muted-foreground: #64748B;
+    /* Slate 500 */
+
+    --accent: #E0F2FE;
+    /* Sky 100 */
+    --accent-foreground: #0284C7;
+
+    --card: #FFFFFF;
+    --card-foreground: #0F172A;
+
+    --border: #E2E8F0;
+    /* Slate 200 */
+    --input: #F1F5F9;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* Custom Animations */
+@keyframes gradient {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Mobile Menu Animations */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}

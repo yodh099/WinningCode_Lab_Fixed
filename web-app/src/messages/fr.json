@@ -1,0 +1,592 @@
+{
+    "HomePage": {
+        "title": "Bâtir. Innover. Gagner.",
+        "description": "Winning Code — Chaque mouvement construit l'avenir. Rendons-le légendaire."
+    },
+    "Navigation": {
+        "home": "Accueil",
+        "projects": "Projets",
+        "services": "Services",
+        "blog": "Blog",
+        "about": "À Propos",
+        "client": "Espace Client",
+        "ask": "Demandez"
+    },
+    "Buttons": {
+        "explore": "Explorer les Projets",
+        "ask": "Demandez",
+        "readMore": "Lire la Suite",
+        "startProject": "Démarrer Votre Projet",
+        "learnMore": "En Savoir Plus",
+        "start": "Lancez Votre Idée",
+        "submit": "Soumettre Votre Idée"
+    },
+    "Sections": {
+        "projects": "Projets à Venir",
+        "services": "Nos Services",
+        "blog": "Dernières Idées",
+        "mission": "Mission & Vision",
+        "company": "Qui Sommes-Nous",
+        "team": "Rencontrez l'Équipe"
+    },
+    "Services": {
+        "web": {
+            "title": "Développement Web",
+            "heroSubtitle": "Construire l'avenir numérique, un pixel à la fois.",
+            "description": "Nous créons des expériences numériques qui comptent. Des pages de destination aux applications web complexes, notre code est propre, rapide et évolutif",
+            "overview": "Dans un monde axé sur le numérique, votre site web est souvent la première interaction des clients avec votre marque. Nous ne nous contentons pas de créer des sites web ; nous créons des expériences numériques immersives qui stimulent l'engagement et la conversion. Notre service de développement web allie excellence esthétique et ingénierie robuste. Nous utilisons les derniers frameworks et les meilleures pratiques pour garantir que votre site est non seulement visuellement époustouflant, mais aussi ultra-rapide, sécurisé et optimisé pour le référencement. Que vous ayez besoin d'une page de destination à fort taux de conversion, d'un portail d'entreprise sophistiqué ou d'une application SaaS complexe, notre équipe fournit un code au pixel près qui évolue avec votre entreprise.",
+            "techStack": {
+                "title": "Technologies et Outils",
+                "list": [
+                    "HTML, CSS, JavaScript, TypeScript",
+                    "React, Next.js, Vue",
+                    "TailwindCSS, Shadcn UI",
+                    "Node.js, Express",
+                    "Supabase, Firebase",
+                    "Outils IA (Génération de code, Refactoring, Tests)",
+                    "Vercel, Netlify, AWS, Cloudflare"
+                ]
+            },
+            "features": {
+                "title": "Fonctionnalités Clés",
+                "list": [
+                    "Design Réactif et Adaptatif",
+                    "Optimisation SEO Avancée",
+                    "Architecture Haute Performance",
+                    "Intégration CMS (Headless et Traditionnel)",
+                    "Capacités Progressive Web App (PWA)"
+                ]
+            },
+            "useCases": {
+                "title": "Applications Réelles",
+                "list": [
+                    "Plateformes e-commerce avec paiement fluide",
+                    "Portfolios d'entreprise présentant l'identité de marque",
+                    "Tableaux de bord interactifs pour la visualisation de données",
+                    "Plateformes éducatives et LMS"
+                ]
+            },
+            "process": {
+                "title": "Notre Processus",
+                "steps": [
+                    "Découverte et Stratégie",
+                    "Design UI/UX",
+                    "Développement et Codage",
+                    "Tests et QA",
+                    "Déploiement",
+                    "Maintenance et Optimisation"
+                ]
+            }
+        },
+        "mobile": {
+            "title": "Applications Mobiles",
+            "heroSubtitle": "Votre entreprise, dans la poche de chacun.",
+            "description": "Atteignez vos utilisateurs où qu'ils soient. Nous développons des applications natives et multiplateformes offrant des performances fluides et des interfaces intuitives",
+            "overview": "L'utilisation mobile a dépassé celle des ordinateurs de bureau, rendant une présence mobile essentielle pour les entreprises modernes. Nous sommes spécialisés dans le développement d'applications mobiles haute performance offrant des expériences natives sur iOS et Android. En utilisant des technologies multiplateformes de pointe, nous réduisons les délais et les coûts de développement sans compromettre la qualité. Nos applications sont conçues avec une approche mobile-first, garantissant une navigation intuitive, des animations fluides et des capacités hors ligne. Du concept au lancement sur l'App Store, nous gérons tout le cycle de vie de votre produit mobile.",
+            "techStack": {
+                "title": "Technologies et Outils",
+                "list": [
+                    "React Native, Flutter, Expo",
+                    "Swift (iOS), Kotlin (Android)",
+                    "Firebase, Supabase",
+                    "Outils d'Automatisation IA Mobile",
+                    "Services de Notifications Push",
+                    "Stockage Hors Ligne et Synchronisation"
+                ]
+            },
+            "features": {
+                "title": "Fonctionnalités Clés",
+                "list": [
+                    "Compatibilité Multiplateforme",
+                    "Performance et Sensation Natives",
+                    "Fonctionnalité Mode Hors Ligne",
+                    "Authentification Biométrique",
+                    "Mises à jour en Temps Réel et Notifications Push"
+                ]
+            },
+            "useCases": {
+                "title": "Applications Réelles",
+                "list": [
+                    "Applications de réservation de services à la demande",
+                    "Réseaux sociaux et plateformes communautaires",
+                    "Applications de suivi de santé et fitness",
+                    "Outils de gestion de terrain pour entreprises"
+                ]
+            },
+            "process": {
+                "title": "Notre Processus",
+                "steps": [
+                    "Validation du Concept",
+                    "Prototypage et Wireframing",
+                    "Développement de l'Application",
+                    "Bêta-test",
+                    "Soumission aux App Stores",
+                    "Support Post-Lancement"
+                ]
+            }
+        },
+        "ai": {
+            "title": "Automatisation IA",
+            "heroSubtitle": "Travaillez plus intelligemment. Laissez l'IA gérer le reste.",
+            "description": "Exploitez la puissance de l'Intelligence Artificielle. Nous automatisons les tâches répétitives, analysons les données et construisons des systèmes intelligents qui apprennent et s'adaptent",
+            "overview": "L'Intelligence Artificielle n'est plus un concept futuriste ; c'est un avantage concurrentiel. Nos services d'Automatisation IA permettent à votre entreprise de fonctionner avec une efficacité sans précédent. Nous construisons des agents intelligents et des flux de travail qui gèrent les tâches répétitives, permettant à vos talents humains de se concentrer sur des initiatives créatives et stratégiques. De l'intégration de LLM pour le support client à la création de pipelines d'analyse de données complexes, nous exploitons la puissance de l'IA pour résoudre de vrais problèmes commerciaux. Nous veillons à ce que nos solutions d'IA soient éthiques, sécurisées et adaptées à vos besoins opérationnels spécifiques.",
+            "techStack": {
+                "title": "Technologies et Outils",
+                "list": [
+                    "Agents LLM (OpenAI, Anthropic)",
+                    "Bases de Données Vectorielles (Pinecone, Weaviate)",
+                    "LangChain, AutoGPT",
+                    "Zapier, Make (Integromat)",
+                    "Python, TensorFlow",
+                    "Orchestration d'API Personnalisée"
+                ]
+            },
+            "features": {
+                "title": "Fonctionnalités Clés",
+                "list": [
+                    "Automatisation Intelligente des Flux de Travail",
+                    "Chatbots et Assistants IA Personnalisés",
+                    "Analyse Prédictive",
+                    "Traitement du Langage Naturel",
+                    "Génération de Contenu Automatisée"
+                ]
+            },
+            "useCases": {
+                "title": "Applications Réelles",
+                "list": [
+                    "Bots de Support Client 24/7",
+                    "Qualification Automatisée des Leads",
+                    "Analyse et Résumé de Documents",
+                    "Campagnes Marketing Personnalisées"
+                ]
+            },
+            "process": {
+                "title": "Notre Processus",
+                "steps": [
+                    "Audit des Flux de Travail",
+                    "Formulation de la Stratégie IA",
+                    "Développement des Agents",
+                    "Intégration et Tests",
+                    "Déploiement et Formation",
+                    "Apprentissage Continu"
+                ]
+            }
+        },
+        "brand": {
+            "title": "Branding",
+            "heroSubtitle": "Créer des identités qui marquent les esprits.",
+            "description": "Votre marque est votre histoire. Nous concevons des identités visuelles, des logos et des systèmes de design qui communiquent vos valeurs et captivent votre audience",
+            "overview": "Une marque est bien plus qu'un simple logo ; c'est le lien émotionnel entre votre entreprise et vos clients. Notre service de Branding est dédié à révéler votre histoire unique et à la traduire en une identité visuelle convaincante. Nous combinons pensée stratégique et excellence artistique pour créer des marques qui se démarquent sur des marchés encombrés. Des palettes de couleurs et de la typographie aux systèmes de design complets et aux guides de marque, nous assurons la cohérence à chaque point de contact. Nous utilisons des outils de design assistés par IA pour explorer rapidement les possibilités créatives, offrant une identité de marque moderne et résonnante.",
+            "techStack": {
+                "title": "Technologies et Outils",
+                "list": [
+                    "Adobe Creative Cloud (Ps, Ai, Id)",
+                    "Figma, Sketch",
+                    "Outils de Design IA (Midjourney, DALL-E)",
+                    "Typographie et Théorie des Couleurs",
+                    "Cadres de Stratégie de Marque",
+                    "Systèmes d'Identité Visuelle"
+                ]
+            },
+            "features": {
+                "title": "Fonctionnalités Clés",
+                "list": [
+                    "Design de Logo et Iconographie",
+                    "Guides de Marque Complets",
+                    "Stratégie Visuelle et Direction Artistique",
+                    "Design de Supports Marketing",
+                    "Intégration Design UI/UX"
+                ]
+            },
+            "useCases": {
+                "title": "Applications Réelles",
+                "list": [
+                    "Lancements de Marques Startup",
+                    "Rebranding d'Entreprise",
+                    "Design de Packaging Produit",
+                    "Refonte de Présence Numérique"
+                ]
+            },
+            "process": {
+                "title": "Notre Processus",
+                "steps": [
+                    "Découverte de la Marque",
+                    "Étude de Marché",
+                    "Conception Visuelle",
+                    "Raffinement et Itération",
+                    "Création des Actifs",
+                    "Livraison du Guide de Marque"
+                ]
+            }
+        },
+        "digital": {
+            "title": "Solutions Numériques",
+            "heroSubtitle": "Résoudre des problèmes complexes avec du code sur mesure.",
+            "description": "Aucun problème n'est trop complexe. Nous concevons des solutions logicielles personnalisées adaptées spécifiquement à vos défis commerciaux uniques",
+            "overview": "Les logiciels prêts à l'emploi ne répondent souvent pas aux exigences uniques des entreprises. Notre service de Solutions Numériques se concentre sur l'ingénierie de logiciels sur mesure qui s'adaptent parfaitement à votre entreprise. Que vous ayez besoin d'un tableau de bord interne complexe, d'une API évolutive ou d'une architecture cloud-native, nous avons l'expertise pour le construire. Nous privilégions l'évolutivité, la sécurité et la maintenabilité, garantissant que votre logiciel grandit avec votre entreprise. En tirant parti des technologies cloud modernes et des architectures microservices, nous résolvons les problèmes que les logiciels standard ne peuvent pas résoudre.",
+            "techStack": {
+                "title": "Technologies et Outils",
+                "list": [
+                    "Développement d'API Personnalisées",
+                    "Architecture Cloud (AWS, GCP, Azure)",
+                    "Docker, Kubernetes",
+                    "Architecture Microservices",
+                    "Bases de Données SQL et NoSQL",
+                    "Outils de Documentation Automatisés"
+                ]
+            },
+            "features": {
+                "title": "Fonctionnalités Clés",
+                "list": [
+                    "Infrastructure Cloud Évolutive",
+                    "Gestion Sécurisée des Données",
+                    "Modernisation des Systèmes Hérités",
+                    "Conception API-First",
+                    "Traitement des Données en Temps Réel"
+                ]
+            },
+            "useCases": {
+                "title": "Applications Réelles",
+                "list": [
+                    "Planification des Ressources d'Entreprise (ERP)",
+                    "Systèmes CRM Personnalisés",
+                    "Gestion des Données IoT",
+                    "Plateformes FinTech"
+                ]
+            },
+            "process": {
+                "title": "Notre Processus",
+                "steps": [
+                    "Recueil des Besoins",
+                    "Architecture Système",
+                    "Développement Agile",
+                    "Audit de Sécurité",
+                    "Déploiement Cloud",
+                    "Surveillance du Système"
+                ]
+            }
+        },
+        "workflow": {
+            "title": "Systèmes de Workflow",
+            "heroSubtitle": "L'efficacité intégrée à chaque étape.",
+            "description": "L'efficacité est la clé. Nous analysons vos opérations et construisons des systèmes numériques qui éliminent les goulots d'étranglement et boostent la productivité",
+            "overview": "Les processus inefficaces drainent les ressources et étouffent la croissance. Notre service de Systèmes de Workflow est conçu pour rationaliser vos opérations grâce à la transformation numérique. Nous analysons vos processus existants, identifions les goulots d'étranglement et mettons en œuvre des outils numériques pour orchestrer votre logique métier. Des simples flux d'approbation aux systèmes ERP-lite complexes, nous construisons des solutions qui assurent une circulation fluide des données dans votre organisation. Nous combinons l'optimisation des processus avec des interfaces intuitives, facilitant l'adoption de nouvelles méthodes de travail plus efficaces par votre équipe.",
+            "techStack": {
+                "title": "Technologies et Outils",
+                "list": [
+                    "Logiciels BPM",
+                    "Plateformes Low-Code/No-Code",
+                    "Outils Internes Personnalisés",
+                    "Moteurs de Logique d'Automatisation",
+                    "Systèmes d'Aide à la Décision IA",
+                    "Hubs d'Intégration de Données"
+                ]
+            },
+            "features": {
+                "title": "Fonctionnalités Clés",
+                "list": [
+                    "Cartographie et Optimisation des Processus",
+                    "Analyse des Goulots d'Étranglement",
+                    "Contrôle d'Accès Basé sur les Rôles",
+                    "Notifications Automatisées",
+                    "Tableaux de Bord de Performance"
+                ]
+            },
+            "useCases": {
+                "title": "Applications Réelles",
+                "list": [
+                    "Systèmes d'Intégration des Employés",
+                    "Gestion des Stocks",
+                    "Flux de Suivi de Projets",
+                    "Automatisation des Chaînes d'Approbation"
+                ]
+            },
+            "process": {
+                "title": "Notre Processus",
+                "steps": [
+                    "Audit des Processus",
+                    "Conception du Workflow",
+                    "Sélection/Construction des Outils",
+                    "Mise en Œuvre",
+                    "Formation des Utilisateurs",
+                    "Revue de Performance"
+                ]
+            }
+        }
+    },
+    "ValueProp": {
+        "accessible": {
+            "title": "Accessible",
+            "description": "La technologie pour tous, sans exception."
+        },
+        "fast": {
+            "title": "Livraison Rapide",
+            "description": "Prototypage rapide et cycles de développement efficaces."
+        },
+        "ai": {
+            "title": "Amélioré par l'IA",
+            "description": "Tirer parti de l'IA pour des résultats supérieurs."
+        },
+        "human": {
+            "title": "Centré sur l'Humain",
+            "description": "La technologie au service des gens, et non l'inverse."
+        }
+    },
+    "Blog": {
+        "heroTitle": "Dernières Idées",
+        "heroSubtitle": "Explorez nos réflexions sur la technologie, le design et l'avenir des affaires.",
+        "readMore": "Lire Plus",
+        "backToBlog": "Retour au Blog",
+        "authorRole": "Auteur",
+        "relatedPosts": "Articles Connexes",
+        "ctaTitle": "Prêt à Transformer Votre Entreprise ?",
+        "ctaSubtitle": "Appliquons ces idées à votre prochain projet.",
+        "post1": {
+            "title": "L'Avenir de l'IA dans les Affaires",
+            "description": "Comment l'intelligence artificielle remodèle les industries."
+        },
+        "post2": {
+            "title": "Technologie Accessible pour Tous",
+            "description": "Pourquoi l'inclusivité dans la technologie compte plus que jamais."
+        },
+        "post3": {
+            "title": "Simplicité dans le Design",
+            "description": "Créer des interfaces utilisateur intuitives et puissantes."
+        }
+    },
+    "About": {
+        "heroTitle": "Construire l'Avenir, Une Ligne de Code à la Fois",
+        "heroSubtitle": "Nous sommes un studio d'innovation numérique en mission pour rendre la technologie accessible, puissante et humaine.",
+        "seoTitle": "À Propos - Winning Code | Studio d'Innovation Numérique",
+        "seoDescription": "Découvrez l'histoire derrière Winning Code. Nous construisons un écosystème où les idées deviennent réalité grâce à l'IA, l'innovation et la conception centrée sur l'humain.",
+        "story": {
+            "title": "Notre Histoire",
+            "subtitle": "Comment tout a commencé",
+            "paragraph1": "Winning Code est né d'une frustration simple : l'écart entre avoir une grande idée et la concrétiser était trop grand pour trop de gens. Des créateurs talentueux, des entrepreneurs ambitieux et des entreprises innovantes étaient freinés—non par manque de vision, mais par la complexité et le coût de transformer cette vision en réalité.",
+            "paragraph2": "Nous nous sommes demandé : Et si la technologie pouvait être un pont plutôt qu'une barrière ? Et si l'intelligence artificielle pouvait démocratiser l'accès au développement logiciel de classe mondiale ? Et si nous pouvions construire un écosystème qui sert à aider, et non à contrôler ?",
+            "paragraph3": "Cette question est devenue notre fondation. Aujourd'hui, Winning Code est plus qu'une agence numérique—nous sommes un hub où l'innovation rencontre l'exécution, où l'IA amplifie la créativité humaine, et où chaque projet, quelle que soit sa taille, reçoit l'attention et l'expertise qu'il mérite."
+        },
+        "mission": {
+            "title": "Notre Mission",
+            "content": "Rendre les services numériques et la technologie accessibles à tous et à toutes les entreprises, sans exception, par l'innovation, la simplicité et l'IA. Nous responsabilisons les créateurs, les entrepreneurs et les communautés en leur donnant les outils et les conseils pour réussir dans le monde numérique."
+        },
+        "vision": {
+            "title": "Notre Vision",
+            "content": "Créer un écosystème indépendant qui sert à aider, et non à contrôler, les gens. Un hub où les idées deviennent réalité, où les projets sont nourris du concept au lancement, et où l'innovation rencontre l'impact pratique pour les entreprises et les individus."
+        },
+        "values": {
+            "title": "Ce en Quoi Nous Croyons",
+            "subtitle": "Les principes qui guident chaque décision que nous prenons",
+            "innovation": {
+                "title": "Innovation",
+                "description": "Nous ne suivons pas les tendances—nous les créons. Exploitant l'IA et les technologies émergentes pour résoudre des problèmes que d'autres n'ont même pas encore identifiés."
+            },
+            "accessibility": {
+                "title": "Accessibilité",
+                "description": "La grande technologie devrait être accessible à tous. Nous construisons avec l'inclusivité au cœur, veillant à ce que personne ne soit laissé pour compte dans la révolution numérique."
+            },
+            "transparency": {
+                "title": "Transparence",
+                "description": "Pas de boîtes noires. Nous croyons en une communication claire, des délais honnêtes et des processus que vous pouvez comprendre et en qui vous pouvez avoir confiance."
+            },
+            "creativity": {
+                "title": "Créativité",
+                "description": "La technologie est une toile, pas une contrainte. Nous abordons chaque projet avec curiosité et imagination, transformant les contraintes en opportunités."
+            },
+            "humanCentered": {
+                "title": "Conception Centrée sur l'Humain",
+                "description": "L'IA est puissante, mais les gens passent en premier. Nous concevons des expériences qui semblent naturelles, intuitives et véritablement utiles."
+            },
+            "empowerment": {
+                "title": "Autonomisation",
+                "description": "Notre objectif n'est pas seulement de construire pour vous—c'est de construire avec vous. Nous transférons les connaissances, partageons les insights et vous laissons plus forts qu'à notre arrivée."
+            }
+        },
+        "approach": {
+            "title": "Notre Approche",
+            "subtitle": "Comment nous transformons les idées en impact",
+            "description": "Chaque projet est unique, mais notre processus est éprouvé. Nous mélangeons la pensée stratégique, la technologie de pointe et l'intuition humaine pour offrir des résultats qui comptent.",
+            "steps": {
+                "discovery": {
+                    "title": "Découverte",
+                    "description": "Plongée profonde dans votre vision, vos défis et vos objectifs. Nous écoutons d'abord, construisons ensuite."
+                },
+                "strategy": {
+                    "title": "Stratégie",
+                    "description": "L'analyse alimentée par l'IA rencontre l'insight humain pour créer une feuille de route ambitieuse mais réalisable."
+                },
+                "design": {
+                    "title": "Design",
+                    "description": "Des interfaces belles et fonctionnelles que les utilisateurs adorent. Chaque pixel a un but."
+                },
+                "build": {
+                    "title": "Construction",
+                    "description": "Code propre, architecture évolutive et frameworks modernes. Construit pour durer, construit pour évoluer."
+                },
+                "optimize": {
+                    "title": "Optimisation",
+                    "description": "Le lancement n'est que le début. Nous affinons, améliorons et adaptons en fonction des retours du monde réel."
+                }
+            }
+        },
+        "differentiators": {
+            "title": "Ce Qui Nous Distingue",
+            "subtitle": "Nous ne rentrons pas dans les cases traditionnelles—et c'est notre force",
+            "dualModel": {
+                "title": "Modèle Double : Agence + Studio de Ventures",
+                "description": "Nous ne construisons pas seulement pour les clients—nous construisons nos propres produits aussi. Cela nous garde affûtés, innovants et profondément connectés aux réalités du lancement et de la mise à l'échelle de produits numériques."
+            },
+            "aiFirst": {
+                "title": "IA d'Abord, Toujours",
+                "description": "L'IA n'est pas un mot à la mode pour nous ; elle est intégrée à chaque étape de notre flux de travail. Des tests automatisés aux systèmes de design intelligents, nous exploitons l'IA pour aller plus vite et plus intelligemment."
+            },
+            "simplicityFocus": {
+                "title": "Obsédés par la Simplicité",
+                "description": "La complexité est facile. La simplicité est difficile. Nous éliminons l'inutile jusqu'à ce qu'il ne reste que l'essentiel, créant des expériences qui semblent sans effort."
+            }
+        },
+        "team": {
+            "title": "Rencontrez l'Équipe",
+            "subtitle": "Les esprits derrière la mission",
+            "founder": {
+                "name": "Nicolas Fortune",
+                "role": "Fondateur \u0026 PDG",
+                "bio": "Technologue visionnaire avec une passion pour la démocratisation de l'accès à l'innovation. Nicolas a fondé Winning Code pour combler le fossé entre les idées ambitieuses et les solutions exécutables."
+            },
+            "creative": {
+                "name": "Sarah Mitchell",
+                "role": "Directrice Créative",
+                "bio": "Designer primée qui croit que beauté et fonction sont inséparables. Sarah dirige notre équipe de design avec un engagement indéfectible envers l'expérience utilisateur."
+            },
+            "engineering": {
+                "name": "David Chen",
+                "role": "Responsable Ingénierie",
+                "bio": "Architecte full-stack qui transforme des problèmes complexes en code élégant. David s'assure que chaque ligne que nous écrivons est propre, évolutive et construite pour évoluer."
+            },
+            "ai": {
+                "name": "Dr. Amara Williams",
+                "role": "Architecte IA",
+                "bio": "Ancienne chercheuse devenue praticienne. Amara apporte la recherche de pointe en IA dans des applications du monde réel, rendant l'impossible inévitable."
+            },
+            "product": {
+                "name": "Marc-Henry Louis",
+                "role": "Stratège Produit",
+                "bio": "Pont entre vision et exécution. Marc-Henry transforme des idées abstraites en feuilles de route concrètes, garantissant que chaque projet offre un impact mesurable."
+            }
+        },
+        "impact": {
+            "title": "Impact \u0026 Communauté",
+            "subtitle": "Construire plus que des logiciels—construire des avenirs",
+            "paragraph1": "Chaque projet que nous entreprenons est un investissement dans l'avenir de quelqu'un. Qu'il s'agisse d'un entrepreneur solo lançant son premier produit ou d'une entreprise établie réimaginant sa présence numérique, nous traitons chaque partenariat avec la gravité qu'il mérite.",
+            "paragraph2": "Au-delà du travail client, nous nous engageons pour l'éducation et le mentorat. Nous partageons ce que nous apprenons, contribuons à l'open source et créons des ressources qui aident la prochaine génération de builders à se lancer.",
+            "entrepreneurs": {
+                "title": "Autonomiser les Entrepreneurs",
+                "description": "Du MVP au leader du marché, nous avons aidé des dizaines de fondateurs à transformer des projets parallèles en entreprises florissantes."
+            },
+            "smallBusiness": {
+                "title": "Soutenir les Petites Entreprises",
+                "description": "Les entreprises locales méritent des outils numériques de classe mondiale. Nous rendons la technologie de niveau entreprise accessible à tous."
+            },
+            "education": {
+                "title": "Éducation \u0026 Mentorat",
+                "description": "Organiser des ateliers, rédiger des guides et encadrer les développeurs et designers aspirants de notre communauté."
+            }
+        },
+        "ecosystem": {
+            "title": "Notre Écosystème",
+            "subtitle": "Plateforme, produits et l'avenir que nous construisons",
+            "paragraph1": "Winning Code évolue en plus qu'une agence. Nous construisons une plateforme—un écosystème numérique où les créateurs peuvent accéder aux outils, ressources et au soutien pour donner vie à leurs idées.",
+            "paragraph2": "Des assistants de design alimentés par l'IA aux constructeurs de workflows no-code, nos produits internes sont conçus pour réduire les barrières et amplifier le potentiel humain. L'avenir que nous envisageons est celui où quiconque a une idée a les moyens de l'exécuter.",
+            "vision": "Imaginez un monde où l'écart entre idée et exécution disparaît. C'est l'avenir que nous construisons."
+        },
+        "cta": {
+            "title": "Construisons Quelque Chose de Légendaire",
+            "subtitle": "Que vous ayez une vision entièrement formée ou juste l'étincelle d'une idée, nous sommes là pour vous aider.",
+            "button": "Démarrez Votre Projet"
+        }
+    },
+    "Footer": {
+        "tagline": "Construire des Écosystèmes Numériques. Chaque Mouvement Construit l'Avenir.",
+        "copyright": "Winning Code. Tous droits réservés.",
+        "explore": {
+            "title": "Explorer",
+            "projects": "Portfolio",
+            "services": "Services",
+            "blog": "Idées",
+            "about": "À Propos"
+        },
+        "clients": {
+            "title": "Écosystème Client",
+            "login": "Connexion Client",
+            "status": "État du Projet",
+            "support": "Support & Demandes"
+        },
+        "contact": {
+            "title": "Contact & Légal",
+            "location": "À Distance Global",
+            "email": "hello@winningcode.dev"
+        },
+        "legal": {
+            "privacy": "Politique de Confidentialité",
+            "terms": "Conditions de Service"
+        }
+    },
+    "CTA": {
+        "title": "Une idée ? Demandez.",
+        "description": "Soumettez votre idée et votre budget, nous la réaliserons.",
+        "joinTitle": "Rejoignez-nous pour Bâtir l'Avenir",
+        "joinDescription": "Que vous soyez entrepreneur, créateur ou entreprise, nous aidons à transformer votre vision en réalité."
+    },
+    "Common": {
+        "comingSoon": "Bientôt Disponible",
+        "selected": "Sélectionné"
+    },
+    "AskPage": {
+        "title": "Démarrez Votre Projet",
+        "subtitle": "Partagez votre vision avec nous et construisons quelque chose d'extraordinaire ensemble.",
+        "name": "Nom Complet",
+        "namePlaceholder": "Jean Dupont",
+        "email": "Adresse E-mail",
+        "emailPlaceholder": "jean@exemple.com",
+        "phone": "Numéro de Téléphone",
+        "phonePlaceholder": "+33 1 23 45 67 89",
+        "company": "Nom de l'Entreprise",
+        "companyPlaceholder": "Votre Entreprise",
+        "idea": "Idée de Projet",
+        "desc": "Décrivez votre idée de projet en détail...",
+        "projectType": "Type de Projet",
+        "selectType": "Sélectionnez un type",
+        "typeWeb": "Développement Web",
+        "typeMobile": "Application Mobile",
+        "typeAI": "IA/Automatisation",
+        "typeBranding": "Branding",
+        "typeCustom": "Solution Personnalisée",
+        "budget": "Budget Estimé",
+        "selectBudget": "Sélectionnez une fourchette",
+        "budgetUnder5k": "Moins de 5 000$",
+        "budget5kTo10k": "5 000$ - 10 000$",
+        "budget10kTo25k": "10 000$ - 25 000$",
+        "budget25kTo50k": "25 000$ - 50 000$",
+        "budget50kPlus": "50 000$+",
+        "timeline": "Délai",
+        "selectTimeline": "Sélectionnez un délai",
+        "timelineUrgent": "Urgent (ASAP)",
+        "timeline1to3": "1-3 mois",
+        "timeline3to6": "3-6 mois",
+        "timeline6Plus": "6+ mois",
+        "message": "Informations Supplémentaires",
+        "messagePlaceholder": "Détails supplémentaires que vous souhaitez partager...",
+        "file": "Joindre des Fichiers (Optionnel)",
+        "fileHelp": "Max 10 Mo. Acceptés : PDF, DOC, XLS, TXT, ZIP, Images",
+        "fileTooLarge": "La taille du fichier dépasse la limite de 10 Mo. Veuillez choisir un fichier plus petit.",
+        "requiredFields": "Veuillez remplir tous les champs requis (Nom, E-mail, Idée de projet).",
+        "submitError": "Échec de l'envoi de votre demande. Veuillez réessayer.",
+        "submitButton": "Envoyer Votre Idée",
+        "submitting": "Envoi en cours...",
+        "successMessage": "Merci ! Votre demande a été envoyée avec succès. Nous vous répondrons bientôt."
+    },
+    "NotFound": {
+        "title": "Page Non Trouvée",
+        "description": "Désolé, la page que vous recherchez n'existe pas."
+    }
+}

@@ -1,0 +1,148 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { createBrowserClient } from '@supabase/ssr';
+import { Loader2, Search, Shield, User, UserCheck } from 'lucide-react';
+
+interface Profile {
+    id: string;
+    email: string;
+    role: 'admin' | 'staff' | 'client';
+    created_at: string;
+}
+
+export default function AdminUsersPage({ params: { locale } }: { params: { locale: string } }) {
+    const [users, setUsers] = useState<Profile[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+    const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const fetchUsers = async () => {
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (!error && data) {
+            setUsers(data as Profile[]);
+        }
+        setLoading(false);
+    };
+
+    const handleRoleChange = async (userId: string, newRole: 'admin' | 'staff' | 'client') => {
+        setUpdatingId(userId);
+        const { error } = await supabase
+            .from('profiles')
+            .update({ role: newRole })
+            .eq('id', userId);
+
+        if (!error) {
+            setUsers(users.map(u => u.id === userId ? { ...u, role: newRole } : u));
+        } else {
+            console.error('Error updating role:', error);
+            alert('Failed to update role');
+        }
+        setUpdatingId(null);
+    };
+
+    const filteredUsers = users.filter(user =>
+        user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.role.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    if (loading) {
+        return (
+            <div className="flex h-full items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-6">
+            <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
+                <div className="relative w-64">
+                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <input
+                        placeholder="Search users..."
+                        className="w-full rounded-md border bg-background pl-8 py-2 text-sm"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            <div className="rounded-md border bg-card">
+                <div className="relative w-full overflow-auto">
+                    <table className="w-full caption-bottom text-sm">
+                        <thead className="[&_tr]:border-b">
+                            <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">User</th>
+                                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Role</th>
+                                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Joined</th>
+                                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="[&_tr:last-child]:border-0">
+                            {filteredUsers.map((user) => (
+                                <tr key={user.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                                    <td className="p-4 align-middle">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
+                                                <User className="h-4 w-4 text-primary" />
+                                            </div>
+                                            <div className="font-medium">{user.email}</div>
+                                        </div>
+                                    </td>
+                                    <td className="p-4 align-middle">
+                                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${user.role === 'admin' ? 'bg-purple-100 text-purple-800' :
+                                                user.role === 'staff' ? 'bg-blue-100 text-blue-800' :
+                                                    'bg-gray-100 text-gray-800'
+                                            }`}>
+                                            {user.role === 'admin' && <Shield className="h-3 w-3" />}
+                                            {user.role === 'staff' && <UserCheck className="h-3 w-3" />}
+                                            {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                                        </span>
+                                    </td>
+                                    <td className="p-4 align-middle text-muted-foreground">
+                                        {new Date(user.created_at).toLocaleDateString()}
+                                    </td>
+                                    <td className="p-4 align-middle">
+                                        <select
+                                            className="rounded-md border bg-background px-2 py-1 text-sm disabled:opacity-50"
+                                            value={user.role}
+                                            onChange={(e) => handleRoleChange(user.id, e.target.value as any)}
+                                            disabled={updatingId === user.id}
+                                        >
+                                            <option value="client">Client</option>
+                                            <option value="staff">Staff</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                        {updatingId === user.id && <Loader2 className="ml-2 inline h-4 w-4 animate-spin" />}
+                                    </td>
+                                </tr>
+                            ))}
+                            {filteredUsers.length === 0 && (
+                                <tr>
+                                    <td colSpan={4} className="p-4 text-center text-muted-foreground">
+                                        No users found.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    );
+}

@@ -1,0 +1,592 @@
+{
+    "HomePage": {
+        "title": "Bati. Inove. Genyen.",
+        "description": "Winning Code — Chak mouvman bati avni an. Ann fè li lejandè."
+    },
+    "Navigation": {
+        "home": "Akèy",
+        "projects": "Pwojè",
+        "services": "Sèvis",
+        "blog": "Blog",
+        "about": "Konsènan",
+        "client": "Espas Kliyan",
+        "ask": "Mande"
+    },
+    "Buttons": {
+        "explore": "Eksplore Pwojè",
+        "ask": "Mande",
+        "readMore": "Li Plis",
+        "startProject": "Kòmanse Pwojè Ou",
+        "learnMore": "Aprann Plis",
+        "start": "Kòmanse Lide Ou",
+        "submit": "Soumèt Lide Ou"
+    },
+    "Sections": {
+        "projects": "Pwojè Kap Vini",
+        "services": "Sèvis Nou Yo",
+        "blog": "Dènye Lide",
+        "mission": "Misyon & Vizyon",
+        "company": "Kiyès Nou Ye",
+        "team": "Rankontre Ekip La"
+    },
+    "Services": {
+        "web": {
+            "title": "Devlopman Sit Web",
+            "heroSubtitle": "Bati avni dijital la, yon piksèl alafwa.",
+            "description": "Nou bati eksperyans dijital ki konte. Soti nan paj senp rive nan aplikasyon konplèks, kòd nou an pwòp e rapid",
+            "overview": "Nan mond dijital jodi a, sit entènèt ou se souvan premye kontak kliyan yo genyen ak mak ou. Nou pa jis fè sit entènèt; nou kreye eksperyans dijital ki angaje moun epi ki bay rezilta. Sèvis devlopman web nou an melanje bèl konsepsyon ak bon jan jeni. Nou itilize dènye teknoloji yo pou asire sit ou a pa sèlman bèl, men li rapid, an sekirite, epi li parèt byen sou Google (SEO). Kit ou bezwen yon paj pou vann, yon pòtay antrepriz, oswa yon aplikasyon konplèks, ekip nou an bay bon jan kalite kòd ki ede biznis ou grandi.",
+            "techStack": {
+                "title": "Teknoloji ak Zouti",
+                "list": [
+                    "HTML, CSS, JavaScript, TypeScript",
+                    "React, Next.js, Vue",
+                    "TailwindCSS, Shadcn UI",
+                    "Node.js, Express",
+                    "Supabase, Firebase",
+                    "Zouti AI (Jenerasyon Kòd, Tès)",
+                    "Vercel, Netlify, AWS, Cloudflare"
+                ]
+            },
+            "features": {
+                "title": "Karakteristik Kle",
+                "list": [
+                    "Design ki mache sou tout ekran (Responsive)",
+                    "Optimizasyon SEO Avanse",
+                    "Achitekti Pèfòmans Segondè",
+                    "Entegrasyon CMS",
+                    "Kapasite Progressive Web App (PWA)"
+                ]
+            },
+            "useCases": {
+                "title": "Egzanp Reyèl",
+                "list": [
+                    "Platfòm e-commerce ak peman fasil",
+                    "Sit antrepriz ki montre idantite mak la",
+                    "Tablo bò (Dashboards) entèaktif",
+                    "Platfòm edikasyon ak kou an liy"
+                ]
+            },
+            "process": {
+                "title": "Fason Nou Travay",
+                "steps": [
+                    "Dekouvèt ak Estrateji",
+                    "Design UI/UX",
+                    "Devlopman ak Kodaj",
+                    "Tès ak Kontwòl Kalite",
+                    "Lansman",
+                    "Antretyen ak Optimizasyon"
+                ]
+            }
+        },
+        "mobile": {
+            "title": "Aplikasyon Mobil",
+            "heroSubtitle": "Biznis ou, nan pòch tout moun.",
+            "description": "Jwenn itilizatè ou yo kote yo ye. Nou devlope aplikasyon natif ak milti-platfòm ki mache byen epi ki fasil pou itilize",
+            "overview": "Plis moun itilize telefòn pase òdinatè, sa ki fè li esansyèl pou biznis yo prezan sou mobil. Nou espesyalize nan devlope aplikasyon mobil ki rapid epi ki bay menm eksperyans ak aplikasyon natif sou iOS ak Android. Lè nou itilize teknoloji modèn, nou redwi tan ak pri devlopman san nou pa sakrifye kalite. Aplikasyon nou yo fèt pou telefòn an premye, ak navigasyon fasil, animasyon lis, ak kapasite pou mache san entènèt. Soti nan lide a rive nan App Store, nou jere tout pwosesis la.",
+            "techStack": {
+                "title": "Teknoloji ak Zouti",
+                "list": [
+                    "React Native, Flutter, Expo",
+                    "Swift (iOS), Kotlin (Android)",
+                    "Firebase, Supabase",
+                    "Zouti Otomatizasyon AI pou Mobil",
+                    "Sèvis Notifikasyon Push",
+                    "Stokaj San Entènèt (Offline)"
+                ]
+            },
+            "features": {
+                "title": "Karakteristik Kle",
+                "list": [
+                    "Konpatibilite sou tout telefòn",
+                    "Pèfòmans Natif",
+                    "Mòd San Entènèt (Offline)",
+                    "Otantifikasyon Byometrik",
+                    "Mizajou an Tan Reyèl"
+                ]
+            },
+            "useCases": {
+                "title": "Egzanp Reyèl",
+                "list": [
+                    "Aplikasyon pou rezèvasyon sèvis",
+                    "Rezo sosyal ak kominote",
+                    "Aplikasyon sante ak espò",
+                    "Zouti jesyon pou anplwaye sou teren"
+                ]
+            },
+            "process": {
+                "title": "Fason Nou Travay",
+                "steps": [
+                    "Validasyon Konsèp",
+                    "Pwototip ak Chema",
+                    "Devlopman Aplikasyon",
+                    "Tès Bêta",
+                    "Soumisyon nan App Store",
+                    "Sipò Apre Lansman"
+                ]
+            }
+        },
+        "ai": {
+            "title": "Otomatizasyon AI",
+            "heroSubtitle": "Travay pi byen, pa pi di. Kite AI fè rès la.",
+            "description": "Sèvi ak pouvwa AI pou otomatize travay, analize done, epi bati sistèm entèlijan ki aprann",
+            "overview": "Entèlijans Atifisyèl pa yon rèv pou demen ankò; se yon avantaj pou jodi a. Sèvis Otomatizasyon AI nou yo ede biznis ou mache pi vit ak mwens efò. Nou bati sistèm entèlijan ki fè travay repetitif yo, sa ki pèmèt anplwaye ou yo konsantre sou bagay ki pi enpòtan. Soti nan sèvis kliyan ak AI rive nan analiz done konplèks, nou itilize AI pou rezoud pwoblèm reyèl. Nou asire solisyon AI nou yo an sekirite epi adapte ak bezwen biznis ou.",
+            "techStack": {
+                "title": "Teknoloji ak Zouti",
+                "list": [
+                    "Ajan LLM (OpenAI, Anthropic)",
+                    "Baz Done Vektoryèl (Pinecone, Weaviate)",
+                    "LangChain, AutoGPT",
+                    "Zapier, Make (Integromat)",
+                    "Python, TensorFlow",
+                    "Òkestrasyon API"
+                ]
+            },
+            "features": {
+                "title": "Karakteristik Kle",
+                "list": [
+                    "Otomatizasyon Travay Entèlijan",
+                    "Chatbots ak Asistan AI",
+                    "Analiz Prediksyon",
+                    "Konpreyansyon Langaj Natirèl",
+                    "Jenerasyon Kontni Otomatik"
+                ]
+            },
+            "useCases": {
+                "title": "Egzanp Reyèl",
+                "list": [
+                    "Sipò Kliyan 24/7",
+                    "Kalifikasyon Kliyan Otomatik",
+                    "Analiz ak Rezime Dokiman",
+                    "Kanpay Maketing Pèsonalize"
+                ]
+            },
+            "process": {
+                "title": "Fason Nou Travay",
+                "steps": [
+                    "Odit Pwosesis",
+                    "Estrateji AI",
+                    "Devlopman Ajan",
+                    "Entegrasyon ak Tès",
+                    "Deplwaman ak Fòmasyon",
+                    "Aprantisaj Kontinyèl"
+                ]
+            }
+        },
+        "brand": {
+            "title": "Branding",
+            "heroSubtitle": "Kreye idantite ki make lespri moun.",
+            "description": "Mak ou se istwa ou. Nou kreye idantite vizyèl, logo, ak sistèm konsepsyon ki kominike valè ou epi kaptive odyans ou a",
+            "overview": "Yon mak se plis pase yon logo; se koneksyon emosyonèl ant biznis ou ak kliyan ou yo. Sèvis Branding nou an la pou dekouvri istwa inik ou epi tradwi l an yon imaj ki gen fòs. Nou melanje estrateji ak atizay pou kreye mak ki kanpe deyò. Soti nan koulè ak ekriti rive nan gid mak konplè, nou asire tout bagay koyeran. Nou itilize zouti konsepsyon AI pou eksplore lide rapidman epi bay yon idantite modèn.",
+            "techStack": {
+                "title": "Teknoloji ak Zouti",
+                "list": [
+                    "Adobe Creative Cloud (Ps, Ai, Id)",
+                    "Figma, Sketch",
+                    "Zouti Design AI (Midjourney, DALL-E)",
+                    "Teyori Koulè ak Tipografi",
+                    "Kad Estrateji Mak",
+                    "Sistèm Idantite Vizyèl"
+                ]
+            },
+            "features": {
+                "title": "Karakteristik Kle",
+                "list": [
+                    "Konsepsyon Logo ak Ikòn",
+                    "Gid Mak Konplè",
+                    "Estrateji Vizyèl",
+                    "Materyèl Maketing",
+                    "Entegrasyon Design UI/UX"
+                ]
+            },
+            "useCases": {
+                "title": "Egzanp Reyèl",
+                "list": [
+                    "Lansman Mak Startup",
+                    "Chanjman Imaj Antrepriz (Rebranding)",
+                    "Konsepsyon Anbalaj Pwodwi",
+                    "Refòm Prezans Dijital"
+                ]
+            },
+            "process": {
+                "title": "Fason Nou Travay",
+                "steps": [
+                    "Dekouvèt Mak la",
+                    "Rechèch Mache",
+                    "Konsepsyon Vizyèl",
+                    "Amelyorasyon",
+                    "Kreyasyon Byen",
+                    "Livrezon Gid Mak"
+                ]
+            }
+        },
+        "digital": {
+            "title": "Solisyon Dijital",
+            "heroSubtitle": "Rezoud pwoblèm konplèks ak kòd sou mezi.",
+            "description": "Pa gen pwoblèm ki twò konplèks. Nou enjenyè solisyon lojisyèl koutim ki fèt espesyalman pou defi inik biznis ou",
+            "overview": "Lojisyèl tou pare yo souvan pa reponn a bezwen espesyal biznis yo. Sèvis Solisyon Dijital nou an konsantre sou kreye lojisyèl sou mezi ki anfòm biznis ou tankou yon gan. Kit ou bezwen yon tablo bò entèn konplèks, yon API, oswa yon achitekti nwaj (cloud), nou gen ekspètiz pou bati l. Nou bay priyorite a sekirite ak kapasite pou grandi. Lè nou itilize teknoloji nwaj modèn, nou rezoud pwoblèm lojisyèl estanda pa ka rezoud.",
+            "techStack": {
+                "title": "Teknoloji ak Zouti",
+                "list": [
+                    "Devlopman API Koutim",
+                    "Achitekti Cloud (AWS, GCP, Azure)",
+                    "Docker, Kubernetes",
+                    "Achitekti Mikwosèvis",
+                    "Baz Done SQL ak NoSQL",
+                    "Zouti Dokimantasyon Otomatik"
+                ]
+            },
+            "features": {
+                "title": "Karakteristik Kle",
+                "list": [
+                    "Enfrastrikti Cloud ki ka Grandi",
+                    "Jesyon Done an Sekirite",
+                    "Modernizasyon Ansyen Sistèm",
+                    "Konsepsyon API-First",
+                    "Traitement Done an Tan Reyèl"
+                ]
+            },
+            "useCases": {
+                "title": "Egzanp Reyèl",
+                "list": [
+                    "Sistèm Jesyon Antrepriz (ERP)",
+                    "Sistèm CRM Koutim",
+                    "Jesyon Done IoT",
+                    "Platfòm FinTech"
+                ]
+            },
+            "process": {
+                "title": "Fason Nou Travay",
+                "steps": [
+                    "Analiz Bezwen",
+                    "Achitekti Sistèm",
+                    "Devlopman Ajil",
+                    "Odit Sekirite",
+                    "Deplwaman Cloud",
+                    "Siveyans Sistèm"
+                ]
+            }
+        },
+        "workflow": {
+            "title": "Sistèm Workflow",
+            "heroSubtitle": "Efikasite nan chak etap.",
+            "description": "Efikasite se kle a. Nou analize operasyon ou yo epi bati sistèm dijital ki elimine blokaj epi ki ogmante pwodiktivite",
+            "overview": "Pwosesis ki pa efikas gaspiye resous ak bloke kwasans. Sèvis Sistèm Workflow nou an fèt pou amelyore operasyon ou atravè transfòmasyon dijital. Nou analize fason ou travay, idantifye kote ki bloke, epi mete an plas zouti dijital pou òganize biznis ou. Soti nan senp apwobasyon rive nan sistèm jesyon konplèks, nou bati solisyon ki fè done yo sikile byen. Nou konbine amelyorasyon pwosesis ak zouti ki fasil pou itilize.",
+            "techStack": {
+                "title": "Teknoloji ak Zouti",
+                "list": [
+                    "Lojisyèl BPM",
+                    "Platfòm Low-Code/No-Code",
+                    "Zouti Entèn Koutim",
+                    "Motè Lojik Otomatizasyon",
+                    "Sistèm Èd Desizyon AI",
+                    "Sant Entegrasyon Done"
+                ]
+            },
+            "features": {
+                "title": "Karakteristik Kle",
+                "list": [
+                    "Katografi ak Optimizasyon Pwosesis",
+                    "Analiz Blokaj",
+                    "Kontwòl Aksè pa Wòl",
+                    "Notifikasyon Otomatik",
+                    "Tablo Pèfòmans"
+                ]
+            },
+            "useCases": {
+                "title": "Egzanp Reyèl",
+                "list": [
+                    "Sistèm pou Nouvo Anplwaye",
+                    "Jesyon Estòk",
+                    "Suivi Pwojè",
+                    "Otomatizasyon Apwobasyon"
+                ]
+            },
+            "process": {
+                "title": "Fason Nou Travay",
+                "steps": [
+                    "Odit Pwosesis",
+                    "Konsepsyon Workflow",
+                    "Seleksyon/Konstriksyon Zouti",
+                    "Mise an Plas",
+                    "Fòmasyon Itilizatè",
+                    "Revizyon Pèfòmans"
+                ]
+            }
+        }
+    },
+    "ValueProp": {
+        "accessible": {
+            "title": "Aksesib",
+            "description": "Teknoloji pou tout moun, san okenn eksepsyon."
+        },
+        "fast": {
+            "title": "Livrezon Rapid",
+            "description": "Travay rapid ak devlopman efikas."
+        },
+        "ai": {
+            "title": "AI Amelyore",
+            "description": "Itilize dènye teknoloji AI pou pi bon rezilta."
+        },
+        "human": {
+            "title": "Santre sou Moun",
+            "description": "Teknoloji ki sèvi moun, pa kontwole yo."
+        }
+    },
+    "Blog": {
+        "heroTitle": "Dènye Lide",
+        "heroSubtitle": "Eksplore panse nou sou teknoloji, konsepsyon, ak avni biznis.",
+        "readMore": "Li Plis",
+        "backToBlog": "Retounen nan Blog la",
+        "authorRole": "Otè",
+        "relatedPosts": "Atik Ki Gen Rapò",
+        "ctaTitle": "Pare pou Transfòme Biznis ou?",
+        "ctaSubtitle": "Ann aplike lide sa yo nan pwochen pwojè ou a.",
+        "post1": {
+            "title": "Avni AI nan Biznis",
+            "description": "Kijan entèlijans atifisyèl ap chanje endistri yo."
+        },
+        "post2": {
+            "title": "Teknoloji Aksesib pou Tout Moun",
+            "description": "Poukisa aksè dijital se yon nesesite moral."
+        },
+        "post3": {
+            "title": "Senplisite nan Konsepsyon",
+            "description": "Lè ou retire sa ki pa nesesè pou montre sa ki esansyèl."
+        }
+    },
+    "About": {
+        "heroTitle": "Ap Bati Avni an, Yon Liy Kòd Nan Yon Tan",
+        "heroSubtitle": "Nou se yon estidyo inovasyon dijital ki gen misyon pou fè teknoloji aksesib, pwisan, e moun.",
+        "seoTitle": "Apwopo Nou - Winning Code | Estidyo Inovasyon Dijital",
+        "seoDescription": "Dekouvri istwa Winning Code. Nou ap bati yon ekosistèm kote lide yo vin reyalite atravè AI, inovasyon, ak konsepsyon ki mete moun devan.",
+        "story": {
+            "title": "Istwa Nou",
+            "subtitle": "Kijan tout bagay te kòmanse",
+            "paragraph1": "Winning Code te fèt nan yon fristrasyon senp: eskpas ant genyen yon gwo lide ak reyalize li te twò laj pou twòp moun. Kreyatè talan, antreprenè anbisye, ak biznis enovatif te bloke—pa pou mank vizyon, men pou konpleksite ak pri pou transfòme vizyon sa a an reyalite.",
+            "paragraph2": "Nou te poze tèt nou kesyon: E si teknoloji te ka yon pon olye ke yon baryè? E si entèlijans atifisyèl te ka demokratize aksè a devlopman lojisyèl mondyal-klas? E si nou te ka bati yon ekosistèm ki sèvi pou ede, pa pou kontwole?",
+            "paragraph3": "Kesyon sa a te vin fondasyon nou. Jodi a, Winning Code se plis pase yon ajans dijital—nou se yon sant kote inovasyon rankontre egzekisyon, kote AI ranfòse kreyativite moun, ak kote chak pwojè, kèlkeswa gwosè li, resevwa atansyon ak espètiz li merite."
+        },
+        "mission": {
+            "title": "Misyon Nou",
+            "content": "Rann sèvis dijital ak teknoloji aksesib pou tout moun ak tout biznis, san eksepsyon, atravè inovasyon, senplisite, ak AI. Nou bay kreyatè, antreprenè, ak kominote yo zouti ak konsèy pou reyisi nan mond dijital la."
+        },
+        "vision": {
+            "title": "Vizyon Nou",
+            "content": "Kreye yon ekosistèm endepandan ki sèvi pou ede, pa pou kontwole, moun yo. Yon sant kote lide yo vin reyalite, kote pwojè yo nouri soti nan konsèp rive nan lanse, ak kote inovasyon rankontre enpak pratik pou biznis yo ak endividi yo."
+        },
+        "values": {
+            "title": "Sa Nou Kwè",
+            "subtitle": "Prensip ki gide chak desizyon nou pran",
+            "innovation": {
+                "title": "Inovasyon",
+                "description": "Nou pa swiv tandans—nou kreye yo. Nou itilize AI ak teknoloji emèjan pou rezoud pwoblèm lòt moun poko menm idantifye."
+            },
+            "accessibility": {
+                "title": "Aksesiblite",
+                "description": "Gwo teknoloji ta dwe disponib pou tout moun. Nou bati avèk enklizyon nan kè a, asire pèsonn pa kite dèyè nan revolisyon dijital la."
+            },
+            "transparency": {
+                "title": "Transparans",
+                "description": "Pa gen bwat nwa. Nou kwè nan kominikasyon klè, delè onèt, ak pwosesis ou ka konprann ak fè konfyans."
+            },
+            "creativity": {
+                "title": "Kreyativite",
+                "description": "Teknoloji se yon twal, pa yon kontrènt. Nou abòde chak pwojè avèk kiryozite ak imajinasyon, transfòme kontrènt yo an opòtinite."
+            },
+            "humanCentered": {
+                "title": "Konsepsyon ki Mete Moun Devan",
+                "description": "AI pwisan, men moun pase premye. Nou konsepsyon eksperyans ki sanble natirèl, entwisitif, ak vrèman itil."
+            },
+            "empowerment": {
+                "title": "Responsabilizasyon",
+                "description": "Objektif nou se pa jis bati pou ou—se bati avèk ou. Nou transfè konesans, pataje ensày, ak kite ou pi fò ke jan nou te jwenn ou."
+            }
+        },
+        "approach": {
+            "title": "Apwòch Nou",
+            "subtitle": "Kijan nou transfòme lide yo an enpak",
+            "description": "Chak pwojè inik, men pwosesis nou pwouve. Nou melanje panse estratejik, teknoloji de pwent, ak entwisyon moun pou bay rezilta ki enpòtan.",
+            "steps": {
+                "discovery": {
+                    "title": "Dekouvèt",
+                    "description": "Pwofon nan vizyon ou, defi ou, ak objektif ou. Nou koute dabò, bati apre."
+                },
+                "strategy": {
+                    "title": "Estrateji",
+                    "description": "Analiz ki soti nan AI rankontre ensày moun pou kreye yon plan ki anbisye men reyalizab."
+                },
+                "design": {
+                    "title": "Konsepsyon",
+                    "description": "Entèfas ki bèl e fonksyonèl ke itilizatè yo renmen. Chak piksèl gen yon objektif."
+                },
+                "build": {
+                    "title": "Konstriksyon",
+                    "description": "Kòd pwòp, achitekti ki evolye, ak frameworks modèn. Bati pou dire, bati pou evolye."
+                },
+                "optimize": {
+                    "title": "Optimize",
+                    "description": "Lanse se jis kòmansman an. Nou afine, amelyore, ak adapte selon repons mond reyèl la."
+                }
+            }
+        },
+        "differentiators": {
+            "title": "Sa Ki Fè Nou Diferan",
+            "subtitle": "Nou pa rantre nan bwat tradisyonèl yo—epi se sa ki fòs nou",
+            "dualModel": {
+                "title": "Modèl Doub: Ajans + Estidyo Vantyè",
+                "description": "Nou pa jis bati pou kliyan yo—nou bati pwòp pwodwi nou tou. Sa kenbe nou file, enovatif, ak pwofondman konekte avèk reyalite lanse ak evolye pwodwi dijital yo."
+            },
+            "aiFirst": {
+                "title": "AI Dabò, Toujou",
+                "description": "AI pa yon mo alamòd pou nou; li entegre nan chak etap travay nou. Soti nan tès otomatik rive nan sistèm konsepsyon entelijan, nou itilize AI pou ale pi vit ak pi entelijan."
+            },
+            "simplicityFocus": {
+                "title": "Obsede ak Senplisite",
+                "description": "Konpleksite fasil. Senplisite difisil. Nou retire sa ki pa nesesè jiskaske sèlman esansyèl la rete, kreye eksperyans ki sanble san efò."
+            }
+        },
+        "team": {
+            "title": "Rankontre Ekip la",
+            "subtitle": "Lespri dèyè misyon an",
+            "founder": {
+                "name": "Nicolas Fortune",
+                "role": "Fondatè ak Direktè",
+                "bio": "Teknològ vizyonè ak yon pasyon pou demokratize aksè a inovasyon. Nicolas fonde Winning Code pou konble eskpas ant lide anbisye ak solisyon egzekitab."
+            },
+            "creative": {
+                "name": "Sarah Mitchell",
+                "role": "Direktris Kreyatif",
+                "bio": "Konseptris ki genyen prim ki kwè bote ak fonksyon pa ka separe. Sarah dirije ekip konsepsyon nou ak yon angajman san fay pou eksperyans itilizatè."
+            },
+            "engineering": {
+                "name": "David Chen",
+                "role": "Responsab Enjenye",
+                "bio": "Achitèk full-stack ki transfòme pwoblèm konplèks an kòd elegan. David asire chak liy nou ekri pwòp, ka evolye, ak bati pou chanje."
+            },
+            "ai": {
+                "name": "Dr. Amara Williams",
+                "role": "Achitèk AI",
+                "bio": "Ansyen chèchè ki vin pratisyen. Amara pote rechèch AI de pwent nan aplikasyon mond reyèl, fè enpòsib la sanble inevitab."
+            },
+            "product": {
+                "name": "Marc-Henry Louis",
+                "role": "Estratèj Pwodwi",
+                "bio": "Pon ant vizyon ak egzekisyon. Marc-Henry transfòme lide abstrè an plan konkreyón, asire chak pwojè bay enpak mezurab."
+            }
+        },
+        "impact": {
+            "title": "Enpak ak Kominote",
+            "subtitle": "Bati plis pase lojisyèl—bati avni",
+            "paragraph1": "Chak pwojè nou pran se yon envestisman nan avni yon moun. Kit se yon antreprenè solo k ap lanse premye pwodwi li oswa yon biznis etabli k ap reimajine prezans dijital li, nou trete chak patenarya ak gravite li merite.",
+            "paragraph2": "Anplis travay kliyan, nou angaje pou edikasyon ak minorat. Nou pataje sa nou aprann, kontribye nan open source, ak kreye resous ki ede pwochen jenerasyon bâtisseurs kòmanse.",
+            "entrepreneurs": {
+                "title": "Responsabilize Antreprenè yo",
+                "description": "Soti nan MVP rive nan lidè mache a, nou te ede douzèn fondatè transfòme pwojè paralèl an biznis ki ap grandi."
+            },
+            "smallBusiness": {
+                "title": "Sipòte Ti Biznis",
+                "description": "Biznis lokal merite zouti dijital mondyal-klas. Nou rann teknoloji nivo antrepriz aksesib pou tout moun."
+            },
+            "education": {
+                "title": "Edikasyon ak Minorat",
+                "description": "Òganize atelye, ekri gid, ak ankadre devlopè ak konseptris k ap monte nan kominote nou an."
+            }
+        },
+        "ecosystem": {
+            "title": "Ekosistèm Nou",
+            "subtitle": "Platfòm, pwodwi, ak avni nou ap bati",
+            "paragraph1": "Winning Code ap evolye an plis pase yon ajans. Nou ap bati yon platfòm—yon ekosistèm dijital kote kreyatè yo ka aksede zouti, resous, ak sipò pou bay lide yo lavi.",
+            "paragraph2": "Soti nan asistan konsepsyon ki mache ak AI rive nan konstriktè workflow no-code, pwodwi entèn nou yo fèt pou redwi baryè yo ak ranfòse potansyèl moun. Avni nou vizyone se youn kote nenpòt moun ki gen yon lide gen mwayen pou egzekite li.",
+            "vision": "Imajine yon mond kote eskpas ant lide ak egzekisyon disparèt. Se avni sa a nou ap bati."
+        },
+        "cta": {
+            "title": "Ann Bati Yon Bagay Lejandè",
+            "subtitle": "Kit ou gen yon vizyon ki fini nèt oswa jis etensèl yon lide, nou la pou ede.",
+            "button": "Kòmanse Pwojè Ou"
+        }
+    },
+    "Footer": {
+        "tagline": "Bati Ekosistèm Dijital. Chak Mouvman Bati Avni an.",
+        "copyright": "Winning Code. Tout dwa rezève.",
+        "explore": {
+            "title": "Eksplore",
+            "projects": "Pòtfòy",
+            "services": "Sèvis",
+            "blog": "Ensày",
+            "about": "Apwopo Nou"
+        },
+        "clients": {
+            "title": "Ekosistèm Kliyan",
+            "login": "Koneksyon Kliyan",
+            "status": "Estati Pwojè",
+            "support": "Sipò & Kesyon"
+        },
+        "contact": {
+            "title": "Kontak & Legal",
+            "location": "Aleksteryè Global",
+            "email": "hello@winningcode.dev"
+        },
+        "legal": {
+            "privacy": "Politik Konfidansyalite",
+            "terms": "Tèm ak Kondisyon"
+        }
+    },
+    "CTA": {
+        "title": "Ou gen yon lide? Mande.",
+        "description": "Soumèt lide pwojè ou ak bidjè ou, n ap reyalize l.",
+        "joinTitle": "Vin Jwenn Nou pou Bati Avni an",
+        "joinDescription": "Kit ou se yon antreprenè, kreyatè, oswa biznis, nou ede transfòme vizyon ou an reyalite."
+    },
+    "Common": {
+        "comingSoon": "Vini Byento",
+        "selected": "Chwazi"
+    },
+    "AskPage": {
+        "title": "Kòmanse Pwojè Ou",
+        "subtitle": "Pataje vizyon ou avèk nou epi ann bati yon bagay estraòdinè ansanm.",
+        "name": "Non Konplè",
+        "namePlaceholder": "Jan Doe",
+        "email": "Adrès Imèl",
+        "emailPlaceholder": "jan@egzanp.com",
+        "phone": "Nimewo Telefòn",
+        "phonePlaceholder": "+509 1234-5678",
+        "company": "Non Konpayi",
+        "companyPlaceholder": "Konpayi Ou",
+        "idea": "Lide Pwojè",
+        "desc": "Dekri lide pwojè ou an detay...",
+        "projectType": "Tip Pwojè",
+        "selectType": "Chwazi yon tip",
+        "typeWeb": "Devlopman Web",
+        "typeMobile": "Aplikasyon Mobil",
+        "typeAI": "AI/Otomatizasyon",
+        "typeBranding": "Branding",
+        "typeCustom": "Solisyon Pèsonalize",
+        "budget": "Bidjè Estime",
+        "selectBudget": "Chwazi gam bidjè",
+        "budgetUnder5k": "Mwens ke $5,000",
+        "budget5kTo10k": "$5,000 - $10,000",
+        "budget10kTo25k": "$10,000 - $25,000",
+        "budget25kTo50k": "$25,000 - $50,000",
+        "budget50kPlus": "$50,000+",
+        "timeline": "Tan Egzekisyon",
+        "selectTimeline": "Chwazi tan",
+        "timelineUrgent": "Ijan (touswit)",
+        "timeline1to3": "1-3 mwa",
+        "timeline3to6": "3-6 mwa",
+        "timeline6Plus": "6+ mwa",
+        "message": "Enfòmasyon Siplemantè",
+        "messagePlaceholder": "Nenpòt detay anplis ou ta renmen pataje...",
+        "file": "Atache Fichye (Opsyonèl)",
+        "fileHelp": "Maksimòm 10 Mo. Aksepte: PDF, DOC, XLS, TXT, ZIP, Imaj",
+        "fileTooLarge": "Gwosè fichye a depase limit 10 Mo a. Tanpri chwazi yon fichye pi piti.",
+        "requiredFields": "Tanpri ranpli tout chan obligatwa yo (Non, Imèl, Lide Pwojè).",
+        "submitError": "Echwe nan soumèt demann ou. Tanpri eseye ankò.",
+        "submitButton": "Soumèt Lide Ou",
+        "submitting": "Ap voye...",
+        "successMessage": "Mèsi! Demann ou te soumèt ak siksè. N ap reponn ou byento."
+    },
+    "NotFound": {
+        "title": "Paj Pa Egziste",
+        "description": "Padon, paj ou ap chèche a pa egziste."
+    }
+}
