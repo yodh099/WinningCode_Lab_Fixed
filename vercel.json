@@ -1,0 +1,15 @@
+{
+    "installCommand": "npm install --prefix web-app",
+    "builds": [
+        {
+            "src": "web-app/next.config.mjs",
+            "use": "@vercel/next",
+            "config": {
+                "maxLambdaSize": "50mb"
+            }
+        }
+    ],
+    "buildCommand": "npm run build",
+    "outputDirectory": "web-app/.next",
+    "framework": "nextjs"
+}
