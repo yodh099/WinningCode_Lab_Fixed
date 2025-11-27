@@ -239,3 +239,7 @@ Contributions are welcome! Please follow the existing code style and add tests f
 ## 📞 Support
 
 For questions or issues, please contact [your contact information]
+
+---
+
+**Last Deployment:** 2025-11-27 (Vercel configuration updated)
