@@ -53,9 +53,7 @@ const nextConfig = {
     },
 };
 
-import { withSentryConfig } from '@sentry/nextjs';
-
-// Export the configuration wrapped with next-intl plugin and Sentry
+// Export the configuration wrapped with next-intl plugin
 // export default withSentryConfig(withNextIntl(nextConfig), {
 //     // For all available options, see:
 //     // https://github.com/getsentry/sentry-webpack-plugin#options

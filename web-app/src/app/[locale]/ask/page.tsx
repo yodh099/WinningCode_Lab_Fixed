@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { Upload, Send, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, Check, AlertCircle, Loader2 } from 'lucide-react';
 
 interface FormData {
     name: string;

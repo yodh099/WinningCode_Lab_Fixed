@@ -13,7 +13,7 @@ export default function AboutPage() {
     const team = ['founder', 'creative', 'engineering', 'ai', 'product'];
     const impact = ['entrepreneurs', 'smallBusiness', 'education'];
 
-    const valueIcons: Record<string, any> = {
+    const valueIcons: Record<string, React.ElementType> = {
         innovation: Lightbulb,
         accessibility: Users,
         transparency: Target,
@@ -215,7 +215,7 @@ export default function AboutPage() {
                         </div>
                         <div className="p-8 rounded-3xl bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 inline-block">
                             <p className="text-xl md:text-2xl font-medium text-foreground italic">
-                                "{t('ecosystem.vision')}"
+                                &quot;{t('ecosystem.vision')}&quot;
                             </p>
                         </div>
                     </div>

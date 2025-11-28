@@ -39,10 +39,14 @@ export default function NotificationBell() {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+        return null;
+    }
+
+    const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
 
     /**
      * Fetches notifications from Supabase for the current user
@@ -54,30 +58,30 @@ export default function NotificationBell() {
      * @function fetchNotifications
      * @returns {Promise<void>}
      */
-    const fetchNotifications = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
-
-        const { data } = await supabase
-            .from('notifications')
-            .select('*')
-            .eq('user_id', user.id)
-            .order('created_at', { ascending: false })
-            .limit(10);
-
-        if (data) {
-            setNotifications(data);
-            setUnreadCount(data.filter(n => !n.is_read).length);
-        }
-    };
-
     useEffect(() => {
+        const fetchNotifications = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) return;
+
+            const { data } = await supabase
+                .from('notifications')
+                .select('*')
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+                .limit(10);
+
+            if (data) {
+                setNotifications(data);
+                setUnreadCount(data.filter(n => !n.is_read).length);
+            }
+        };
+
         fetchNotifications();
 
         // Optional: Set up real-time subscription here if needed
         const interval = setInterval(fetchNotifications, 60000); // Poll every minute
         return () => clearInterval(interval);
-    }, []);
+    }, [supabase]);
 
     // Close dropdown when clicking outside
     useEffect(() => {

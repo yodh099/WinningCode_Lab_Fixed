@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import { Loader2, Upload, Send } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+
 
 export default function SubmitIdeaPage() {
     const [title, setTitle] = useState('');
@@ -73,8 +73,9 @@ export default function SubmitIdeaPage() {
             setPriority('normal');
             setFile(null);
 
-        } catch (err: any) {
-            setError(err.message || 'An unexpected error occurred');
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to submit inquiry';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
@@ -106,7 +107,7 @@ export default function SubmitIdeaPage() {
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center mb-12">
                         <h1 className="text-4xl font-bold font-heading mb-4">Submit Your Idea</h1>
-                        <p className="text-xl text-muted-foreground">Tell us about your project. We'll help you bring it to life.</p>
+                        <p className="text-xl text-muted-foreground">Tell us about your project. We&apos;ll help you bring it to life.</p>
                     </div>
 
                     <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-2xl">

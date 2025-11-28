@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+
 
 /**
  * Privacy Policy Page
@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
  * architecture and data handling practices.
  */
 export default function PrivacyPolicyPage() {
-    const t = useTranslations();
+
 
     return (
         <div className="min-h-screen bg-background py-16">
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
                         <section>
                             <h2 className="text-2xl font-bold mb-4">1. Introduction</h2>
                             <p className="text-muted-foreground leading-relaxed">
-                                Welcome to Winning Code Lab ("we," "our," or "us"). We are committed to protecting your privacy
+                                Welcome to Winning Code Lab (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). We are committed to protecting your privacy
                                 and handling your personal information with care and transparency. This Privacy Policy explains how
                                 we collect, use, store, and protect your personal data when you use our platform and services.
                             </p>
@@ -84,8 +84,8 @@ export default function PrivacyPolicyPage() {
                                 <li>Custom project requirements and specifications</li>
                             </ul>
                             <p className="text-muted-foreground leading-relaxed mt-4">
-                                This data is stored in our <code className="text-sm bg-muted px-2 py-1 rounded">client_projects</code> table
-                                and is protected by Row Level Security (RLS) policies.
+                                This data is stored in our <code className="text-sm bg-muted px-2 py-1 rounded">client_projects</code> table.
+                                We implement Row Level Security (RLS) to ensure users can only access their own data.
                             </p>
 
                             <h3 className="text-xl font-semibold mb-3 mt-6">2.3 Files and Documents</h3>
@@ -138,7 +138,7 @@ export default function PrivacyPolicyPage() {
                                 access their own data. This means:
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
-                                <li>Clients cannot view other clients' projects, files, or messages</li>
+                                <li>Clients cannot view other clients&apos; projects, files, or messages</li>
                                 <li>Database-level enforcement prevents unauthorized data access</li>
                                 <li>Even in the event of application-level vulnerabilities, RLS provides an additional layer of protection</li>
                             </ul>
@@ -269,7 +269,7 @@ export default function PrivacyPolicyPage() {
 
                         {/* Section 9 */}
                         <section>
-                            <h2 className="text-2xl font-bold mb-4">9. Children's Privacy</h2>
+                            <h2 className="text-2xl font-bold mb-4">9. Children&apos;s Privacy</h2>
                             <p className="text-muted-foreground leading-relaxed">
                                 Our services are not intended for individuals under the age of 18. We do not knowingly collect personal
                                 information from children. If you believe we have inadvertently collected such information,
@@ -285,7 +285,7 @@ export default function PrivacyPolicyPage() {
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
                                 <li>Posting the updated policy on our website</li>
-                                <li>Updating the "Last Updated" date</li>
+                                <li>Updating the &quot;Last Updated&quot; date</li>
                                 <li>Sending email notifications for material changes (if you have an account)</li>
                             </ul>
                             <p className="text-muted-foreground leading-relaxed mt-4">

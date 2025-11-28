@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+
 import { getTranslations } from 'next-intl/server';
 import { blogPosts } from '@/data/blogPosts';
 import { Link } from '@/i18n/routing';

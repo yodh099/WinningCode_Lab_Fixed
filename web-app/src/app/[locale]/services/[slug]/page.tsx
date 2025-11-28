@@ -43,18 +43,16 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ slug: 
     // In a real app we might use a richer type safe method or getMessages
     const getList = (key: string) => {
         try {
-            // @ts-ignore
             return t.raw(`${serviceKey}.${key}.list`) as string[];
-        } catch (e) {
+        } catch {
             return [];
         }
     };
 
     const getSteps = (key: string) => {
         try {
-            // @ts-ignore
             return t.raw(`${serviceKey}.${key}.steps`) as string[];
-        } catch (e) {
+        } catch {
             return [];
         }
     };

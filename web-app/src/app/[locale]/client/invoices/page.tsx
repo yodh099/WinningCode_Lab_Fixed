@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { Link } from '@/i18n/routing';
-import { Loader2, FileText } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
-export default function ClientInvoicesPage({ params: { locale } }: { params: { locale: string } }) {
+export default function ClientInvoicesPage() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [invoices, setInvoices] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -40,7 +41,7 @@ export default function ClientInvoicesPage({ params: { locale } }: { params: { l
         };
 
         fetchInvoices();
-    }, []);
+    }, [supabase]);
 
     if (loading) {
         return (
@@ -79,9 +80,9 @@ export default function ClientInvoicesPage({ params: { locale } }: { params: { l
                                     </td>
                                     <td className="p-4 align-middle">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${invoice.status === 'paid' ? 'bg-green-100 text-green-800' :
-                                                invoice.status === 'overdue' ? 'bg-red-100 text-red-800' :
-                                                    invoice.status === 'sent' ? 'bg-blue-100 text-blue-800' :
-                                                        'bg-gray-100 text-gray-800'
+                                            invoice.status === 'overdue' ? 'bg-red-100 text-red-800' :
+                                                invoice.status === 'sent' ? 'bg-blue-100 text-blue-800' :
+                                                    'bg-gray-100 text-gray-800'
                                             }`}>
                                             {invoice.status.toUpperCase()}
                                         </span>

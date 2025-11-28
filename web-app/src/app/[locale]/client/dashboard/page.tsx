@@ -3,6 +3,17 @@ import { redirect } from 'next/navigation';
 import { Folder, FileText, AlertCircle, Calendar, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 
+interface Project {
+    id: string;
+    name: string;
+    description: string | null;
+    status: string;
+    created_at: string;
+    start_date: string | null;
+    end_date: string | null;
+    client_id: string;
+}
+
 export default async function ClientDashboard() {
     const supabase = await createClient();
 
@@ -15,14 +26,14 @@ export default async function ClientDashboard() {
         .from('profiles')
         .select('full_name, role')
         .eq('id', user.id)
-        .single();
+        .single() as { data: { full_name: string; role: string } | null };
 
     // Fetch client's projects
     const { data: projects } = await supabase
         .from('client_projects')
         .select('*')
         .eq('client_id', user.id)
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false }) as { data: Project[] | null };
 
     const activeProjects = projects?.filter(p => p.status === 'active') || [];
     const totalProjects = projects?.length || 0;
@@ -31,7 +42,7 @@ export default async function ClientDashboard() {
         <div className="p-4 md:p-8 max-w-7xl mx-auto">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">Welcome back, {profile?.full_name || 'Client'}</h1>
-                <p className="text-muted-foreground mt-2">Here's what's happening with your projects today.</p>
+                <p className="text-muted-foreground mt-2">Here&apos;s what&apos;s happening with your projects today.</p>
             </div>
 
             {/* Stats Grid */}
@@ -110,11 +121,11 @@ export default async function ClientDashboard() {
                                         </div>
                                     </div>
                                     <span className={`ml-4 px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${project.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                                            project.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                                                project.status === 'completed' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                                                    project.status === 'on_hold' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
-                                                        project.status === 'archived' ? 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200' :
-                                                            'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                                        project.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                                            project.status === 'completed' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                                                project.status === 'on_hold' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' :
+                                                    project.status === 'archived' ? 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200' :
+                                                        'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
                                         }`}>
                                         {project.status}
                                     </span>
@@ -126,7 +137,7 @@ export default async function ClientDashboard() {
                     <div className="p-12 text-center">
                         <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                         <p className="text-muted-foreground">No projects yet</p>
-                        <p className="text-sm text-muted-foreground mt-1">Your projects will appear here once they're created</p>
+                        <p className="text-sm text-muted-foreground mt-1">Your projects will appear here once they&apos;re created</p>
                     </div>
                 )}
             </div>

@@ -2,18 +2,19 @@
 
 import { use, useEffect, useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
-import { useRouter } from 'next/navigation';
-import { Loader2, ArrowLeft, Download, Send, CheckCircle, XCircle } from 'lucide-react';
+import { Loader2, ArrowLeft, Send, CheckCircle, XCircle } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 
 export default function InvoiceDetailsPage(props: { params: Promise<{ locale: string; id: string }> }) {
     const params = use(props.params);
-    const { locale, id } = params;
+    const { id } = params;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [invoice, setInvoice] = useState<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [items, setItems] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
-    const router = useRouter();
+
 
     const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -55,7 +56,7 @@ export default function InvoiceDetailsPage(props: { params: Promise<{ locale: st
         };
 
         fetchInvoice();
-    }, [id]);
+    }, [id, supabase]);
 
     const updateStatus = async (status: string) => {
         setUpdating(true);

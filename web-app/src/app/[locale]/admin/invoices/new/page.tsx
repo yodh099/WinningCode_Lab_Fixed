@@ -3,17 +3,9 @@
 import { use, useEffect, useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
-import { Loader2, Plus, Trash2, Save } from 'lucide-react';
+import { Loader2, Save, Trash2, Plus } from 'lucide-react';
 
-interface Project {
-    id: string;
-    title: string;
-    client_projects: {
-        profiles: {
-            email: string;
-        };
-    };
-}
+
 
 interface InvoiceItem {
     description: string;
@@ -25,6 +17,7 @@ export default function NewInvoicePage(props: { params: Promise<{ locale: string
     const params = use(props.params);
     const { locale } = params;
     const router = useRouter();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
@@ -52,7 +45,7 @@ export default function NewInvoicePage(props: { params: Promise<{ locale: string
             setLoading(false);
         };
         fetchProjects();
-    }, []);
+    }, [supabase]);
 
     const handleAddItem = () => {
         setItems([...items, { description: '', quantity: 1, unit_price: 0 }]);

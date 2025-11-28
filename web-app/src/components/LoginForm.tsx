@@ -38,7 +38,7 @@ export default function LoginForm({ locale }: { locale: string }) {
 
             // Refresh router to trigger middleware
             router.refresh();
-        } catch (err) {
+        } catch {
             setError('An unexpected error occurred');
         } finally {
             setLoading(false);
@@ -61,7 +61,7 @@ export default function LoginForm({ locale }: { locale: string }) {
                 },
             });
             if (error) throw error;
-        } catch (err: any) {
+        } catch (err: unknown) {
             setError(err.message);
             setLoading(false);
         }
@@ -179,7 +179,7 @@ export default function LoginForm({ locale }: { locale: string }) {
 
             <div className="text-center mt-4">
                 <p className="text-sm text-muted-foreground">
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?{' '}
                     <Link href="/register" className="font-medium text-primary hover:text-primary/80 transition-colors">
                         Create an account
                     </Link>

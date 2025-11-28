@@ -29,3 +29,5 @@ build/
 
 # Local Netlify folder
 .netlify
+.vercel
+.env*.local

@@ -9,28 +9,39 @@ export default async function middleware(request: NextRequest) {
   // 1. Run i18n middleware first to handle locale
   const response = intlMiddleware(request);
 
-  // 2. Setup Supabase client
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            request.cookies.set(name, value);
-            response.cookies.set(name, value, options);
-          });
-        },
-      },
-    }
-  );
+  // 2. Setup Supabase client (with error handling for Edge runtime)
+  let user = null;
 
-  // 3. Get User & Role
-  // This will refresh session if expired - required for Server Components
-  const { data: { user } } = await supabase.auth.getUser();
+  try {
+    // Check if Supabase env vars are available
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        {
+          cookies: {
+            getAll() {
+              return request.cookies.getAll();
+            },
+            setAll(cookiesToSet) {
+              cookiesToSet.forEach(({ name, value, options }) => {
+                request.cookies.set(name, value);
+                response.cookies.set(name, value, options);
+              });
+            },
+          },
+        }
+      );
+
+      // 3. Get User & Role
+      // This will refresh session if expired - required for Server Components
+      const { data } = await supabase.auth.getUser();
+      user = data.user;
+    }
+  } catch (error) {
+    // If Supabase fails, continue without auth (allow public access)
+    console.error('Middleware Supabase error:', error);
+  }
 
   // 4. Role-Based Routing Logic
   const path = request.nextUrl.pathname;
@@ -40,8 +51,7 @@ export default async function middleware(request: NextRequest) {
   const locale = segments[1];
 
   // Check if the first segment is a valid locale
-  // We cast to any because routing.locales is readonly
-  const isValidLocale = routing.locales.includes(locale as any);
+  const isValidLocale = routing.locales.some((l) => l === locale);
 
   // If not a valid locale, next-intl will handle redirect/rewrite
   if (!isValidLocale) {
@@ -73,7 +83,7 @@ export default async function middleware(request: NextRequest) {
     }
   } else {
     // 6. Handle Authenticated Users
-    const role = user.user_metadata.role;
+    const role = user.user_metadata?.role;
 
     // Redirect from login page if already authenticated
     if (isAuthRoute) {
@@ -90,10 +100,10 @@ export default async function middleware(request: NextRequest) {
     }
 
     // Enforce Role Access on Protected Routes
-    if (isClientRoute && role !== 'client') {
+    if (isClientRoute && role !== 'client' && role !== 'admin') {
       return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
     }
-    if (isTeamRoute && role !== 'developer') {
+    if (isTeamRoute && role !== 'developer' && role !== 'admin') {
       return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
     }
     if (isAdminRoute && role !== 'admin') {

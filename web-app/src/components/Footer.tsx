@@ -44,16 +44,17 @@ export function Footer() {
 
     // 9 Social Media Platforms with FontAwesome 6 Icons
     const socialLinks = [
-        { icon: FaLinkedin, href: 'https://linkedin.com/company/winningcode', label: 'LinkedIn', color: 'hover:text-[#0A66C2]' },
-        { icon: FaGithub, href: 'https://github.com/winningcode', label: 'GitHub', color: 'hover:text-foreground' },
-        { icon: FaFacebook, href: 'https://facebook.com/winningcode', label: 'Facebook', color: 'hover:text-[#1877F2]' },
-        { icon: FaYoutube, href: 'https://youtube.com/@winningcode', label: 'YouTube', color: 'hover:text-[#FF0000]' },
-        { icon: FaInstagram, href: 'https://instagram.com/winningcode', label: 'Instagram', color: 'hover:text-[#E4405F]' },
-        { icon: FaXTwitter, href: 'https://twitter.com/winningcode', label: 'Twitter / X', color: 'hover:text-foreground' },
-        { icon: FaTiktok, href: 'https://tiktok.com/@winningcode', label: 'TikTok', color: 'hover:text-foreground' },
-        { icon: FaTelegram, href: 'https://t.me/winningcode', label: 'Telegram', color: 'hover:text-[#26A5E4]' },
-        { icon: FaDiscord, href: 'https://discord.gg/winningcode', label: 'Discord', color: 'hover:text-[#5865F2]' },
+        { icon: FaLinkedin, href: 'https://www.linkedin.com/in/winning-code-lab-85855a393/', label: 'LinkedIn', color: 'hover:text-[#0A66C2]' },
+        { icon: FaGithub, href: 'https://github.com/winningcode3-agent', label: 'GitHub', color: 'hover:text-foreground' },
+        { icon: FaFacebook, href: 'https://www.facebook.com/profile.php?id=61582565047368', label: 'Facebook', color: 'hover:text-[#1877F2]' },
+        { icon: FaYoutube, href: 'https://www.youtube.com/channel/UCJofsNCKRQRnToLf2tPqq4w/posts', label: 'YouTube', color: 'hover:text-[#FF0000]' },
+        { icon: FaInstagram, href: 'https://www.instagram.com/winningcode3/', label: 'Instagram', color: 'hover:text-[#E4405F]' },
+        { icon: FaXTwitter, href: 'https://x.com/winningcode_Lab', label: 'Twitter / X', color: 'hover:text-foreground' },
+        { icon: FaTiktok, href: 'https://www.tiktok.com/@winningcode_3', label: 'TikTok', color: 'hover:text-foreground' },
+        { icon: FaTelegram, href: 'https://t.me/+XzIgE9MQIptjOTRh', label: 'Telegram', color: 'hover:text-[#26A5E4]' },
+        { icon: FaDiscord, href: 'https://discord.com/channels/1430702583387000913/1430702584678580276', label: 'Discord', color: 'hover:text-[#5865F2]' },
     ];
+
 
     return (
         <footer className="bg-card border-t border-border">

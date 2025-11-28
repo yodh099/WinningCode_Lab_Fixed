@@ -3,10 +3,26 @@
 import { useEffect, useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { Link } from '@/i18n/routing';
-import { Loader2, Plus, FileText } from 'lucide-react';
+import { Plus, Loader2 } from 'lucide-react';
 
-export default function AdminInvoicesPage({ params: { locale } }: { params: { locale: string } }) {
-    const [invoices, setInvoices] = useState<any[]>([]);
+interface Invoice {
+    id: string;
+    created_at: string;
+    total_amount: number;
+    currency: string;
+    status: 'paid' | 'overdue' | 'sent' | 'draft'; // Assuming these are the possible statuses
+    issue_date: string;
+    client_projects: {
+        title: string;
+        profiles: {
+            email: string;
+        };
+    } | null;
+    // Add other properties from your 'invoices' table if needed
+}
+
+export default function AdminInvoicesPage() {
+    const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [loading, setLoading] = useState(true);
 
     const supabase = createBrowserClient(
@@ -34,7 +50,7 @@ export default function AdminInvoicesPage({ params: { locale } }: { params: { lo
         };
 
         fetchInvoices();
-    }, []);
+    }, [supabase]);
 
     if (loading) {
         return (
@@ -82,9 +98,9 @@ export default function AdminInvoicesPage({ params: { locale } }: { params: { lo
                                     </td>
                                     <td className="p-4 align-middle">
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${invoice.status === 'paid' ? 'bg-green-100 text-green-800' :
-                                                invoice.status === 'overdue' ? 'bg-red-100 text-red-800' :
-                                                    invoice.status === 'sent' ? 'bg-blue-100 text-blue-800' :
-                                                        'bg-gray-100 text-gray-800'
+                                            invoice.status === 'overdue' ? 'bg-red-100 text-red-800' :
+                                                invoice.status === 'sent' ? 'bg-blue-100 text-blue-800' :
+                                                    'bg-gray-100 text-gray-800'
                                             }`}>
                                             {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
                                         </span>

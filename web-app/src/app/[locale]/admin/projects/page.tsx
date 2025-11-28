@@ -1,4 +1,4 @@
-import { Plus, MoreVertical, Calendar, CheckCircle2, Clock, AlertTriangle } from 'lucide-react';
+import { Plus, MoreVertical, Calendar, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 export default function AdminProjects() {
     const projects = [
@@ -57,7 +57,7 @@ export default function AdminProjects() {
                             <div className="flex justify-between items-start">
                                 <div className="flex items-start space-x-4">
                                     <div className={`h-12 w-12 rounded-lg flex items-center justify-center text-white font-bold text-lg ${project.priority === 'High' ? 'bg-indigo-600' :
-                                            project.priority === 'Medium' ? 'bg-blue-500' : 'bg-gray-500'
+                                        project.priority === 'Medium' ? 'bg-blue-500' : 'bg-gray-500'
                                         }`}>
                                         {project.name.charAt(0)}
                                     </div>
@@ -68,9 +68,9 @@ export default function AdminProjects() {
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${project.status === 'In Progress' ? 'bg-blue-100 text-blue-700' :
-                                            project.status === 'Review' ? 'bg-yellow-100 text-yellow-700' :
-                                                project.status === 'Planning' ? 'bg-gray-100 text-gray-700' :
-                                                    'bg-green-100 text-green-700'
+                                        project.status === 'Review' ? 'bg-yellow-100 text-yellow-700' :
+                                            project.status === 'Planning' ? 'bg-gray-100 text-gray-700' :
+                                                'bg-green-100 text-green-700'
                                         }`}>
                                         {project.status}
                                     </span>

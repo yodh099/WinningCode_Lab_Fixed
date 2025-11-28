@@ -1,4 +1,4 @@
-import { Plus, MoreHorizontal, Calendar, User } from 'lucide-react';
+import { Plus, MoreHorizontal, Calendar } from 'lucide-react';
 
 export default function TeamTasks() {
     const columns = [
@@ -50,8 +50,8 @@ export default function TeamTasks() {
                                     <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow cursor-pointer">
                                         <div className="flex justify-between items-start mb-2">
                                             <span className={`px-2 py-1 rounded text-xs font-medium ${task.priority === 'High' ? 'bg-red-100 text-red-700' :
-                                                    task.priority === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                                                        'bg-green-100 text-green-700'
+                                                task.priority === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                                                    'bg-green-100 text-green-700'
                                                 }`}>
                                                 {task.priority}
                                             </span>

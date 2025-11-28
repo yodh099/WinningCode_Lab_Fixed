@@ -1,14 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import { LayoutDashboard, CheckSquare, MessageSquare, FileText, LogOut, Code2 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter, useParams } from 'next/navigation';
 
-export default async function TeamLayout({
+export default function TeamLayout({
     children,
-    params
 }: {
     children: React.ReactNode;
-    params: Promise<{ locale: string }>;
 }) {
-    const { locale } = await params;
+    const router = useRouter();
+    const params = useParams();
+    const locale = params.locale as string;
 
     const navigation = [
         { name: 'Dashboard', href: `/${locale}/team/dashboard`, icon: LayoutDashboard },
@@ -16,6 +20,13 @@ export default async function TeamLayout({
         { name: 'Messages', href: `/${locale}/team/messages`, icon: MessageSquare },
         { name: 'Files', href: `/${locale}/team/files`, icon: FileText },
     ];
+
+
+    const handleSignOut = async () => {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+        router.push(`/${locale}/login`);
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -52,7 +63,10 @@ export default async function TeamLayout({
                             <p className="text-xs text-gray-500">Online</p>
                         </div>
                     </div>
-                    <button className="flex items-center w-full px-4 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-gray-800 rounded-lg transition-colors">
+                    <button
+                        onClick={handleSignOut}
+                        className="flex items-center w-full px-4 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-gray-800 rounded-lg transition-colors"
+                    >
                         <LogOut className="mr-3 h-5 w-5" />
                         Sign Out
                     </button>

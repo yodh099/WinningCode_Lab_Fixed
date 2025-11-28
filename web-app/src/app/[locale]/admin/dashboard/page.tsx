@@ -1,7 +1,9 @@
 import { createClient } from '@/lib/supabase/server';
-import { Users, Folder, DollarSign, Activity, TrendingUp, Mail, AlertCircle } from 'lucide-react';
+import { Users, Folder, Activity, Mail, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+
+
 
 export default async function AdminDashboard() {
     const supabase = await createClient();
@@ -10,15 +12,18 @@ export default async function AdminDashboard() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect('/login');
 
-    // Check admin role
+    // Get profile
     const { data: profile } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', user.id)
-        .single();
+        .single() as { data: { role: string } | null };
 
-    if (profile?.role !== 'admin') redirect('/not-authorized');
+    if (!profile || profile.role !== 'admin') {
+        redirect('/not-authorized');
+    }
 
+    // Fetch stats
     // Fetch dashboard stats
     const [inquiriesResult, projectsResult, usersResult] = await Promise.all([
         supabase.from('inquiries').select('id, status, created_at', { count: 'exact' }),
@@ -29,7 +34,6 @@ export default async function AdminDashboard() {
     const totalInquiries = inquiriesResult.count || 0;
     const newInquiries = inquiriesResult.data?.filter(i => i.status === 'new').length || 0;
     const totalProjects = projectsResult.count || 0;
-    const activeProjects = projectsResult.data?.filter(p => p.status === 'active').length || 0;
     const totalUsers = usersResult.count || 0;
     const activeUsers = usersResult.data?.filter(u => u.is_active).length || 0;
 
@@ -158,9 +162,9 @@ export default async function AdminDashboard() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${inquiry.status === 'new' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                                                    inquiry.status === 'reviewing' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                                                        inquiry.status === 'contacted' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
-                                                            'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                                                inquiry.status === 'reviewing' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                                                    inquiry.status === 'contacted' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
+                                                        'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
                                                 }`}>
                                                 {inquiry.status}
                                             </span>

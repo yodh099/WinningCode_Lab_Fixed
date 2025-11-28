@@ -1,6 +1,4 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -16,8 +14,8 @@ import Image from 'next/image';
  * - Blog Preview
  * - Call to Action
  */
-export default function HomePage() {
-    const t = useTranslations();
+export default async function HomePage() {
+    const t = await getTranslations();
 
     return (
         <div className="min-h-screen flex flex-col">

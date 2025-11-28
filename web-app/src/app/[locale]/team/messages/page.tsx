@@ -1,4 +1,4 @@
-import { Send, User, Hash } from 'lucide-react';
+import { Send, Hash } from 'lucide-react';
 
 export default function TeamMessages() {
     const channels = [
@@ -53,8 +53,8 @@ export default function TeamMessages() {
                         <div key={msg.id} className={`flex ${msg.isMe ? 'justify-end' : 'justify-start'}`}>
                             <div className={`flex max-w-[70%] ${msg.isMe ? 'flex-row-reverse' : 'flex-row'}`}>
                                 <div className={`flex-shrink-0 h-10 w-10 rounded-lg flex items-center justify-center ${msg.role === 'Admin' ? 'bg-purple-100 text-purple-600' :
-                                        msg.role === 'Design' ? 'bg-pink-100 text-pink-600' :
-                                            msg.isMe ? 'bg-indigo-100 text-indigo-600 ml-3' : 'bg-gray-200 text-gray-600 mr-3'
+                                    msg.role === 'Design' ? 'bg-pink-100 text-pink-600' :
+                                        msg.isMe ? 'bg-indigo-100 text-indigo-600 ml-3' : 'bg-gray-200 text-gray-600 mr-3'
                                     }`}>
                                     <span className="font-bold text-xs">{msg.sender.charAt(0)}</span>
                                 </div>

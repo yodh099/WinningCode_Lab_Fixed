@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Loader2, Lock, Mail, User } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 
-export default function RegisterForm({ locale }: { locale: string }) {
+export default function RegisterForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
@@ -44,7 +44,7 @@ export default function RegisterForm({ locale }: { locale: string }) {
             // Redirect to login or show success message
             // For now, let's redirect to login
             router.push('/login');
-        } catch (err) {
+        } catch {
             setError('An unexpected error occurred');
         } finally {
             setLoading(false);

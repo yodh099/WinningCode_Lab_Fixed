@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+
 
 /**
  * Terms of Service Page
@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
  * platform functionality and user roles.
  */
 export default function TermsOfServicePage() {
-    const t = useTranslations();
+
 
     return (
         <div className="min-h-screen bg-background py-16">
@@ -42,8 +42,8 @@ export default function TermsOfServicePage() {
                         <section>
                             <h2 className="text-2xl font-bold mb-4">1. Acceptance of Terms</h2>
                             <p className="text-muted-foreground leading-relaxed">
-                                Welcome to Winning Code Lab ("we," "our," or "us"). By accessing or using our website, platform,
-                                and services (collectively, the "Services"), you agree to be bound by these Terms of Service ("Terms").
+                                Welcome to Winning Code Lab (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). By accessing or using our website, platform,
+                                and services (collectively, the &quot;Services&quot;), you agree to be bound by these Terms of Service (&quot;Terms&quot;).
                                 If you do not agree to these Terms, please do not use our Services.
                             </p>
                             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -60,13 +60,13 @@ export default function TermsOfServicePage() {
 
                             <h3 className="text-xl font-semibold mb-3 mt-6">2.1 Visitors</h3>
                             <p className="text-muted-foreground leading-relaxed">
-                                "Visitors" are individuals who browse our public website, including:
+                                &quot;Visitors&quot; are individuals who browse our public website, including:
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
                                 <li>Viewing our portfolio and case studies</li>
                                 <li>Reading our blog content</li>
                                 <li>Learning about our services</li>
-                                <li>Submitting inquiries via the "Just Ask" contact form</li>
+                                <li>Submitting inquiries via the &quot;Just Ask&quot; contact form</li>
                             </ul>
                             <p className="text-muted-foreground leading-relaxed mt-4">
                                 Visitors do not require an account and have read-only access to public content.
@@ -74,7 +74,7 @@ export default function TermsOfServicePage() {
 
                             <h3 className="text-xl font-semibold mb-3 mt-6">2.2 Clients</h3>
                             <p className="text-muted-foreground leading-relaxed">
-                                "Clients" are authenticated users who have engaged our services and have access to:
+                                &quot;Clients&quot; are authenticated users who have engaged our services and have access to:
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
                                 <li>Secure Client Dashboard</li>
@@ -89,7 +89,7 @@ export default function TermsOfServicePage() {
 
                             <h3 className="text-xl font-semibold mb-3 mt-6">2.3 Team Members</h3>
                             <p className="text-muted-foreground leading-relaxed">
-                                "Team Members" are internal Winning Code Lab staff with elevated privileges to manage client projects
+                                &quot;Team Members&quot; are internal Winning Code Lab staff with elevated privileges to manage client projects
                                 and platform operations.
                             </p>
                         </section>
@@ -111,7 +111,7 @@ export default function TermsOfServicePage() {
 
                             <h3 className="text-xl font-semibold mb-3 mt-6">3.2 Account Sharing Prohibition</h3>
                             <p className="text-muted-foreground leading-relaxed">
-                                You may not share your account credentials with any third party. Each user must have their own account.
+                                You are responsible for maintaining the confidentiality of your account credentials. You may not share your account credentials with any third party. Each user must have their own account.
                                 Violations may result in immediate account suspension.
                             </p>
 
@@ -181,7 +181,7 @@ export default function TermsOfServicePage() {
                                 You may not:
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
-                                <li>Spam or flood our "Just Ask" contact form with automated or repetitive submissions</li>
+                                <li>Spam or flood our &quot;Just Ask&quot; contact form with automated or repetitive submissions</li>
                                 <li>Submit false, misleading, or fraudulent information</li>
                                 <li>Use the form for purposes other than legitimate business inquiries</li>
                             </ul>
@@ -209,7 +209,7 @@ export default function TermsOfServicePage() {
                                 You may not:
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
-                                <li>Attempt to access other users' accounts or data</li>
+                                <li>Attempt to access other users&apos; accounts or data</li>
                                 <li>Bypass or circumvent security measures</li>
                                 <li>Probe, scan, or test system vulnerabilities</li>
                                 <li>Interfere with platform operations or availability</li>
@@ -233,7 +233,7 @@ export default function TermsOfServicePage() {
 
                             <h3 className="text-xl font-semibold mb-3 mt-6">6.1 Termination by Us</h3>
                             <p className="text-muted-foreground leading-relaxed">
-                                We reserve the right to suspend or terminate your account immediately, without prior notice, if:
+                                We reserve the right to terminate or suspend access to our Services immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
                                 <li>You violate these Terms or our Acceptable Use Policy</li>
@@ -258,8 +258,7 @@ export default function TermsOfServicePage() {
                             <h3 className="text-xl font-semibold mb-3 mt-6">6.3 Effect of Termination</h3>
                             <p className="text-muted-foreground leading-relaxed">
                                 Upon termination, all licenses and rights granted to you will immediately cease.
-                                Provisions that by their nature should survive termination (including intellectual property rights,
-                                limitations of liability, and dispute resolution) will remain in effect.
+                                All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity and limitations of liability.
                             </p>
                         </section>
 
@@ -344,7 +343,7 @@ export default function TermsOfServicePage() {
                             </p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 mt-2">
                                 <li>Posting the updated Terms on our website</li>
-                                <li>Updating the "Last Updated" date</li>
+                                <li>Updating the &quot;Last Updated&quot; date</li>
                                 <li>Sending email notifications to registered users (for significant changes)</li>
                             </ul>
                             <p className="text-muted-foreground leading-relaxed mt-4">
@@ -377,7 +376,7 @@ export default function TermsOfServicePage() {
                         {/* Acknowledgment */}
                         <section className="bg-muted/30 rounded-lg p-6 mt-8">
                             <p className="text-sm text-muted-foreground">
-                                By using Winning Code Lab's Services, you acknowledge that you have read, understood,
+                                By using Winning Code Lab&apos;s Services, you acknowledge that you have read, understood,
                                 and agree to be bound by these Terms of Service.
                             </p>
                         </section>

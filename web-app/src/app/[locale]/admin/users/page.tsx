@@ -11,7 +11,7 @@ interface Profile {
     created_at: string;
 }
 
-export default function AdminUsersPage({ params: { locale } }: { params: { locale: string } }) {
+export default function AdminUsersPage() {
     const [users, setUsers] = useState<Profile[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -23,20 +23,20 @@ export default function AdminUsersPage({ params: { locale } }: { params: { local
     );
 
     useEffect(() => {
+        const fetchUsers = async () => {
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (!error && data) {
+                setUsers(data as Profile[]);
+            }
+            setLoading(false);
+        };
+
         fetchUsers();
-    }, []);
-
-    const fetchUsers = async () => {
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-        if (!error && data) {
-            setUsers(data as Profile[]);
-        }
-        setLoading(false);
-    };
+    }, [supabase]);
 
     const handleRoleChange = async (userId: string, newRole: 'admin' | 'staff' | 'client') => {
         setUpdatingId(userId);
@@ -106,8 +106,8 @@ export default function AdminUsersPage({ params: { locale } }: { params: { local
                                     </td>
                                     <td className="p-4 align-middle">
                                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${user.role === 'admin' ? 'bg-purple-100 text-purple-800' :
-                                                user.role === 'staff' ? 'bg-blue-100 text-blue-800' :
-                                                    'bg-gray-100 text-gray-800'
+                                            user.role === 'staff' ? 'bg-blue-100 text-blue-800' :
+                                                'bg-gray-100 text-gray-800'
                                             }`}>
                                             {user.role === 'admin' && <Shield className="h-3 w-3" />}
                                             {user.role === 'staff' && <UserCheck className="h-3 w-3" />}
@@ -121,7 +121,7 @@ export default function AdminUsersPage({ params: { locale } }: { params: { local
                                         <select
                                             className="rounded-md border bg-background px-2 py-1 text-sm disabled:opacity-50"
                                             value={user.role}
-                                            onChange={(e) => handleRoleChange(user.id, e.target.value as any)}
+                                            onChange={(e) => handleRoleChange(user.id, e.target.value as 'admin' | 'staff' | 'client')}
                                             disabled={updatingId === user.id}
                                         >
                                             <option value="client">Client</option>

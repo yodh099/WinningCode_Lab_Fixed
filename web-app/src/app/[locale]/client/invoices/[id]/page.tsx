@@ -7,8 +7,10 @@ import { Link } from '@/i18n/routing';
 
 export default function ClientInvoiceDetailsPage(props: { params: Promise<{ locale: string; id: string }> }) {
     const params = use(props.params);
-    const { locale, id } = params;
+    const { id } = params;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [invoice, setInvoice] = useState<any>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [items, setItems] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -52,7 +54,7 @@ export default function ClientInvoiceDetailsPage(props: { params: Promise<{ loca
         };
 
         fetchInvoice();
-    }, [id]);
+    }, [id, supabase]);
 
     if (loading) return <div className="flex justify-center p-8"><Loader2 className="animate-spin" /></div>;
     if (!invoice) return <div className="p-8 text-center">Invoice not found</div>;

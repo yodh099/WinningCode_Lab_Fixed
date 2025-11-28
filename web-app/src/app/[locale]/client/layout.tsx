@@ -1,14 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import { LayoutDashboard, Folder, MessageSquare, FileText, LogOut } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter, useParams } from 'next/navigation';
 
-export default async function ClientLayout({
+export default function ClientLayout({
     children,
-    params
 }: {
     children: React.ReactNode;
-    params: Promise<{ locale: string }>;
 }) {
-    const { locale } = await params;
+    const router = useRouter();
+    const params = useParams();
+    const locale = params.locale as string;
 
     const navigation = [
         { name: 'Dashboard', href: `/${locale}/client/dashboard`, icon: LayoutDashboard },
@@ -16,6 +20,13 @@ export default async function ClientLayout({
         { name: 'Messages', href: `/${locale}/client/messages`, icon: MessageSquare },
         { name: 'Files', href: `/${locale}/client/files`, icon: FileText },
     ];
+
+
+    const handleSignOut = async () => {
+        const supabase = createClient();
+        await supabase.auth.signOut();
+        router.push(`/${locale}/login`);
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -40,7 +51,10 @@ export default async function ClientLayout({
                 </nav>
 
                 <div className="p-4 border-t border-gray-100">
-                    <button className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                    <button
+                        onClick={handleSignOut}
+                        className="flex items-center w-full px-4 py-3 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                    >
                         <LogOut className="mr-3 h-5 w-5" />
                         Sign Out
                     </button>
