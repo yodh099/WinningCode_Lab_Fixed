@@ -182,7 +182,7 @@ export default function ClientMessages() {
         <div className="flex flex-col h-[calc(100vh-64px)] bg-background">
             <div className="bg-card border-b border-border p-4 flex items-center justify-between">
                 <div>
-                    <h1 className="text-xl font-bold text-foreground">Messages</h1>
+                    <h1 className="text-xl font-bold text-foreground">Messages (v1.2 Fixed)</h1>
                     <p className="text-sm text-muted-foreground">Chat with your project manager</p>
                 </div>
             </div>
