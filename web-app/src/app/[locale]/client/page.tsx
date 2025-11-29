@@ -46,11 +46,8 @@ export default async function ClientPage() {
     // Fetch recent messages
     const { data: messages } = await supabase
         .from('messages')
-        .select(`
-            *,
-            sender:sender_id(full_name)
-        `)
-        .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
+        .select('*')
+        .or(`sender_id.eq.${user.id},recipient_id.eq.${user.id}`)
         .order('created_at', { ascending: false })
         .limit(3) as { data: any[] | null };
 
@@ -59,7 +56,7 @@ export default async function ClientPage() {
 
     const formattedMessages = messages?.map(msg => ({
         ...msg,
-        sender_name: msg.sender?.full_name || 'Unknown'
+        sender_name: msg.sender_id === user.id ? 'Me' : 'Project Manager'
     })) || [];
 
     return (
@@ -132,8 +129,8 @@ export default async function ClientPage() {
                                                 )}
                                                 <div className="flex items-center gap-2 mt-1">
                                                     <span className={`text-xs px-2 py-0.5 rounded-full ${project.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                                                            project.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
-                                                                'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+                                                        project.status === 'pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' :
+                                                            'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
                                                         }`}>
                                                         {project.status}
                                                     </span>
