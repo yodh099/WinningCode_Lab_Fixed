@@ -6,6 +6,14 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     /**
+     * Force cache invalidation on every build
+     * This ensures Vercel serves fresh code without CDN caching issues
+     */
+    generateBuildId: async () => {
+        return `build-${Date.now()}`;
+    },
+
+    /**
      * Enable React Strict Mode for highlighting potential problems
      * in the application during development
      */
