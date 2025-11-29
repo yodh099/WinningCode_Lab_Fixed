@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { LayoutDashboard, Users, Briefcase, LogOut, CreditCard, ShieldCheck, Folder, Lightbulb, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, Briefcase, LogOut, CreditCard, ShieldCheck, Folder, Lightbulb, Menu, X, Mail } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, useParams } from 'next/navigation';
 
@@ -19,6 +19,7 @@ export default function AdminLayout({
         { name: 'Dashboard', href: `/${locale}/admin/dashboard`, icon: LayoutDashboard },
         { name: 'Clients', href: `/${locale}/admin/clients`, icon: Users },
         { name: 'Projects', href: `/${locale}/admin/projects`, icon: Folder },
+        { name: 'Messages', href: `/${locale}/admin/messages`, icon: Mail },
         { name: 'Ideas', href: `/${locale}/admin/ideas`, icon: Lightbulb },
         { name: 'Team', href: `/${locale}/admin/team`, icon: Briefcase },
         { name: 'Invoices', href: `/${locale}/admin/invoices`, icon: CreditCard },

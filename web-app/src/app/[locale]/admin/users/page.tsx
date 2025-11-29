@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { createBrowserClient } from '@supabase/ssr';
+import { createClient } from '@/lib/supabase/client';
 import { Loader2, Search, Shield, User, UserCheck } from 'lucide-react';
 
 interface Profile {
     id: string;
-    email: string;
+    email?: string;
+    full_name: string | null;
     role: 'admin' | 'staff' | 'client';
+    is_active: boolean;
     created_at: string;
 }
 
@@ -17,45 +19,61 @@ export default function AdminUsersPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-    const supabase = createBrowserClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
-
     useEffect(() => {
-        const fetchUsers = async () => {
-            const { data, error } = await supabase
+        fetchUsers();
+    }, []);
+
+    async function fetchUsers() {
+        try {
+            const supabase = createClient();
+
+            const { data: profilesData, error: profilesError } = await supabase
                 .from('profiles')
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            if (!error && data) {
-                setUsers(data as Profile[]);
-            }
+            if (profilesError) throw profilesError;
+
+            // Get emails from auth users
+            const usersWithEmails = ((profilesData as any[]) || []).map((profile) => {
+                return {
+                    ...profile,
+                    email: profile.email || 'No email'
+                };
+            });
+
+            setUsers(usersWithEmails);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        } finally {
             setLoading(false);
-        };
+        }
+    }
 
-        fetchUsers();
-    }, [supabase]);
-
-    const handleRoleChange = async (userId: string, newRole: 'admin' | 'staff' | 'client') => {
+    async function handleRoleChange(userId: string, newRole: 'admin' | 'staff' | 'client') {
         setUpdatingId(userId);
-        const { error } = await supabase
-            .from('profiles')
-            .update({ role: newRole })
-            .eq('id', userId);
+        try {
+            const supabase = createClient();
+            const { error } = await (supabase
+                .from('profiles') as any)
+                .update({ role: newRole })
+                .eq('id', userId);
 
-        if (!error) {
+            if (error) throw error;
+
             setUsers(users.map(u => u.id === userId ? { ...u, role: newRole } : u));
-        } else {
+        } catch (error) {
             console.error('Error updating role:', error);
             alert('Failed to update role');
+        } finally {
+            setUpdatingId(null);
         }
-        setUpdatingId(null);
-    };
+    }
+
 
     const filteredUsers = users.filter(user =>
         user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.role.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -98,10 +116,15 @@ export default function AdminUsersPage() {
                                 <tr key={user.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                                     <td className="p-4 align-middle">
                                         <div className="flex items-center gap-3">
-                                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                                                <User className="h-4 w-4 text-primary" />
+                                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary font-bold">
+                                                {user.full_name?.charAt(0) || user.email?.charAt(0).toUpperCase() || 'U'}
                                             </div>
-                                            <div className="font-medium">{user.email}</div>
+                                            <div>
+                                                <div className="font-medium text-foreground">
+                                                    {user.full_name || 'No name'}
+                                                </div>
+                                                <div className="text-sm text-muted-foreground">{user.email}</div>
+                                            </div>
                                         </div>
                                     </td>
                                     <td className="p-4 align-middle">

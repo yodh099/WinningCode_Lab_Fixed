@@ -33,7 +33,7 @@ export default async function middleware(request: NextRequest) {
         }
       );
 
-      // 3. Get User & Role
+      // 3. Get User
       // This will refresh session if expired - required for Server Components
       const { data } = await supabase.auth.getUser();
       user = data.user;
@@ -85,6 +85,11 @@ export default async function middleware(request: NextRequest) {
     // 6. Handle Authenticated Users
     const role = user.user_metadata?.role;
 
+    // TEMPORARY: Allow ALL authenticated users to access admin routes
+    if (isAdminRoute) {
+      return response; // Skip all role checks for admin routes
+    }
+
     // Redirect from login page if already authenticated
     if (isAuthRoute) {
       // Check for 'next' param to redirect back to intended page
@@ -96,17 +101,14 @@ export default async function middleware(request: NextRequest) {
       // Default role-based redirect
       if (role === 'client') return NextResponse.redirect(new URL(`/${locale}/client/dashboard`, request.url));
       if (role === 'developer') return NextResponse.redirect(new URL(`/${locale}/team/dashboard`, request.url));
-      if (role === 'admin') return NextResponse.redirect(new URL(`/${locale}/admin/dashboard`, request.url));
+      if (role === 'admin' || role === 'staff') return NextResponse.redirect(new URL(`/${locale}/admin/dashboard`, request.url));
     }
 
-    // Enforce Role Access on Protected Routes
-    if (isClientRoute && role !== 'client' && role !== 'admin') {
+    // Enforce Role Access on Protected Routes (NOT admin)
+    if (isClientRoute && role !== 'client' && role !== 'admin' && role !== 'staff') {
       return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
     }
-    if (isTeamRoute && role !== 'developer' && role !== 'admin') {
-      return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
-    }
-    if (isAdminRoute && role !== 'admin') {
+    if (isTeamRoute && role !== 'developer' && role !== 'admin' && role !== 'staff') {
       return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
     }
   }

@@ -40,32 +40,34 @@ export default function ClientMessages() {
 
             setUserId(user.id);
 
-            // Fetch messages where user is sender or receiver
+            // Simple query for production compatibility (no view needed)
             const { data, error } = await supabase
                 .from('messages')
-                .select(`
-                    *,
-                    sender:sender_id(full_name),
-                    recipient:recipient_id(full_name)
-                `)
+                .select('*')
                 .or(`sender_id.eq.${user.id},recipient_id.eq.${user.id}`)
                 .order('created_at', { ascending: true });
 
-            if (error) throw error;
+            if (error) {
+                console.error('=== FETCH ERROR ===');
+                console.error('Error:', error);
+                console.error('==================');
+                throw error;
+            }
 
-            const formattedMessages = data?.map(msg => ({
+            const messagesData = (data as any[]) || [];
+            const formattedMessages = messagesData.map(msg => ({
                 id: msg.id,
                 sender_id: msg.sender_id,
                 receiver_id: msg.recipient_id,
                 content: msg.content,
                 created_at: msg.created_at,
-                sender_name: msg.sender?.full_name || 'Unknown',
+                sender_name: 'User', // Simple fallback
                 is_me: msg.sender_id === user.id
-            })) || [];
+            }));
 
             setMessages(formattedMessages);
         } catch (error) {
-            console.error('Error fetching messages:', error);
+            console.error('Error fetching messages:', error instanceof Error ? error.message : error);
         } finally {
             setLoading(false);
         }
@@ -92,21 +94,39 @@ export default function ClientMessages() {
                 return;
             }
 
-            const { error } = await supabase
-                .from('messages')
-                .insert({
-                    sender_id: userId,
-                    recipient_id: receiverId,
-                    content: newMessage.trim()
-                });
+            // Send message WITHOUT conversation_id for backwards compatibility
+            const insertData: any = {
+                sender_id: userId,
+                recipient_id: receiverId,
+                content: newMessage.trim()
+            };
 
-            if (error) throw error;
+            const { error } = await (supabase
+                .from('messages') as any)
+                .insert(insertData);
+
+            if (error) {
+                console.error('=== MESSAGE SEND ERROR ===');
+                console.error('Error code:', error.code);
+                console.error('Error message:', error.message);
+                console.error('Error details:', error.details);
+                console.error('Full error:', JSON.stringify(error, null, 2));
+                console.error('Sender ID:', userId);
+                console.error('Recipient ID:', receiverId);
+                console.error('=========================');
+                throw error;
+            }
 
             setNewMessage('');
             fetchMessages(); // Refresh messages
-        } catch (error) {
-            console.error('Error sending message:', error);
-            alert('Failed to send message');
+        } catch (error: any) {
+            console.error('=== CATCH BLOCK ERROR ===');
+            console.error('Error type:', typeof error);
+            console.error('Error name:', error?.name);
+            console.error('Error message:', error?.message);
+            console.error('Full error object:', error);
+            console.error('========================');
+            alert(`Failed to send message: ${error?.message || 'Unknown error'}`);
         } finally {
             setSending(false);
         }

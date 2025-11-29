@@ -55,15 +55,18 @@ export default function AdminIdeasPage() {
             if (error) throw error;
 
             // Map profiles data to idea
-            const ideasWithUserInfo = data?.map(idea => ({
+            const ideasData = (data as any[]) || [];
+            const ideasWithUserInfo = ideasData.map(idea => ({
                 ...idea,
                 user_email: idea.profiles?.email || 'Unknown',
                 user_name: idea.profiles?.full_name || 'Unknown User'
-            })) || [];
+            }));
 
             setIdeas(ideasWithUserInfo);
         } catch (error) {
-            console.error('Error fetching ideas:', error);
+            console.error('Error fetching ideas:', error instanceof Error ? error.message : error);
+            console.error('Full error object:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+            console.error('Error details:', { type: typeof error, constructor: error?.constructor?.name });
         } finally {
             setLoading(false);
         }
@@ -72,8 +75,8 @@ export default function AdminIdeasPage() {
     async function updateStatus(ideaId: string, newStatus: string) {
         try {
             const supabase = createClient();
-            const { error } = await supabase
-                .from('ideas')
+            const { error } = await (supabase
+                .from('ideas') as any)
                 .update({ status: newStatus, updated_at: new Date().toISOString() })
                 .eq('id', ideaId);
 
@@ -155,8 +158,8 @@ export default function AdminIdeasPage() {
                     <button
                         onClick={() => setFilter('all')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all'
-                                ? 'bg-primary text-primary-foreground'
-                                : 'bg-card text-foreground hover:bg-accent'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-card text-foreground hover:bg-accent'
                             }`}
                     >
                         All ({ideas.length})
@@ -164,8 +167,8 @@ export default function AdminIdeasPage() {
                     <button
                         onClick={() => setFilter('pending')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'pending'
-                                ? 'bg-primary text-primary-foreground'
-                                : 'bg-card text-foreground hover:bg-accent'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-card text-foreground hover:bg-accent'
                             }`}
                     >
                         Pending
@@ -173,8 +176,8 @@ export default function AdminIdeasPage() {
                     <button
                         onClick={() => setFilter('in-progress')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'in-progress'
-                                ? 'bg-primary text-primary-foreground'
-                                : 'bg-card text-foreground hover:bg-accent'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-card text-foreground hover:bg-accent'
                             }`}
                     >
                         In Progress
@@ -182,8 +185,8 @@ export default function AdminIdeasPage() {
                     <button
                         onClick={() => setFilter('completed')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'completed'
-                                ? 'bg-primary text-primary-foreground'
-                                : 'bg-card text-foreground hover:bg-accent'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-card text-foreground hover:bg-accent'
                             }`}
                     >
                         Completed
@@ -204,8 +207,8 @@ export default function AdminIdeasPage() {
                                 key={idea.id}
                                 onClick={() => setSelectedIdea(idea)}
                                 className={`bg-card border rounded-lg p-6 cursor-pointer transition-all hover:shadow-lg ${selectedIdea?.id === idea.id
-                                        ? 'border-primary ring-2 ring-primary/20'
-                                        : 'border-border'
+                                    ? 'border-primary ring-2 ring-primary/20'
+                                    : 'border-border'
                                     }`}
                             >
                                 <div className="flex items-start justify-between mb-3">

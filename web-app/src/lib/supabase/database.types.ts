@@ -180,6 +180,135 @@ export interface Database {
                     updated_at?: string
                 }
             }
+            client_projects: {
+                Row: {
+                    id: string
+                    client_id: string
+                    project_name: string
+                    description: string | null
+                    status: 'pending' | 'active' | 'on_hold' | 'completed' | 'cancelled'
+                    priority: 'low' | 'normal' | 'high' | 'urgent'
+                    budget: number | null
+                    currency: string
+                    progress: number
+                    start_date: string | null
+                    end_date: string | null
+                    deadline: string | null
+                    milestones: Json
+                    created_by: string | null
+                    assigned_to: string | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    client_id: string
+                    project_name: string
+                    description?: string | null
+                    status?: 'pending' | 'active' | 'on_hold' | 'completed' | 'cancelled'
+                    priority?: 'low' | 'normal' | 'high' | 'urgent'
+                    budget?: number | null
+                    currency?: string
+                    progress?: number
+                    start_date?: string | null
+                    end_date?: string | null
+                    deadline?: string | null
+                    milestones?: Json
+                    created_by?: string | null
+                    assigned_to?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    client_id?: string
+                    project_name?: string
+                    description?: string | null
+                    status?: 'pending' | 'active' | 'on_hold' | 'completed' | 'cancelled'
+                    priority?: 'low' | 'normal' | 'high' | 'urgent'
+                    budget?: number | null
+                    currency?: string
+                    progress?: number
+                    start_date?: string | null
+                    end_date?: string | null
+                    deadline?: string | null
+                    milestones?: Json
+                    created_by?: string | null
+                    assigned_to?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+            }
+            ideas: {
+                Row: {
+                    id: string
+                    user_id: string
+                    title: string
+                    description: string
+                    budget: string | null
+                    deadline: string | null
+                    file_url: string | null
+                    priority: string
+                    status: string
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    user_id: string
+                    title: string
+                    description: string
+                    budget?: string | null
+                    deadline?: string | null
+                    file_url?: string | null
+                    priority?: string
+                    status?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    user_id?: string
+                    title?: string
+                    description?: string
+                    budget?: string | null
+                    deadline?: string | null
+                    file_url?: string | null
+                    priority?: string
+                    status?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+            }
+            messages: {
+                Row: {
+                    id: string
+                    project_id: string | null
+                    sender_id: string | null
+                    recipient_id: string | null
+                    content: string
+                    is_internal: boolean
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    project_id?: string | null
+                    sender_id?: string | null
+                    recipient_id?: string | null
+                    content: string
+                    is_internal?: boolean
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    project_id?: string | null
+                    sender_id?: string | null
+                    recipient_id?: string | null
+                    content?: string
+                    is_internal?: boolean
+                    created_at?: string
+                }
+            }
             blog_posts: {
                 Row: {
                     id: string

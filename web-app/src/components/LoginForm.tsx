@@ -36,7 +36,21 @@ export default function LoginForm({ locale }: { locale: string }) {
                 return;
             }
 
-            // Refresh router to trigger middleware
+            // Get user to check role
+            const { data: { user } } = await supabase.auth.getUser();
+            const role = user?.user_metadata?.role;
+
+            // Redirect based on role or 'next' param
+            if (next && next.startsWith('/')) {
+                router.push(`/${locale}${next}`);
+            } else if (role === 'admin') {
+                router.push(`/${locale}/admin/dashboard`);
+            } else if (role === 'developer') {
+                router.push(`/${locale}/team/dashboard`);
+            } else {
+                router.push(`/${locale}/client/dashboard`);
+            }
+
             router.refresh();
         } catch {
             setError('An unexpected error occurred');
@@ -61,8 +75,9 @@ export default function LoginForm({ locale }: { locale: string }) {
                 },
             });
             if (error) throw error;
-        } catch (err: unknown) {
-            setError(err.message);
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+            setError(errorMessage);
             setLoading(false);
         }
     };

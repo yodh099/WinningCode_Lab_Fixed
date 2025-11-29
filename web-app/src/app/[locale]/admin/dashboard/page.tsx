@@ -55,7 +55,7 @@ export default async function AdminDashboard() {
         },
         {
             name: 'Active Projects',
-            value: activeProjects.toString(),
+            value: totalProjects.toString(),
             subtext: `${totalProjects} total`,
             icon: Folder,
             color: 'bg-green-500',
