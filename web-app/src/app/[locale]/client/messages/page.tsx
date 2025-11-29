@@ -43,7 +43,7 @@ export default function ClientMessages() {
             // Simple query for production compatibility (no view needed)
             const { data, error } = await supabase
                 .from('messages')
-                .select('*')
+                .select('*, sender:sender_id(full_name), recipient:recipient_id(full_name)')
                 .or(`sender_id.eq.${user.id},recipient_id.eq.${user.id}`)
                 .order('created_at', { ascending: true });
 
@@ -61,7 +61,7 @@ export default function ClientMessages() {
                 receiver_id: msg.recipient_id,
                 content: msg.content,
                 created_at: msg.created_at,
-                sender_name: 'User', // Simple fallback
+                sender_name: msg.sender?.full_name || 'User',
                 is_me: msg.sender_id === user.id
             }));
 
@@ -86,7 +86,7 @@ export default function ClientMessages() {
                 .from('profiles')
                 .select('id')
                 .eq('role', 'admin')
-                .limit(1);
+                .limit(1) as { data: { id: string }[] | null };
 
             const receiverId = adminUsers?.[0]?.id;
             if (!receiverId) {
