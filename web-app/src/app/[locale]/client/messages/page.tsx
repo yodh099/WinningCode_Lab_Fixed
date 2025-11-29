@@ -98,7 +98,8 @@ export default function ClientMessages() {
             const insertData: any = {
                 sender_id: userId,
                 recipient_id: receiverId,
-                content: newMessage.trim()
+                content: newMessage.trim(),
+                subject: 'General Message' // Required by schema
             };
 
             const { error } = await (supabase

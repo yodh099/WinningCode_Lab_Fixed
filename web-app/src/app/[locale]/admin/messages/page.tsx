@@ -133,7 +133,8 @@ export default function AdminMessages() {
                 .insert({
                     sender_id: currentAdminId,
                     recipient_id: selectedUserId,
-                    content: newMessage.trim()
+                    content: newMessage.trim(),
+                    subject: 'Reply' // Required by schema
                 });
 
             if (error) throw error;
