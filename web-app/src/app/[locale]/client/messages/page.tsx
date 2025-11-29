@@ -94,12 +94,44 @@ export default function ClientMessages() {
                 return;
             }
 
-            // Send message WITHOUT conversation_id for backwards compatibility
+            // Check for existing conversation
+            let conversationId: string | null = null;
+
+            const { data: existingConv } = await (supabase
+                .from('conversations') as any)
+                .select('id')
+                .or(`client_id.eq.${userId},client_id.eq.${receiverId}`)
+                .limit(1)
+                .single();
+
+            if (existingConv) {
+                conversationId = existingConv.id;
+            } else {
+                // Create new conversation
+                const { data: newConv, error: convError } = await (supabase
+                    .from('conversations') as any)
+                    .insert({
+                        client_id: userId,
+                        subject: 'General Inquiry',
+                        status: 'open'
+                    })
+                    .select()
+                    .single();
+
+                if (convError) {
+                    console.error('Error creating conversation:', convError);
+                    // Fallback: try sending without conversation_id if creation fails
+                } else {
+                    conversationId = newConv.id;
+                }
+            }
+
+            // Send message
             const insertData: any = {
                 sender_id: userId,
                 recipient_id: receiverId,
                 content: newMessage.trim(),
-                subject: 'General Message' // Required by schema
+                conversation_id: conversationId
             };
 
             const { error } = await (supabase
