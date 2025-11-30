@@ -16,25 +16,31 @@ export default function AddMemberModal({ isOpen, onClose, onSuccess }: AddMember
         fullName: '',
         email: '',
         role: 'staff',
-        phone: ''
+        phone: '',
+        password: ''
     });
 
     if (!isOpen) return null;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Validate password
+        if (formData.password.length < 6) {
+            alert('Password must be at least 6 characters long');
+            return;
+        }
+
         setLoading(true);
 
         const supabase = createClient();
 
         try {
-            // Similar to Clients, adding a team member requires creating an Auth User.
-            // We will simulate this or show an alert.
-
-            // Call Edge Function to create user
+            // Call Edge Function to create user with password
             const { data, error } = await supabase.functions.invoke('create-user', {
                 body: {
                     email: formData.email,
+                    password: formData.password,
                     full_name: formData.fullName,
                     role: formData.role,
                     phone: formData.phone
@@ -45,7 +51,7 @@ export default function AddMemberModal({ isOpen, onClose, onSuccess }: AddMember
 
             onSuccess();
             onClose();
-            setFormData({ fullName: '', email: '', role: 'staff', phone: '' });
+            setFormData({ fullName: '', email: '', role: 'staff', phone: '', password: '' });
 
         } catch (error) {
             console.error('Error adding member:', error);
@@ -111,6 +117,20 @@ export default function AddMemberModal({ isOpen, onClose, onSuccess }: AddMember
                             className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                             placeholder="+1 (555) 000-0000"
                         />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-foreground mb-1">Password</label>
+                        <input
+                            type="password"
+                            required
+                            value={formData.password}
+                            onChange={e => setFormData({ ...formData, password: e.target.value })}
+                            className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            placeholder="Minimum 6 characters"
+                            minLength={6}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">Set a password for the team member to log in immediately</p>
                     </div>
 
                     <div className="flex justify-end space-x-3 mt-6">
