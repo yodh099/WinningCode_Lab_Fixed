@@ -99,16 +99,17 @@ export default async function middleware(request: NextRequest) {
       }
 
       // Default role-based redirect
+      // Default role-based redirect
       if (role === 'client') return NextResponse.redirect(new URL(`/${locale}/client/dashboard`, request.url));
-      if (role === 'developer') return NextResponse.redirect(new URL(`/${locale}/team/dashboard`, request.url));
-      if (role === 'admin' || role === 'staff') return NextResponse.redirect(new URL(`/${locale}/admin/dashboard`, request.url));
+      if (role === 'staff' || role === 'developer') return NextResponse.redirect(new URL(`/${locale}/team/dashboard`, request.url));
+      if (role === 'admin') return NextResponse.redirect(new URL(`/${locale}/admin/dashboard`, request.url));
     }
 
     // Enforce Role Access on Protected Routes (NOT admin)
     if (isClientRoute && role !== 'client' && role !== 'admin' && role !== 'staff') {
       return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
     }
-    if (isTeamRoute && role !== 'developer' && role !== 'admin' && role !== 'staff') {
+    if (isTeamRoute && role !== 'staff' && role !== 'developer' && role !== 'admin') {
       return NextResponse.redirect(new URL(`/${locale}/not-authorized`, request.url));
     }
   }

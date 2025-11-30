@@ -9,40 +9,60 @@ export default async function AdminDashboard() {
     const supabase = await createClient();
 
     // Check auth
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) redirect('/login');
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+        console.log('AdminDashboard: No user or auth error', authError);
+        redirect('/login');
+    }
 
     // Get profile
-    const { data: profile } = await supabase
+    const { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('role')
         .eq('id', user.id)
-        .single() as { data: { role: string } | null };
+        .single();
 
-    if (!profile || profile.role !== 'admin') {
+    if (profileError) {
+        console.error('AdminDashboard: Profile error', profileError);
+    }
+
+    const userProfile = profile as { role: string } | null;
+
+    if (!userProfile || userProfile.role !== 'admin') {
+        console.log('AdminDashboard: Not admin, role:', userProfile?.role);
         redirect('/not-authorized');
     }
 
     // Fetch stats
-    // Fetch dashboard stats
-    const [inquiriesResult, projectsResult, usersResult] = await Promise.all([
-        supabase.from('inquiries').select('id, status, created_at', { count: 'exact' }),
-        supabase.from('client_projects').select('id, status', { count: 'exact' }),
-        supabase.from('profiles').select('id, role, is_active', { count: 'exact' })
-    ]);
+    let totalInquiries = 0;
+    let newInquiries = 0;
+    let totalProjects = 0;
+    let totalUsers = 0;
+    let activeUsers = 0;
+    let recentInquiries: any[] = [];
 
-    const totalInquiries = inquiriesResult.count || 0;
-    const newInquiries = inquiriesResult.data?.filter(i => i.status === 'new').length || 0;
-    const totalProjects = projectsResult.count || 0;
-    const totalUsers = usersResult.count || 0;
-    const activeUsers = usersResult.data?.filter(u => u.is_active).length || 0;
+    try {
+        const [inquiriesResult, projectsResult, usersResult, recentInquiriesResult] = await Promise.all([
+            supabase.from('inquiries').select('id, status, created_at', { count: 'exact' }),
+            supabase.from('client_projects').select('id, status', { count: 'exact' }),
+            supabase.from('profiles').select('id, role, is_active', { count: 'exact' }),
+            supabase.from('inquiries')
+                .select('id, name, email, project_idea, budget, status, created_at')
+                .order('created_at', { ascending: false })
+                .limit(10)
+        ]);
 
-    // Recent inquiries (last 10)
-    const { data: recentInquiries } = await supabase
-        .from('inquiries')
-        .select('id, name, email, project_idea, budget, status, created_at')
-        .order('created_at', { ascending: false })
-        .limit(10);
+        totalInquiries = inquiriesResult.count || 0;
+        newInquiries = (inquiriesResult.data as any[])?.filter((i: any) => i.status === 'new').length || 0;
+        totalProjects = projectsResult.count || 0;
+        totalUsers = usersResult.count || 0;
+        activeUsers = (usersResult.data as any[])?.filter((u: any) => u.is_active).length || 0;
+        recentInquiries = recentInquiriesResult.data || [];
+
+    } catch (error) {
+        console.error('AdminDashboard: Error fetching stats', error);
+        // Continue rendering with zero stats instead of crashing
+    }
 
     const stats = [
         {

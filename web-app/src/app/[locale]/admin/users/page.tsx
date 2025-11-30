@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { Loader2, Search, Shield, User, UserCheck } from 'lucide-react';
 
+import { updateUserRole } from '@/app/actions/users';
+
 interface Profile {
     id: string;
     email?: string;
     full_name: string | null;
-    role: 'admin' | 'staff' | 'client';
+    role: 'admin' | 'staff' | 'client' | 'developer';
     is_active: boolean;
     created_at: string;
 }
@@ -50,21 +52,19 @@ export default function AdminUsersPage() {
         }
     }
 
-    async function handleRoleChange(userId: string, newRole: 'admin' | 'staff' | 'client') {
+    async function handleRoleChange(userId: string, newRole: 'admin' | 'staff' | 'client' | 'developer') {
         setUpdatingId(userId);
         try {
-            const supabase = createClient();
-            const { error } = await (supabase
-                .from('profiles') as any)
-                .update({ role: newRole })
-                .eq('id', userId);
+            const result = await updateUserRole(userId, newRole);
 
-            if (error) throw error;
+            if (result.error) {
+                throw new Error(result.error);
+            }
 
             setUsers(users.map(u => u.id === userId ? { ...u, role: newRole } : u));
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error updating role:', error);
-            alert('Failed to update role');
+            alert('Failed to update role: ' + error.message);
         } finally {
             setUpdatingId(null);
         }
@@ -130,7 +130,8 @@ export default function AdminUsersPage() {
                                     <td className="p-4 align-middle">
                                         <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${user.role === 'admin' ? 'bg-purple-100 text-purple-800' :
                                             user.role === 'staff' ? 'bg-blue-100 text-blue-800' :
-                                                'bg-gray-100 text-gray-800'
+                                                user.role === 'developer' ? 'bg-indigo-100 text-indigo-800' :
+                                                    'bg-gray-100 text-gray-800'
                                             }`}>
                                             {user.role === 'admin' && <Shield className="h-3 w-3" />}
                                             {user.role === 'staff' && <UserCheck className="h-3 w-3" />}
@@ -144,11 +145,12 @@ export default function AdminUsersPage() {
                                         <select
                                             className="rounded-md border bg-background px-2 py-1 text-sm disabled:opacity-50"
                                             value={user.role}
-                                            onChange={(e) => handleRoleChange(user.id, e.target.value as 'admin' | 'staff' | 'client')}
+                                            onChange={(e) => handleRoleChange(user.id, e.target.value as any)}
                                             disabled={updatingId === user.id}
                                         >
                                             <option value="client">Client</option>
                                             <option value="staff">Staff</option>
+                                            <option value="developer">Developer</option>
                                             <option value="admin">Admin</option>
                                         </select>
                                         {updatingId === user.id && <Loader2 className="ml-2 inline h-4 w-4 animate-spin" />}
