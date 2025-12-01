@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { updateClientProfile } from '@/app/actions/clients';
 
 interface EditClientModalProps {
     isOpen: boolean;
@@ -59,25 +60,19 @@ export default function EditClientModal({ isOpen, onClose, onSuccess, clientId }
         setLoading(true);
 
         try {
-            const supabase = createClient();
+            // Use server action to bypass RLS and ensure data persistence
+            const result = await updateClientProfile(clientId, formData);
 
-            const { error } = await (supabase
-                .from('profiles') as any)
-                .update({
-                    full_name: formData.fullName,
-                    company_name: formData.companyName,
-                    phone: formData.phone
-                })
-                .eq('id', clientId);
-
-            if (error) throw error;
+            if (result.error) {
+                throw new Error(result.error);
+            }
 
             onSuccess();
             onClose();
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error updating client:', error);
-            alert('Failed to update client. Please try again.');
+            alert('Failed to update client: ' + (error.message || 'Unknown error'));
         } finally {
             setLoading(false);
         }

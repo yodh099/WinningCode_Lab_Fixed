@@ -203,10 +203,10 @@ export default function AdminProjects() {
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-start space-x-4">
                                         <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">
-                                            {project.project_name.charAt(0)}
+                                            {project.project_name?.charAt(0) || '?'}
                                         </div>
                                         <div>
-                                            <h2 className="text-xl font-bold text-foreground">{project.project_name}</h2>
+                                            <h2 className="text-xl font-bold text-foreground">{project.project_name || 'Unnamed Project'}</h2>
                                             <p className="text-sm text-muted-foreground mt-1">
                                                 Client: <span className="font-medium text-foreground">{project.client_name}</span>
                                             </p>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import { Loader2, Upload, Send } from 'lucide-react';
+import { submitIdea } from '@/app/actions/ideas';
 
 
 export default function SubmitIdeaPage() {
@@ -51,19 +52,19 @@ export default function SubmitIdeaPage() {
                 fileUrl = filePath;
             }
 
-            const { error: insertError } = await supabase
-                .from('ideas')
-                .insert({
-                    user_id: user.id,
-                    title,
-                    description,
-                    budget,
-                    deadline: deadline || null,
-                    file_url: fileUrl,
-                    priority,
-                });
+            // Use server action for submission
+            const result = await submitIdea({
+                title,
+                description,
+                budget,
+                deadline,
+                priority,
+                fileUrl: fileUrl
+            });
 
-            if (insertError) throw insertError;
+            if (result.error) {
+                throw new Error(result.error);
+            }
 
             setSuccess(true);
             setTitle('');
@@ -73,8 +74,9 @@ export default function SubmitIdeaPage() {
             setPriority('normal');
             setFile(null);
 
-        } catch (err: unknown) {
-            const errorMessage = err instanceof Error ? err.message : 'Failed to submit inquiry';
+        } catch (err: any) {
+            console.error('Error submitting idea:', err);
+            const errorMessage = err.message || 'Failed to submit inquiry';
             setError(errorMessage);
         } finally {
             setLoading(false);
