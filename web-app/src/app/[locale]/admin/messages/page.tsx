@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Send, User, Loader2, AlertCircle, Search } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,16 @@ export default function AdminMessages() {
     const [loadingMessages, setLoadingMessages] = useState(false);
     const [sending, setSending] = useState(false);
     const [currentAdminId, setCurrentAdminId] = useState<string | null>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     useEffect(() => {
         fetchConversations();
@@ -54,10 +63,14 @@ export default function AdminMessages() {
             }
             setCurrentAdminId(user.id);
 
-            // Use view to avoid PostgREST FK detection issues
+            // Fetch messages with sender and recipient profiles
             const { data, error } = await supabase
-                .from('messages_with_profiles')
-                .select('*')
+                .from('messages')
+                .select(`
+                    *,
+                    sender:profiles!sender_id(full_name, email),
+                    recipient:profiles!recipient_id(full_name, email)
+                `)
                 .or(`sender_id.eq.${user.id},recipient_id.eq.${user.id}`)
                 .order('created_at', { ascending: false });
 
@@ -68,9 +81,16 @@ export default function AdminMessages() {
 
             (data as any[])?.forEach(msg => {
                 const otherId = msg.sender_id === user.id ? msg.recipient_id : msg.sender_id;
-                const otherName = msg.sender_id === user.id
-                    ? (msg.recipient_name || 'Unknown')
-                    : (msg.sender_name || 'Unknown');
+
+                // Determine other user's name/email
+                let otherName = 'Unknown';
+                if (msg.sender_id === user.id) {
+                    // I am sender, other is recipient
+                    otherName = msg.recipient?.full_name || msg.recipient?.email || 'Unknown';
+                } else {
+                    // I am recipient, other is sender
+                    otherName = msg.sender?.full_name || msg.sender?.email || 'Unknown';
+                }
 
                 if (!otherId) return;
 
@@ -108,7 +128,7 @@ export default function AdminMessages() {
         try {
             const supabase = createClient();
             const { data, error } = await supabase
-                .from('messages_with_profiles')
+                .from('messages')
                 .select('*')
                 .or(`and(sender_id.eq.${currentAdminId},recipient_id.eq.${otherUserId}),and(sender_id.eq.${otherUserId},recipient_id.eq.${currentAdminId})`)
                 .order('created_at', { ascending: true });
@@ -244,6 +264,7 @@ export default function AdminMessages() {
                                     );
                                 })
                             )}
+                            <div ref={messagesEndRef} />
                         </div>
 
                         <div className="p-4 bg-card border-t border-border">
