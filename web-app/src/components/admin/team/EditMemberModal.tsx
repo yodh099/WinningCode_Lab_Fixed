@@ -122,6 +122,7 @@ export default function EditMemberModal({ isOpen, onClose, onSuccess, memberId }
                                 <option value="staff">Staff</option>
                                 <option value="admin">Admin</option>
                                 <option value="client">Client</option>
+                                <option value="developer">Developer</option>
                             </select>
                         </div>
 

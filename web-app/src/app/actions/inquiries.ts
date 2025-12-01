@@ -16,8 +16,8 @@ export async function submitInquiry(formData: {
     // Or use standard client if RLS allows anon inserts
     const supabase = createAdminClient();
 
-    const { error } = await supabase
-        .from('inquiries')
+    const { error } = await (supabase
+        .from('inquiries') as any)
         .insert({
             name: formData.name,
             email: formData.email,
@@ -37,6 +37,15 @@ export async function submitInquiry(formData: {
         console.error('Error submitting inquiry:', error);
         return { error: error.message };
     }
+
+    // Notify admins
+    const { notifyAdmins } = await import('./notifications');
+    await notifyAdmins(
+        'New Inquiry Received',
+        `New inquiry from ${formData.name}: ${formData.projectIdea?.substring(0, 50)}...`,
+        'info',
+        '/admin/inquiries' // Assuming this page exists or will exist
+    );
 
     return { success: true };
 }

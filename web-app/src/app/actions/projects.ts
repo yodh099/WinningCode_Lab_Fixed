@@ -42,7 +42,7 @@ export async function updateProject(projectId: string, data: {
         .from('client_projects') as any)
         .update({
             client_id: data.clientId,
-            project_name: data.projectName,
+            title: data.projectName, // Map projectName to title
             description: data.description,
             status: data.status,
             priority: data.priority,
@@ -56,6 +56,18 @@ export async function updateProject(projectId: string, data: {
     if (error) {
         console.error('Error updating project:', error);
         return { error: error.message };
+    }
+
+    // Create notification for assignment
+    if (data.assignedTo) {
+        const { createNotification } = await import('./notifications');
+        await createNotification(
+            data.assignedTo,
+            'New Project Assignment',
+            `You have been assigned to project: ${data.projectName}`,
+            'info',
+            `/admin/projects/${projectId}`
+        );
     }
 
     revalidatePath('/[locale]/admin/projects', 'page');

@@ -38,5 +38,14 @@ export async function submitIdea(formData: {
     // Revalidate relevant paths if needed (e.g. if there's a list of ideas)
     // revalidatePath('/[locale]/client/ideas');
 
+    // Notify admins
+    const { notifyAdmins } = await import('./notifications');
+    await notifyAdmins(
+        'New Project Idea',
+        `New idea from user ${user.email}: ${formData.title}`,
+        'info',
+        '/admin/ideas' // Assuming this page exists
+    );
+
     return { success: true };
 }
