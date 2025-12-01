@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
-import { updateUserRole } from '@/app/actions/users';
+import { updateTeamMember } from '@/app/actions/users';
 
 interface EditMemberModalProps {
     isOpen: boolean;
@@ -64,22 +64,9 @@ export default function EditMemberModal({ isOpen, onClose, onSuccess, memberId }
         setLoading(true);
 
         try {
-            const supabase = createClient();
+            // Use server action for everything
+            const result = await updateTeamMember(memberId, formData);
 
-            // Update profile details (excluding role)
-            const { error } = await (supabase
-                .from('profiles') as any)
-                .update({
-                    full_name: formData.fullName,
-                    phone: formData.phone,
-                    company_name: formData.companyName
-                })
-                .eq('id', memberId);
-
-            if (error) throw error;
-
-            // Update role using server action (handles both DB and Auth metadata)
-            const result = await updateUserRole(memberId, formData.role as any);
             if (result.error) {
                 throw new Error(result.error);
             }

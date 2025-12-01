@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { updateProject } from '@/app/actions/projects';
 
 interface EditProjectModalProps {
     isOpen: boolean;
@@ -94,23 +95,15 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
         setLoading(true);
 
         try {
-            const supabase = createClient();
+            // Use server action for secure update
+            const result = await updateProject(projectId, {
+                ...formData,
+                budget: formData.budget ? parseFloat(formData.budget) : null
+            });
 
-            const { error } = await (supabase
-                .from('client_projects') as any)
-                .update({
-                    client_id: formData.clientId,
-                    project_name: formData.projectName,
-                    description: formData.description,
-                    status: formData.status,
-                    priority: formData.priority,
-                    budget: formData.budget ? parseFloat(formData.budget) : null,
-                    currency: formData.currency,
-                    deadline: formData.deadline || null
-                })
-                .eq('id', projectId);
-
-            if (error) throw error;
+            if (result.error) {
+                throw new Error(result.error);
+            }
 
             onSuccess();
             onClose();
