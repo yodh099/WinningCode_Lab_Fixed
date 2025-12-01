@@ -184,7 +184,7 @@ export interface Database {
                 Row: {
                     id: string
                     client_id: string
-                    project_name: string
+                    title: string
                     description: string | null
                     status: 'pending' | 'active' | 'on_hold' | 'completed' | 'cancelled'
                     priority: 'low' | 'normal' | 'high' | 'urgent'
@@ -203,7 +203,7 @@ export interface Database {
                 Insert: {
                     id?: string
                     client_id: string
-                    project_name: string
+                    title: string
                     description?: string | null
                     status?: 'pending' | 'active' | 'on_hold' | 'completed' | 'cancelled'
                     priority?: 'low' | 'normal' | 'high' | 'urgent'
@@ -222,7 +222,7 @@ export interface Database {
                 Update: {
                     id?: string
                     client_id?: string
-                    project_name?: string
+                    title?: string
                     description?: string | null
                     status?: 'pending' | 'active' | 'on_hold' | 'completed' | 'cancelled'
                     priority?: 'low' | 'normal' | 'high' | 'urgent'

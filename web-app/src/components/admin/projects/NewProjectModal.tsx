@@ -68,7 +68,7 @@ export default function NewProjectModal({ isOpen, onClose, onSuccess }: NewProje
                 .from('client_projects')
                 .insert({
                     client_id: formData.clientId,
-                    project_name: formData.projectName,
+                    title: formData.projectName,
                     description: formData.description,
                     status: formData.status as any,
                     priority: formData.priority as any,
