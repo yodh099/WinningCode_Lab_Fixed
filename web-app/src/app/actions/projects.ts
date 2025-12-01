@@ -13,6 +13,7 @@ export async function updateProject(projectId: string, data: {
     budget: number | null;
     currency: string;
     deadline: string | null;
+    assignedTo: string | null;
 }) {
     const supabase = await createClient();
 
@@ -47,7 +48,8 @@ export async function updateProject(projectId: string, data: {
             priority: data.priority,
             budget: data.budget,
             currency: data.currency,
-            deadline: data.deadline
+            deadline: data.deadline,
+            assigned_to: data.assignedTo
         })
         .eq('id', projectId);
 

@@ -1,13 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
 import { useRouter } from 'next/navigation';
 import { Loader2, Upload, Send } from 'lucide-react';
 import { submitIdea } from '@/app/actions/ideas';
-
+import { submitInquiry } from '@/app/actions/inquiries';
 
 export default function SubmitIdeaPage() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [budget, setBudget] = useState('');
@@ -17,6 +19,7 @@ export default function SubmitIdeaPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
+    const [user, setUser] = useState<any>(null);
     const router = useRouter();
 
     const supabase = createBrowserClient(
@@ -24,43 +27,62 @@ export default function SubmitIdeaPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
 
+    useEffect(() => {
+        checkUser();
+    }, []);
+
+    async function checkUser() {
+        const { data: { user } } = await supabase.auth.getUser();
+        setUser(user);
+        if (user) {
+            setEmail(user.email || '');
+        }
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
 
         try {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) {
-                router.push('/login?next=/submit-idea');
-                return;
-            }
-
             let fileUrl = null;
 
             if (file) {
                 const fileExt = file.name.split('.').pop();
                 const fileName = `${Math.random()}.${fileExt}`;
-                const filePath = `${user.id}/${fileName}`;
+                const filePath = user ? `${user.id}/${fileName}` : `public/${fileName}`;
 
                 const { error: uploadError } = await supabase.storage
                     .from('project-files')
                     .upload(filePath, file);
 
                 if (uploadError) throw uploadError;
-
                 fileUrl = filePath;
             }
 
-            // Use server action for submission
-            const result = await submitIdea({
-                title,
-                description,
-                budget,
-                deadline,
-                priority,
-                fileUrl: fileUrl
-            });
+            let result;
+            if (user) {
+                // Authenticated: Submit to ideas table
+                result = await submitIdea({
+                    title,
+                    description,
+                    budget,
+                    deadline,
+                    priority,
+                    fileUrl: fileUrl
+                });
+            } else {
+                // Unauthenticated: Submit to inquiries table
+                result = await submitInquiry({
+                    name: name || 'Guest',
+                    email,
+                    projectIdea: description,
+                    budget,
+                    deadline,
+                    priority,
+                    fileUrl: fileUrl
+                });
+            }
 
             if (result.error) {
                 throw new Error(result.error);
@@ -73,6 +95,10 @@ export default function SubmitIdeaPage() {
             setDeadline('');
             setPriority('normal');
             setFile(null);
+            if (!user) {
+                setName('');
+                setEmail('');
+            }
 
         } catch (err: any) {
             console.error('Error submitting idea:', err);
@@ -90,13 +116,13 @@ export default function SubmitIdeaPage() {
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Send className="h-8 w-8 text-green-600" />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Idea Submitted!</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Request Submitted!</h2>
                     <p className="text-gray-600 mb-6">Thank you for sharing your vision. Our team will review it and get back to you shortly.</p>
                     <button
                         onClick={() => setSuccess(false)}
                         className="w-full py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors"
                     >
-                        Submit Another Idea
+                        Submit Another Request
                     </button>
                 </div>
             </div>
@@ -108,31 +134,67 @@ export default function SubmitIdeaPage() {
             <div className="container mx-auto px-4">
                 <div className="max-w-3xl mx-auto">
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl font-bold font-heading mb-4">Submit Your Idea</h1>
+                        <h1 className="text-4xl font-bold font-heading mb-4">Just Ask</h1>
                         <p className="text-xl text-muted-foreground">Tell us about your project. We&apos;ll help you bring it to life.</p>
                     </div>
 
                     <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-2xl">
                         <form onSubmit={handleSubmit} className="space-y-8">
-                            <div className="space-y-4">
-                                <div>
-                                    <label htmlFor="title" className="block text-sm font-medium text-foreground mb-1">
-                                        Project Name *
-                                    </label>
-                                    <input
-                                        id="title"
-                                        type="text"
-                                        required
-                                        value={title}
-                                        onChange={(e) => setTitle(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
-                                        placeholder="e.g., AI-Powered Analytics Dashboard"
-                                    />
+
+                            {!user && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">
+                                            Your Name *
+                                        </label>
+                                        <input
+                                            id="name"
+                                            type="text"
+                                            required
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            placeholder="John Doe"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
+                                            Email Address *
+                                        </label>
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            required
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            placeholder="john@example.com"
+                                        />
+                                    </div>
                                 </div>
+                            )}
+
+                            <div className="space-y-4">
+                                {user && (
+                                    <div>
+                                        <label htmlFor="title" className="block text-sm font-medium text-foreground mb-1">
+                                            Project Name *
+                                        </label>
+                                        <input
+                                            id="title"
+                                            type="text"
+                                            required
+                                            value={title}
+                                            onChange={(e) => setTitle(e.target.value)}
+                                            className="w-full px-4 py-3 rounded-lg bg-background border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            placeholder="e.g., AI-Powered Analytics Dashboard"
+                                        />
+                                    </div>
+                                )}
 
                                 <div>
                                     <label htmlFor="description" className="block text-sm font-medium text-foreground mb-1">
-                                        Description *
+                                        {user ? 'Description *' : 'Project Idea *'}
                                     </label>
                                     <textarea
                                         id="description"
@@ -239,7 +301,7 @@ export default function SubmitIdeaPage() {
                                     <Loader2 className="h-5 w-5 animate-spin" />
                                 ) : (
                                     <>
-                                        <span>Submit Idea</span>
+                                        <span>Submit Request</span>
                                         <Send className="h-5 w-5" />
                                     </>
                                 )}

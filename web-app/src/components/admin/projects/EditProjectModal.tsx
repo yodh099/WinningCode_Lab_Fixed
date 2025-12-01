@@ -18,10 +18,18 @@ interface ClientOption {
     email?: string;
 }
 
+interface StaffOption {
+    id: string;
+    full_name: string | null;
+    email?: string;
+    role: string;
+}
+
 export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId }: EditProjectModalProps) {
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
     const [clients, setClients] = useState<ClientOption[]>([]);
+    const [staff, setStaff] = useState<StaffOption[]>([]);
 
     const [formData, setFormData] = useState({
         clientId: '',
@@ -31,13 +39,15 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
         priority: 'normal',
         budget: '',
         currency: 'USD',
-        deadline: ''
+        deadline: '',
+        assignedTo: ''
     });
 
     useEffect(() => {
         if (isOpen && projectId) {
             fetchProjectDetails();
             fetchClients();
+            fetchStaff();
         }
     }, [isOpen, projectId]);
 
@@ -54,6 +64,22 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
             setClients(data || []);
         } catch (error) {
             console.error('Error fetching clients:', error);
+        }
+    }
+
+    async function fetchStaff() {
+        try {
+            const supabase = createClient();
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('id, full_name, email, role')
+                .in('role', ['staff', 'admin'])
+                .order('full_name');
+
+            if (error) throw error;
+            setStaff(data || []);
+        } catch (error) {
+            console.error('Error fetching staff:', error);
         }
     }
 
@@ -78,7 +104,8 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
                     priority: data.priority || 'normal',
                     budget: data.budget ? data.budget.toString() : '',
                     currency: data.currency || 'USD',
-                    deadline: data.deadline ? data.deadline.split('T')[0] : ''
+                    deadline: data.deadline ? data.deadline.split('T')[0] : '',
+                    assignedTo: data.assigned_to || ''
                 });
             }
         } catch (error) {
@@ -98,7 +125,8 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
             // Use server action for secure update
             const result = await updateProject(projectId, {
                 ...formData,
-                budget: formData.budget ? parseFloat(formData.budget) : null
+                budget: formData.budget ? parseFloat(formData.budget) : null,
+                assignedTo: formData.assignedTo || null
             });
 
             if (result.error) {
@@ -147,7 +175,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
                                 />
                             </div>
 
-                            <div className="col-span-2">
+                            <div className="col-span-2 md:col-span-1">
                                 <label className="block text-sm font-medium text-foreground mb-1">Client</label>
                                 <select
                                     required
@@ -159,6 +187,22 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
                                     {clients.map(client => (
                                         <option key={client.id} value={client.id}>
                                             {client.full_name || 'Unnamed Client'} ({client.email || 'No Email'})
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="col-span-2 md:col-span-1">
+                                <label className="block text-sm font-medium text-foreground mb-1">Assign to Staff</label>
+                                <select
+                                    value={formData.assignedTo}
+                                    onChange={e => setFormData({ ...formData, assignedTo: e.target.value })}
+                                    className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                >
+                                    <option value="">Unassigned</option>
+                                    {staff.map(member => (
+                                        <option key={member.id} value={member.id}>
+                                            {member.full_name || 'Unnamed Staff'} ({member.role})
                                         </option>
                                     ))}
                                 </select>

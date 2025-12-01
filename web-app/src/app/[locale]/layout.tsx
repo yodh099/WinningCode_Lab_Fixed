@@ -3,7 +3,7 @@ import { Space_Grotesk, Inter_Tight } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
+import { FooterWrapper } from '@/components/FooterWrapper';
 import { routing } from '@/i18n/routing';
 import "../globals.css";
 
@@ -77,7 +77,7 @@ export default async function RootLayout({
                 <NextIntlClientProvider messages={messages}>
                     <Navbar locale={locale} />
                     <main className="pt-20">{children}</main>
-                    <Footer />
+                    <FooterWrapper />
                 </NextIntlClientProvider>
             </body>
         </html>

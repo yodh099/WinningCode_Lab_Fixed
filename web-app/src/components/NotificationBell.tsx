@@ -1,124 +1,88 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
-import { createBrowserClient } from '@supabase/ssr';
+import { useState, useEffect, useRef } from 'react';
 import { Bell } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+import { fetchNotifications, markNotificationAsRead } from '@/app/actions/notifications';
+import { createBrowserClient } from '@supabase/ssr';
 
 interface Notification {
     id: string;
     title: string;
     message: string;
-    link: string;
+    type: string;
     is_read: boolean;
     created_at: string;
+    link?: string;
 }
 
-/**
- * NotificationBell Component
- * 
- * Displays a bell icon in the navigation bar that shows unread notifications count
- * and allows users to view and mark notifications as read.
- * 
- * Features:
- * - Real-time unread count badge
- * - Dropdown menu with recent notifications (limit 10)
- * - Click notification to mark as read
- * - Polls for new notifications every 60 seconds
- * - Closes dropdown when clicking outside
- * 
- * @component
- * @example
- * ```tsx
- * <NotificationBell />
- * ```
- */
 export default function NotificationBell() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
 
-    if (!supabaseUrl || !supabaseAnonKey) {
-        return null;
-    }
-
-    const supabase = createBrowserClient(supabaseUrl, supabaseAnonKey);
-
-    /**
-     * Fetches notifications from Supabase for the current user
-     * 
-     * Retrieves the 10 most recent notifications ordered by creation date.
-     * Updates the notifications state and unread count.
-     * 
-     * @async
-     * @function fetchNotifications
-     * @returns {Promise<void>}
-     */
     useEffect(() => {
-        const fetchNotifications = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) return;
+        loadNotifications();
 
-            const { data } = await supabase
-                .from('notifications')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(10);
+        // Subscribe to realtime changes
+        const channel = supabase
+            .channel('notifications')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'notifications',
+                    filter: `user_id=eq.${(supabase.auth.getUser() as any).id}`
+                },
+                (payload) => {
+                    setNotifications(prev => [payload.new as Notification, ...prev]);
+                    setUnreadCount(prev => prev + 1);
+                }
+            )
+            .subscribe();
 
-            if (data) {
-                setNotifications(data);
-                setUnreadCount(data.filter(n => !n.is_read).length);
-            }
+        return () => {
+            supabase.removeChannel(channel);
         };
+    }, []);
 
-        fetchNotifications();
-
-        // Optional: Set up real-time subscription here if needed
-        const interval = setInterval(fetchNotifications, 60000); // Poll every minute
-        return () => clearInterval(interval);
-    }, [supabase]);
-
-    // Close dropdown when clicking outside
     useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
+        const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsOpen(false);
             }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    async function loadNotifications() {
+        const { notifications } = await fetchNotifications();
+        if (notifications) {
+            setNotifications(notifications);
+            setUnreadCount(notifications.filter(n => !n.is_read).length);
         }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [dropdownRef]);
+    }
 
-    /**
-     * Marks a notification as read in the database
-     * 
-     * Uses optimistic UI update to immediately reflect the change before
-     * the database operation completes.
-     * 
-     * @async
-     * @function markAsRead
-     * @param {string} id - The notification ID to mark as read
-     * @returns {Promise<void>}
-     */
-    const markAsRead = async (id: string) => {
-        await supabase
-            .from('notifications')
-            .update({ is_read: true })
-            .eq('id', id);
-
-        // Optimistic update
-        setNotifications(notifications.map(n => n.id === id ? { ...n, is_read: true } : n));
+    async function handleMarkAsRead(id: string) {
+        await markNotificationAsRead(id);
+        setNotifications(prev => prev.map(n =>
+            n.id === id ? { ...n, is_read: true } : n
+        ));
         setUnreadCount(prev => Math.max(0, prev - 1));
-    };
+    }
 
     const handleNotificationClick = async (notification: Notification) => {
         if (!notification.is_read) {
-            await markAsRead(notification.id);
+            await handleMarkAsRead(notification.id);
         }
         setIsOpen(false);
     };
@@ -137,46 +101,47 @@ export default function NotificationBell() {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-80 rounded-md border bg-popover shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                <div className="absolute right-0 mt-2 w-80 rounded-md border bg-popover shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 animate-in fade-in zoom-in duration-200">
                     <div className="p-4 border-b">
                         <h3 className="text-sm font-semibold">Notifications</h3>
                     </div>
+
                     <div className="max-h-96 overflow-y-auto">
                         {notifications.length === 0 ? (
-                            <div className="p-4 text-center text-sm text-muted-foreground">
-                                No notifications
+                            <div className="p-8 text-center text-sm text-muted-foreground">
+                                No notifications yet
                             </div>
                         ) : (
                             <div className="divide-y">
-                                {notifications.map((notification) => (
+                                {notifications.map(notification => (
                                     <div
                                         key={notification.id}
                                         className={`p-4 hover:bg-muted/50 transition-colors ${!notification.is_read ? 'bg-muted/20' : ''}`}
                                     >
-                                        <div onClick={() => handleNotificationClick(notification)}>
+                                        <div onClick={() => handleNotificationClick(notification)} className="cursor-pointer">
                                             {notification.link ? (
                                                 <Link href={notification.link} className="block">
-                                                    <p className={`text-sm font-medium ${!notification.is_read ? 'text-foreground' : 'text-muted-foreground'}`}>
+                                                    <h4 className={`text-sm font-medium ${!notification.is_read ? 'text-foreground' : 'text-muted-foreground'}`}>
                                                         {notification.title}
-                                                    </p>
+                                                    </h4>
                                                     <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                                                         {notification.message}
                                                     </p>
-                                                    <p className="text-xs text-muted-foreground mt-2">
+                                                    <span className="text-[10px] text-muted-foreground mt-2 block">
                                                         {new Date(notification.created_at).toLocaleDateString()}
-                                                    </p>
+                                                    </span>
                                                 </Link>
                                             ) : (
                                                 <div>
-                                                    <p className={`text-sm font-medium ${!notification.is_read ? 'text-foreground' : 'text-muted-foreground'}`}>
+                                                    <h4 className={`text-sm font-medium ${!notification.is_read ? 'text-foreground' : 'text-muted-foreground'}`}>
                                                         {notification.title}
-                                                    </p>
+                                                    </h4>
                                                     <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                                                         {notification.message}
                                                     </p>
-                                                    <p className="text-xs text-muted-foreground mt-2">
+                                                    <span className="text-[10px] text-muted-foreground mt-2 block">
                                                         {new Date(notification.created_at).toLocaleDateString()}
-                                                    </p>
+                                                    </span>
                                                 </div>
                                             )}
                                         </div>
