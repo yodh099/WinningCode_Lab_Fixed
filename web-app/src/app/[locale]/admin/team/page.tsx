@@ -154,7 +154,7 @@ export default function AdminTeam() {
                     </p>
                 </div>
             ) : (
-                <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                <div className="bg-card rounded-xl shadow-sm border border-border">
                     <table className="min-w-full divide-y divide-border">
                         <thead className="bg-muted/50">
                             <tr>
@@ -226,6 +226,7 @@ export default function AdminTeam() {
                     </table>
                 </div>
             )}
+            <div className="pb-32"></div>
 
 
             <AddMemberModal

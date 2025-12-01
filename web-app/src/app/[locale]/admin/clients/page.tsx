@@ -68,6 +68,7 @@ export default function AdminClients() {
                     return {
                         ...profile,
                         email: profile.email || 'No email',
+                        full_name: profile.full_name || (profile.email ? profile.email.split('@')[0] : 'Unknown'),
                         project_count: count || 0
                     };
                 })
@@ -111,7 +112,7 @@ export default function AdminClients() {
                 </button>
             </div>
 
-            <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+            <div className="bg-card rounded-xl shadow-sm border border-border">
                 {/* Search and Filter */}
                 <div className="p-4 border-b border-border flex justify-between items-center bg-muted/30">
                     <div className="relative max-w-md w-full">
@@ -219,6 +220,7 @@ export default function AdminClients() {
                     </table>
                 )}
             </div>
+            <div className="pb-32"></div>
 
 
             <AddClientModal

@@ -16,42 +16,34 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
         fullName: '',
         email: '',
         companyName: '',
-        phone: ''
+        phone: '',
+        password: ''
     });
 
     if (!isOpen) return null;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (formData.password.length < 6) {
+            alert('Password must be at least 6 characters long');
+            return;
+        }
+
         setLoading(true);
 
         try {
-            // In a real app, this would call a Server Action to create the auth user
-            // For now, we'll simulate it or just show an alert that backend is needed
-            // But since the user wants "real functions", we can try to insert into profiles if we had an ID.
-            // Since we can't create a user client-side without logging out, we will show a message.
-
-            // However, if we assume the user exists or we just want to create a profile record (if DB allows):
-            // The DB requires 'id' which is usually auth.uid().
-
-            // Let's check if we can use an Edge Function? 
-            // For this task, I will implement the UI and a "Feature not available" alert 
-            // explaining that it requires a backend admin environment.
-            // OR I can try to use a "invite" mechanism if Supabase is configured.
-
             const supabase = createClient();
-
-            // Check if user already exists in profiles (by email lookup if possible? No, email is in auth)
 
             // Call Edge Function to create user
             const { data, error } = await supabase.functions.invoke('create-user', {
                 body: {
                     email: formData.email,
                     password: formData.password,
-                    full_name: formData.full_name,
+                    full_name: formData.fullName,
                     role: 'client',
                     phone: formData.phone,
-                    company_name: formData.company_name
+                    company_name: formData.companyName
                 }
             });
 
@@ -59,7 +51,7 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
 
             onSuccess();
             onClose();
-            setFormData({ fullName: '', email: '', companyName: '', phone: '' });
+            setFormData({ fullName: '', email: '', companyName: '', phone: '', password: '' });
 
         } catch (error) {
             console.error('Error creating client:', error);
@@ -124,6 +116,20 @@ export default function AddClientModal({ isOpen, onClose, onSuccess }: AddClient
                             className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
                             placeholder="+1 (555) 000-0000"
                         />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-foreground mb-1">Password</label>
+                        <input
+                            type="password"
+                            required
+                            value={formData.password}
+                            onChange={e => setFormData({ ...formData, password: e.target.value })}
+                            className="w-full px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            placeholder="Minimum 6 characters"
+                            minLength={6}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">Set a password for the client to log in immediately</p>
                     </div>
 
                     <div className="flex justify-end space-x-3 mt-6">

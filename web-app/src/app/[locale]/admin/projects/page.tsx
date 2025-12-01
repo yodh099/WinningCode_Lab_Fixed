@@ -198,7 +198,7 @@ export default function AdminProjects() {
             ) : (
                 <div className="grid grid-cols-1 gap-6">
                     {projects.map((project) => (
-                        <div key={project.id} className="bg-card rounded-xl shadow-sm border border-border overflow-hidden hover:shadow-md transition-shadow">
+                        <div key={project.id} className="bg-card rounded-xl shadow-sm border border-border hover:shadow-md transition-shadow">
                             <div className="p-6">
                                 <div className="flex justify-between items-start">
                                     <div className="flex items-start space-x-4">

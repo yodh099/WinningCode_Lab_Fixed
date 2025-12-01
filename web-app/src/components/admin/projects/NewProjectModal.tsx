@@ -44,7 +44,7 @@ export default function NewProjectModal({ isOpen, onClose, onSuccess }: NewProje
             const supabase = createClient();
             const { data, error } = await supabase
                 .from('profiles')
-                .select('id, full_name')
+                .select('id, full_name, email')
                 .eq('role', 'client')
                 .order('full_name');
 
@@ -139,7 +139,7 @@ export default function NewProjectModal({ isOpen, onClose, onSuccess }: NewProje
                                 <option value="">Select a client</option>
                                 {clients.map(client => (
                                     <option key={client.id} value={client.id}>
-                                        {client.full_name || 'Unnamed Client'}
+                                        {client.full_name || 'Unnamed Client'} ({client.email || 'No Email'})
                                     </option>
                                 ))}
                             </select>

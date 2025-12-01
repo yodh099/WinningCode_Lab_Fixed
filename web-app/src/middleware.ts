@@ -37,6 +37,20 @@ export default async function middleware(request: NextRequest) {
       // This will refresh session if expired - required for Server Components
       const { data } = await supabase.auth.getUser();
       user = data.user;
+
+      // Fetch latest role from profiles table to ensure immediate updates
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single();
+
+        if (profile) {
+          // Override metadata role with DB role
+          user.user_metadata.role = profile.role;
+        }
+      }
     }
   } catch (error) {
     // If Supabase fails, continue without auth (allow public access)

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LayoutDashboard, Folder, MessageSquare, FileText, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Folder, MessageSquare, FileText, LogOut, Menu, X, Lightbulb } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, useParams } from 'next/navigation';
 import { useState } from 'react';
@@ -21,6 +21,7 @@ export default function ClientLayout({
         { name: 'Projects', href: `/${locale}/client/projects`, icon: Folder },
         { name: 'Messages', href: `/${locale}/client/messages`, icon: MessageSquare },
         { name: 'Files', href: `/${locale}/client/files`, icon: FileText },
+        { name: 'Just Ask', href: `/${locale}/submit-idea`, icon: Lightbulb },
     ];
 
 

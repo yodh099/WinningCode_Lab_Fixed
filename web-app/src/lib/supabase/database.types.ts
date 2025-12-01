@@ -309,6 +309,70 @@ export interface Database {
                     created_at?: string
                 }
             }
+            invoices: {
+                Row: {
+                    id: string
+                    project_id: string
+                    status: string
+                    total_amount: number
+                    currency: string
+                    issue_date: string
+                    due_date: string | null
+                    notes: string | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    project_id: string
+                    status?: string
+                    total_amount?: number
+                    currency?: string
+                    issue_date?: string
+                    due_date?: string | null
+                    notes?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    project_id?: string
+                    status?: string
+                    total_amount?: number
+                    currency?: string
+                    issue_date?: string
+                    due_date?: string | null
+                    notes?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+            }
+            invoice_items: {
+                Row: {
+                    id: string
+                    invoice_id: string
+                    description: string
+                    quantity: number
+                    unit_price: number
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    invoice_id: string
+                    description: string
+                    quantity?: number
+                    unit_price?: number
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    invoice_id?: string
+                    description?: string
+                    quantity?: number
+                    unit_price?: number
+                    created_at?: string
+                }
+            }
             blog_posts: {
                 Row: {
                     id: string
