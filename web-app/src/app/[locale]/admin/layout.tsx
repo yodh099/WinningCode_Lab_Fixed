@@ -59,7 +59,6 @@ export default function AdminLayout({
                         <span className="font-bold">Admin Console</span>
                     </div>
                     <div className="flex items-center space-x-4">
-                        <NotificationBell />
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className="p-2 rounded-md hover:bg-indigo-800"
@@ -94,12 +93,6 @@ export default function AdminLayout({
                         >
                             <X className="h-5 w-5" />
                         </button>
-                    </div>
-
-                    {/* Desktop Notification Bell (Added to top of sidebar for visibility) */}
-                    <div className="hidden md:flex items-center justify-between px-6 py-4 border-b border-indigo-800 bg-indigo-950/30">
-                        <span className="text-sm font-medium text-indigo-200">Notifications</span>
-                        <NotificationBell />
                     </div>
 
                     <nav className="flex-1 p-4 space-y-1">
