@@ -107,23 +107,28 @@ export async function createProject(data: {
     // 2. Create project using Admin Client
     const adminSupabase = createAdminClient();
 
+    const projectData = {
+        client_id: data.clientId,
+        title: data.projectName, // Database requires 'title' column
+        project_name: data.projectName,
+        description: data.description,
+        status: data.status,
+        priority: data.priority,
+        budget: data.budget,
+        currency: data.currency,
+        deadline: data.deadline,
+        progress: 0
+    };
+
+    console.log('Creating project with data:', projectData);
+
     const { error } = await (adminSupabase
         .from('client_projects') as any)
-        .insert({
-            client_id: data.clientId,
-            title: data.projectName, // Database requires 'title' column
-            project_name: data.projectName,
-            description: data.description,
-            status: data.status,
-            priority: data.priority,
-            budget: data.budget,
-            currency: data.currency,
-            deadline: data.deadline,
-            progress: 0
-        });
+        .insert(projectData);
 
     if (error) {
         console.error('Error creating project:', error);
+        console.error('Project data that failed:', projectData);
         return { error: error.message };
     }
 
