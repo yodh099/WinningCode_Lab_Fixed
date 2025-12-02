@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter, useParams } from 'next/navigation';
 import { NotificationProvider } from '@/context/NotificationContext';
 import NotificationBell from '@/components/admin/NotificationBell';
+import NotificationBadge from '@/components/admin/NotificationBadge';
 
 export default function AdminLayout({
     children,
