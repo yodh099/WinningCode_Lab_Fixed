@@ -111,6 +111,7 @@ export async function createProject(data: {
         .from('client_projects') as any)
         .insert({
             client_id: data.clientId,
+            title: data.projectName, // Database requires 'title' column
             project_name: data.projectName,
             description: data.description,
             status: data.status,
