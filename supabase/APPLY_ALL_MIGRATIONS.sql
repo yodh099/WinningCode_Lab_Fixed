@@ -88,6 +88,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Create trigger
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
@@ -150,6 +151,12 @@ CREATE TABLE IF NOT EXISTS public.projects (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
 
+-- Ensure columns exist if table already existed
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS published BOOLEAN DEFAULT false;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS display_order INTEGER DEFAULT 0;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS category VARCHAR(50);
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
+
 -- ========================================
 -- TABLE: client_projects
 -- Active client projects (private)
@@ -173,6 +180,21 @@ CREATE TABLE IF NOT EXISTS public.client_projects (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
+
+-- Ensure columns exist for client_projects
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS project_name TEXT;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS description TEXT;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'active';
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS priority VARCHAR(10) DEFAULT 'normal';
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS budget DECIMAL(12, 2);
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS currency VARCHAR(3) DEFAULT 'USD';
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS progress INTEGER DEFAULT 0;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS start_date DATE;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS end_date DATE;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS deadline DATE;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS milestones JSONB DEFAULT '[]'::jsonb;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS created_by UUID;
+ALTER TABLE public.client_projects ADD COLUMN IF NOT EXISTS assigned_to UUID;
 
 -- ========================================
 -- TABLE: project_files
@@ -355,6 +377,13 @@ CREATE TABLE IF NOT EXISTS public.blog_posts (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
+
+-- Ensure columns exist for blog_posts
+ALTER TABLE public.blog_posts ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'draft';
+ALTER TABLE public.blog_posts ADD COLUMN IF NOT EXISTS published BOOLEAN DEFAULT false;
+ALTER TABLE public.blog_posts ADD COLUMN IF NOT EXISTS published_at TIMESTAMP WITH TIME ZONE;
+ALTER TABLE public.blog_posts ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
+ALTER TABLE public.blog_posts ADD COLUMN IF NOT EXISTS category_id UUID;
 
 -- ========================================
 -- TABLE: blog_translations (Alternative approach)
@@ -667,6 +696,14 @@ CREATE TABLE IF NOT EXISTS public.inquiries (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     responded_at TIMESTAMP WITH TIME ZONE
 );
+
+-- Ensure columns exist for inquiries
+ALTER TABLE public.inquiries ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'new';
+ALTER TABLE public.inquiries ADD COLUMN IF NOT EXISTS priority VARCHAR(10) DEFAULT 'normal';
+ALTER TABLE public.inquiries ADD COLUMN IF NOT EXISTS assigned_to UUID;
+ALTER TABLE public.inquiries ADD COLUMN IF NOT EXISTS project_type VARCHAR(50);
+ALTER TABLE public.inquiries ADD COLUMN IF NOT EXISTS budget VARCHAR(50);
+ALTER TABLE public.inquiries ADD COLUMN IF NOT EXISTS timeline VARCHAR(50);
 
 -- ========================================
 -- TABLE: messages
@@ -1569,7 +1606,8 @@ CREATE POLICY "Users can view own client documents"
     );
 
 -- Users can upload to their own folder
-INSERT INTO storage.objects FOR INSERT
+CREATE POLICY "Users can upload own client documents"
+    ON storage.objects FOR INSERT
     WITH CHECK (
         bucket_id = 'client_documents' AND
         (
@@ -1811,7 +1849,7 @@ BEGIN
     -- Only notify for new inquiries
     IF NEW.status = 'new' THEN
         -- Loop through all admins and create notification
-        FOR admin_record IN SELECT id FROM public.profiles WHERE role = 'admin' LOOP
+        FOR admin_record IN (SELECT id FROM public.profiles WHERE role = 'admin') LOOP
             INSERT INTO public.notifications (user_id, notification_type, title, message, action_url, severity)
             VALUES (
                 admin_record.id,

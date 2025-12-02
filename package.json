@@ -23,7 +23,8 @@
   "author": "Winning Code Lab",
   "license": "MIT",
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.0"
+    "@supabase/supabase-js": "^2.39.0",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "serve": "^14.2.5"
