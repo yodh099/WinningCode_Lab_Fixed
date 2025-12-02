@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { createProject } from '@/app/actions/projects';
 
 interface NewProjectModalProps {
     isOpen: boolean;
@@ -62,23 +63,20 @@ export default function NewProjectModal({ isOpen, onClose, onSuccess }: NewProje
         setLoading(true);
 
         try {
-            const supabase = createClient();
+            const result = await createProject({
+                clientId: formData.clientId,
+                projectName: formData.projectName,
+                description: formData.description,
+                status: formData.status,
+                priority: formData.priority,
+                budget: formData.budget ? parseFloat(formData.budget) : null,
+                currency: formData.currency,
+                deadline: formData.deadline || null
+            });
 
-            const { error } = await supabase
-                .from('client_projects')
-                .insert({
-                    client_id: formData.clientId,
-                    project_name: formData.projectName,
-                    description: formData.description,
-                    status: formData.status as any,
-                    priority: formData.priority as any,
-                    budget: formData.budget ? parseFloat(formData.budget) : null,
-                    currency: formData.currency,
-                    deadline: formData.deadline || null,
-                    progress: 0
-                });
-
-            if (error) throw error;
+            if (result.error) {
+                throw new Error(result.error);
+            }
 
             onSuccess();
             onClose();
@@ -93,9 +91,9 @@ export default function NewProjectModal({ isOpen, onClose, onSuccess }: NewProje
                 deadline: ''
             });
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error creating project:', error);
-            alert('Failed to create project');
+            alert(`Failed to create project: ${error.message}`);
         } finally {
             setLoading(false);
         }

@@ -138,7 +138,7 @@ export default function EditProjectModal({ isOpen, onClose, onSuccess, projectId
 
         } catch (error) {
             console.error('Error updating project:', error);
-            alert('Failed to update project');
+            alert(`Failed to update project: ${error instanceof Error ? error.message : 'Unknown error'}`);
         } finally {
             setLoading(false);
         }
