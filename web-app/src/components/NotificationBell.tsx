@@ -68,7 +68,7 @@ export default function NotificationBell() {
         const { notifications } = await fetchNotifications();
         if (notifications) {
             setNotifications(notifications);
-            setUnreadCount(notifications.filter(n => !n.is_read).length);
+            setUnreadCount(notifications.filter((n: Notification) => !n.is_read).length);
         }
     }
 
@@ -101,7 +101,7 @@ export default function NotificationBell() {
             </button>
 
             {isOpen && (
-                <div className="absolute right-0 mt-2 w-80 rounded-md border bg-popover/80 backdrop-blur-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 animate-in fade-in zoom-in duration-200">
+                <div className="absolute right-0 mt-2 w-80 rounded-md border bg-popover shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 animate-in fade-in zoom-in duration-200">
                     <div className="p-4 border-b">
                         <h3 className="text-sm font-semibold">Notifications</h3>
                     </div>

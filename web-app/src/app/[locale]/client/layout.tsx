@@ -5,6 +5,7 @@ import { LayoutDashboard, Folder, MessageSquare, FileText, LogOut, Menu, X, Ligh
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, useParams } from 'next/navigation';
 import { useState } from 'react';
+import PresenceBroadcaster from '@/components/PresenceBroadcaster';
 
 export default function ClientLayout({
     children,
@@ -33,6 +34,7 @@ export default function ClientLayout({
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
+            <PresenceBroadcaster />
             {/* Mobile Header */}
             <div className="md:hidden bg-white border-b border-gray-200 sticky top-0 z-40">
                 <div className="flex items-center justify-between p-4">
