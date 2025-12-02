@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, User, Loader2, AlertCircle, Search } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+
 import { useRouter } from 'next/navigation';
+import { usePresence } from '@/hooks/usePresence';
 
 interface Message {
     id: string;
@@ -34,6 +36,7 @@ export default function AdminMessages() {
     const [currentAdminId, setCurrentAdminId] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const onlineUsers = usePresence(currentAdminId);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -232,9 +235,9 @@ export default function AdminMessages() {
                                     <h3 className="font-bold text-foreground">
                                         {conversations.find(c => c.userId === selectedUserId)?.userName || 'Unknown'}
                                     </h3>
-                                    <span className="text-xs text-green-500 flex items-center gap-1">
-                                        <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                                        Online
+                                    <span className={`text-xs flex items-center gap-1 ${onlineUsers.has(selectedUserId) ? 'text-green-500' : 'text-muted-foreground'}`}>
+                                        <span className={`h-2 w-2 rounded-full ${onlineUsers.has(selectedUserId) ? 'bg-green-500' : 'bg-gray-400'}`}></span>
+                                        {onlineUsers.has(selectedUserId) ? 'Online' : 'Offline'}
                                     </span>
                                 </div>
                             </div>

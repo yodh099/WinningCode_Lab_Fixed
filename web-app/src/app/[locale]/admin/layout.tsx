@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { LayoutDashboard, Users, Briefcase, LogOut, CreditCard, ShieldCheck, Folder, Lightbulb, Menu, X, Mail } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, useParams } from 'next/navigation';
+import NotificationBadge from '@/components/admin/NotificationBadge';
 
 export default function AdminLayout({
     children,
@@ -27,6 +28,18 @@ export default function AdminLayout({
 
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [userId, setUserId] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                setUserId(user.id);
+            }
+        };
+        fetchUser();
+    }, []);
 
     const handleSignOut = async () => {
         const supabase = createClient();
@@ -86,7 +99,9 @@ export default function AdminLayout({
                             className="flex items-center px-4 py-3 text-sm font-medium text-indigo-100 rounded-lg hover:bg-indigo-800 hover:text-white transition-colors group"
                         >
                             <item.icon className="mr-3 h-5 w-5 text-indigo-300 group-hover:text-white" />
-                            {item.name}
+                            <span className="flex-1">{item.name}</span>
+                            {item.name === 'Messages' && userId && <NotificationBadge type="messages" userId={userId} />}
+                            {item.name === 'Ideas' && <NotificationBadge type="ideas" />}
                         </Link>
                     ))}
                 </nav>

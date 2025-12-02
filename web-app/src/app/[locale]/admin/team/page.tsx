@@ -11,7 +11,7 @@ interface TeamMember {
     id: string;
     full_name: string | null;
     email: string;
-    role: 'admin' | 'staff' | 'client';
+    role: 'admin' | 'staff' | 'client' | 'developer';
     company_name: string | null;
     phone: string | null;
     is_active: boolean;
@@ -44,7 +44,7 @@ export default function AdminTeam() {
             let query = supabase
                 .from('profiles')
                 .select('*')
-                .in('role', ['admin', 'staff']);
+                .in('role', ['admin', 'staff', 'developer']);
 
             if (roleFilter !== 'all') {
                 query = query.eq('role', roleFilter);

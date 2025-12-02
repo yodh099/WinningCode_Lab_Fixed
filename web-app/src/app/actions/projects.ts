@@ -42,7 +42,7 @@ export async function updateProject(projectId: string, data: {
         .from('client_projects') as any)
         .update({
             client_id: data.clientId,
-            title: data.projectName, // Map projectName to title
+            project_name: data.projectName, // Map projectName to project_name
             description: data.description,
             status: data.status,
             priority: data.priority,
