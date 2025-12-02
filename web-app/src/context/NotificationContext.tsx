@@ -17,39 +17,65 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     const [newIdeas, setNewIdeas] = useState(0);
     const [userId, setUserId] = useState<string | null>(null);
 
-    const supabase = createClient();
+    // Safely initialize Supabase client
+    const [supabase] = useState(() => {
+        try {
+            return createClient();
+        } catch (error) {
+            console.error('Failed to initialize Supabase client in NotificationProvider:', error);
+            return null;
+        }
+    });
 
     const refreshCounts = async () => {
-        // Fetch unread messages count
-        if (userId) {
-            const { count: msgCount } = await supabase
-                .from('messages')
-                .select('*', { count: 'exact', head: true })
-                .eq('recipient_id', userId)
-                .eq('is_read', false);
-            setUnreadMessages(msgCount || 0);
-        }
+        if (!supabase) return;
 
-        // Fetch new ideas count
-        const { count: ideaCount } = await supabase
-            .from('inquiries')
-            .select('*', { count: 'exact', head: true })
-            .eq('status', 'new');
-        setNewIdeas(ideaCount || 0);
+        try {
+            // Fetch unread messages count
+            if (userId) {
+                const { count: msgCount, error: msgError } = await supabase
+                    .from('messages')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('recipient_id', userId)
+                    .eq('is_read', false);
+
+                if (!msgError) {
+                    setUnreadMessages(msgCount || 0);
+                }
+            }
+
+            // Fetch new ideas count
+            const { count: ideaCount, error: ideaError } = await supabase
+                .from('inquiries')
+                .select('*', { count: 'exact', head: true })
+                .eq('status', 'new');
+
+            if (!ideaError) {
+                setNewIdeas(ideaCount || 0);
+            }
+        } catch (error) {
+            console.error('Error refreshing notification counts:', error);
+        }
     };
 
     useEffect(() => {
+        if (!supabase) return;
+
         const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (user) {
-                setUserId(user.id);
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    setUserId(user.id);
+                }
+            } catch (error) {
+                console.error('Error fetching user in NotificationProvider:', error);
             }
         };
         getUser();
-    }, []);
+    }, [supabase]);
 
     useEffect(() => {
-        if (!userId) return;
+        if (!userId || !supabase) return;
 
         refreshCounts();
 
@@ -88,7 +114,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             supabase.removeChannel(messageChannel);
             supabase.removeChannel(ideaChannel);
         };
-    }, [userId]);
+    }, [userId, supabase]);
 
     return (
         <NotificationContext.Provider value={{
