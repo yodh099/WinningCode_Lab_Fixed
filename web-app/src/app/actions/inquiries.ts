@@ -21,15 +21,15 @@ export async function submitInquiry(formData: {
     const { error } = await (supabase
         .from('inquiries') as any)
         .insert({
-            name: formData.name, // Correct column name is 'name'
+            full_name: formData.name, // User requested 'full_name' column
             email: formData.email,
             phone: formData.phone,
-            company_name: formData.company_name,
-            project_idea: formData.projectIdea, // Correct column name is 'project_idea'
+            company_name: formData.company_name, // User requested 'company_name' column
+            project_idea: formData.projectIdea, // User requested 'project_idea' column
             project_type: formData.project_type,
             budget: formData.budget,
             timeline: formData.timeline,
-            message: formData.message, // Separate message column exists
+            message: formData.message,
             priority: 'normal',
             status: 'new',
             source: 'website',
