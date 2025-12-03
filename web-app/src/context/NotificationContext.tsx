@@ -37,7 +37,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
                     .from('messages')
                     .select('*', { count: 'exact', head: true })
                     .eq('recipient_id', userId)
-                    .eq('is_read', false);
+                    .is('read_at', null);
 
                 if (!msgError) {
                     setUnreadMessages(msgCount || 0);
@@ -118,7 +118,9 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
     return (
         <NotificationContext.Provider value={{
-            totalNotifications: 0,
+            unreadMessages,
+            newIdeas,
+            totalNotifications: unreadMessages + newIdeas,
             refreshCounts
         }}>
             {children}
