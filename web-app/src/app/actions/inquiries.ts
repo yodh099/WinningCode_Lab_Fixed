@@ -6,31 +6,33 @@ import { createAdminClient } from '@/lib/supabase/admin';
 export async function submitInquiry(formData: {
     name: string;
     email: string;
+    phone?: string;
+    company_name?: string;
     projectIdea: string;
+    project_type?: string;
     budget?: string;
-    deadline?: string;
-    priority?: string;
+    timeline?: string;
+    message?: string;
     fileUrl?: string | null;
 }) {
-    // Use Admin Client to bypass RLS for public submissions (if RLS is strict)
-    // Or use standard client if RLS allows anon inserts
+    // Use Admin Client to bypass RLS for public submissions
     const supabase = createAdminClient();
 
-    const { error } = await (supabase
-        .from('inquiries') as any)
+    const { error } = await supabase
+        .from('inquiries')
         .insert({
-            name: formData.name,
+            full_name: formData.name, // Schema uses full_name
             email: formData.email,
-            project_idea: formData.projectIdea,
+            phone: formData.phone,
+            // company_name: formData.company_name, // Check if column exists, otherwise put in notes
+            project_type: formData.project_type,
             budget: formData.budget,
-            timeline: formData.deadline,
-            priority: formData.priority,
-            // file_url: formData.fileUrl // inquiries table might not have file_url, checking schema...
-            // Schema check: inquiries table does NOT have file_url in the provided types.
-            // We will append file URL to the message or notes if needed.
-            notes: formData.fileUrl ? `Attachment: ${formData.fileUrl}` : null,
+            timeline: formData.timeline,
+            message: formData.projectIdea + (formData.message ? `\n\nAdditional Message: ${formData.message}` : ''), // Combine idea and message
+            priority: 'normal',
             status: 'new',
-            source: 'website'
+            source: 'website',
+            notes: `Company: ${formData.company_name || 'N/A'}\nAttachment: ${formData.fileUrl || 'None'}`
         });
 
     if (error) {
@@ -39,13 +41,18 @@ export async function submitInquiry(formData: {
     }
 
     // Notify admins
-    const { notifyAdmins } = await import('./notifications');
-    await notifyAdmins(
-        'New Inquiry Received',
-        `New inquiry from ${formData.name}: ${formData.projectIdea?.substring(0, 50)}...`,
-        'info',
-        '/admin/inquiries' // Assuming this page exists or will exist
-    );
+    try {
+        const { notifyAdmins } = await import('./notifications');
+        await notifyAdmins(
+            'New Inquiry Received',
+            `New inquiry from ${formData.name}: ${formData.projectIdea.substring(0, 50)}...`,
+            'info',
+            '/admin/ideas'
+        );
+    } catch (notifyError) {
+        console.error('Failed to notify admins:', notifyError);
+        // Don't fail the submission if notification fails
+    }
 
     return { success: true };
 }

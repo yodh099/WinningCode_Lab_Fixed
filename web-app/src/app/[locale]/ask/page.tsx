@@ -72,50 +72,33 @@ export default function AskPage() {
                 throw new Error(t('requiredFields'));
             }
 
-            // Get current locale from URL
-            const locale = window.location.pathname.split('/')[1] || 'en';
-
-            // Prepare file data if present
-            let fileData = null;
+            // Handle file upload if present (TODO: Implement file upload to storage)
+            // For now, we'll skip file upload or implement it separately if needed.
+            // If file upload is critical, we need a separate action or client-side upload to storage first.
+            let fileUrl = null;
             if (file) {
-                const reader = new FileReader();
-                const fileBase64 = await new Promise<string>((resolve, reject) => {
-                    reader.onload = () => resolve(reader.result as string);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-
-                fileData = {
-                    name: file.name,
-                    data: fileBase64,
-                    type: file.type,
-                    size: file.size
-                };
+                // Placeholder for file upload logic
+                // const { data, error } = await supabase.storage.from('inquiries').upload(...)
+                // fileUrl = ...
             }
 
-            // Get Supabase URL from environment
-            const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-            if (!supabaseUrl) {
-                throw new Error('Supabase URL not configured');
-            }
-
-            // Submit to Edge Function
-            const response = await fetch(`${supabaseUrl}/functions/v1/contact-form-handler`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    preferred_language: locale,
-                    file: fileData
-                })
+            // Call server action
+            const { submitInquiry } = await import('@/app/actions/inquiries');
+            const result = await submitInquiry({
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                company_name: formData.company_name,
+                projectIdea: formData.project_idea,
+                project_type: formData.project_type,
+                budget: formData.budget,
+                timeline: formData.timeline,
+                message: formData.message,
+                fileUrl: fileUrl
             });
 
-            const result = await response.json();
-
-            if (!response.ok) {
-                throw new Error(result.error || 'Failed to submit inquiry');
+            if (result.error) {
+                throw new Error(result.error);
             }
 
             // Success!
