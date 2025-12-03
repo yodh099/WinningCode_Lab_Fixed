@@ -21,18 +21,19 @@ export async function submitInquiry(formData: {
     const { error } = await (supabase
         .from('inquiries') as any)
         .insert({
-            full_name: formData.name, // Schema uses full_name
+            name: formData.name, // Correct column name is 'name'
             email: formData.email,
             phone: formData.phone,
-            // company_name: formData.company_name, // Check if column exists, otherwise put in notes
+            company_name: formData.company_name,
+            project_idea: formData.projectIdea, // Correct column name is 'project_idea'
             project_type: formData.project_type,
             budget: formData.budget,
             timeline: formData.timeline,
-            message: formData.projectIdea + (formData.message ? `\n\nAdditional Message: ${formData.message}` : ''), // Combine idea and message
+            message: formData.message, // Separate message column exists
             priority: 'normal',
             status: 'new',
             source: 'website',
-            notes: `Company: ${formData.company_name || 'N/A'}\nAttachment: ${formData.fileUrl || 'None'}`
+            notes: formData.fileUrl ? `Attachment: ${formData.fileUrl}` : null
         });
 
     if (error) {
