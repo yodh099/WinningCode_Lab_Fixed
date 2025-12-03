@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, MoreVertical, Calendar, CheckCircle2, AlertTriangle, Loader2, AlertCircle } from 'lucide-react';
+import { Plus, MoreVertical, Calendar, CheckCircle2, AlertTriangle, Loader2, AlertCircle, UserPlus, User } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import NewProjectModal from '@/components/admin/projects/NewProjectModal';
@@ -20,11 +20,20 @@ interface Project {
     client_name?: string;
     client_email?: string;
     assigned_to: string | null;
+    assigned_staff_name?: string;
     created_at: string;
+}
+
+interface StaffMember {
+    id: string;
+    full_name: string | null;
+    email: string;
+    role: string;
 }
 
 export default function AdminProjects() {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [staff, setStaff] = useState<StaffMember[]>([]);
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState<string>('all');
     const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
@@ -32,7 +41,23 @@ export default function AdminProjects() {
 
     useEffect(() => {
         fetchProjects();
+        fetchStaff();
     }, [statusFilter]);
+
+    async function fetchStaff() {
+        try {
+            const supabase = createClient();
+            const { data, error } = await supabase
+                .from('profiles')
+                .select('id, full_name, email, role')
+                .in('role', ['admin', 'staff', 'developer']);
+
+            if (error) throw error;
+            setStaff(data || []);
+        } catch (error) {
+            console.error('Error fetching staff:', error);
+        }
+    }
 
     async function fetchProjects() {
         try {
@@ -55,7 +80,8 @@ export default function AdminProjects() {
                 .from('client_projects')
                 .select(`
                     *,
-                    client:profiles!client_id(full_name, id, email)
+                    client:profiles!client_id(full_name, id, email),
+                    assigned_staff:profiles!assigned_to(full_name, id, email)
                 `);
 
             if (statusFilter !== 'all') {
@@ -69,15 +95,16 @@ export default function AdminProjects() {
                 throw error;
             }
 
-            const projectsWithEmails = ((data as any[]) || []).map((project) => {
+            const projectsWithDetails = ((data as any[]) || []).map((project) => {
                 return {
                     ...project,
                     client_name: project.client?.full_name || 'Unknown Client',
-                    client_email: project.client?.email || 'No email'
+                    client_email: project.client?.email || 'No email',
+                    assigned_staff_name: project.assigned_staff?.full_name || 'Unassigned'
                 };
             });
 
-            setProjects(projectsWithEmails);
+            setProjects(projectsWithDetails);
         } catch (error) {
             console.error('Error fetching projects:', error instanceof Error ? error.message : error);
             console.error('Full error object:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
@@ -103,6 +130,24 @@ export default function AdminProjects() {
         } catch (error) {
             console.error('Error deleting project:', error);
             alert('Failed to delete project');
+        }
+    };
+
+    const handleAssignStaff = async (projectId: string, staffId: string) => {
+        try {
+            const supabase = createClient();
+            const { error } = await (supabase
+                .from('client_projects') as any)
+                .update({ assigned_to: staffId === 'unassigned' ? null : staffId })
+                .eq('id', projectId);
+
+            if (error) throw error;
+
+            // Refresh projects to show updated assignment
+            fetchProjects();
+        } catch (error) {
+            console.error('Error assigning staff:', error);
+            alert('Failed to assign staff');
         }
     };
 
@@ -240,21 +285,31 @@ export default function AdminProjects() {
                                         </div>
                                     </div>
 
+                                    <div className="flex flex-col justify-center">
+                                        <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium mb-1">Assigned Staff</span>
+                                        <div className="flex items-center">
+                                            <User className="h-4 w-4 mr-2 text-muted-foreground" />
+                                            <select
+                                                value={project.assigned_to || 'unassigned'}
+                                                onChange={(e) => handleAssignStaff(project.id, e.target.value)}
+                                                className="text-sm bg-transparent border-none focus:ring-0 cursor-pointer text-foreground font-medium p-0 pr-6"
+                                            >
+                                                <option value="unassigned">Unassigned</option>
+                                                {staff.map((member) => (
+                                                    <option key={member.id} value={member.id}>
+                                                        {member.full_name || member.email}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     {project.deadline && (
                                         <div className="flex flex-col justify-center">
                                             <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Due Date</span>
                                             <div className="flex items-center mt-1 text-sm text-foreground">
                                                 <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
                                                 {new Date(project.deadline).toLocaleDateString()}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {project.budget && (
-                                        <div className="flex flex-col justify-center">
-                                            <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Budget</span>
-                                            <div className="flex items-center mt-1 text-sm font-bold text-foreground">
-                                                {project.currency} ${project.budget.toLocaleString()}
                                             </div>
                                         </div>
                                     )}
