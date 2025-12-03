@@ -62,8 +62,8 @@ export async function notifyAdmins(title: string, message: string, type: string 
     // For now, let's assume we notify a specific set of admins or fetch from profiles
 
     // Option 1: Fetch from profiles (if role is in profiles)
-    const { data: admins, error } = await supabase
-        .from('profiles')
+    const { data: admins, error } = await (supabase
+        .from('profiles') as any)
         .select('id')
         .in('role', ['admin', 'super_admin']);
 
@@ -78,7 +78,7 @@ export async function notifyAdmins(title: string, message: string, type: string 
     }
 
     // Create notifications for each admin
-    const notifications = admins.map(admin => ({
+    const notifications = admins.map((admin: any) => ({
         user_id: admin.id,
         title,
         message,
@@ -86,8 +86,8 @@ export async function notifyAdmins(title: string, message: string, type: string 
         link
     }));
 
-    const { error: insertError } = await supabase
-        .from('notifications')
+    const { error: insertError } = await (supabase
+        .from('notifications') as any)
         .insert(notifications);
 
     if (insertError) {
