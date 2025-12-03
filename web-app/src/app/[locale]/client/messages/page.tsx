@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Send, User, Loader2, AlertCircle } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -22,6 +22,16 @@ export default function ClientMessages() {
     const [sending, setSending] = useState(false);
     const [userId, setUserId] = useState<string | null>(null);
     const router = useRouter();
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // Auto-scroll to latest message
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     useEffect(() => {
         fetchMessages();
@@ -182,7 +192,7 @@ export default function ClientMessages() {
         <div className="flex flex-col h-[calc(100vh-64px)] bg-background">
             <div className="bg-card border-b border-border p-4 flex items-center justify-between">
                 <div>
-                    <h1 className="text-xl font-bold text-foreground">Messages (v1.2 Fixed)</h1>
+                    <h1 className="text-xl font-bold text-foreground">Messages</h1>
                     <p className="text-sm text-muted-foreground">Chat with your project manager</p>
                 </div>
             </div>
@@ -213,6 +223,7 @@ export default function ClientMessages() {
                         <p className="text-sm text-muted-foreground mt-1">Start a conversation by sending a message below</p>
                     </div>
                 )}
+                <div ref={messagesEndRef} />
             </div>
 
             <div className="bg-card border-t border-border p-4">

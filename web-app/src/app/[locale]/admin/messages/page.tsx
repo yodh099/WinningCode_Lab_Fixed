@@ -150,16 +150,12 @@ export default function AdminMessages() {
 
         setSending(true);
         try {
-            const supabase = createClient();
-            const { error } = await (supabase
-                .from('messages') as any)
-                .insert({
-                    sender_id: currentAdminId,
-                    recipient_id: selectedUserId,
-                    content: newMessage.trim()
-                });
+            const { sendAdminMessage } = await import('@/app/actions/messages');
+            const result = await sendAdminMessage(selectedUserId, newMessage.trim());
 
-            if (error) throw error;
+            if (result.error) {
+                throw new Error(result.error);
+            }
 
             setNewMessage('');
             fetchMessages(selectedUserId);

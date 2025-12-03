@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
+import { createNotification } from './notifications';
 
 export async function updateProject(projectId: string, data: {
     clientId: string;
@@ -60,7 +61,6 @@ export async function updateProject(projectId: string, data: {
 
     // Create notification for assignment
     if (data.assignedTo) {
-        const { createNotification } = await import('./notifications');
         await createNotification(
             data.assignedTo,
             'New Project Assignment',
@@ -70,7 +70,17 @@ export async function updateProject(projectId: string, data: {
         );
     }
 
+    // Create notification for client about project update
+    await createNotification(
+        data.clientId,
+        'Project Updated',
+        `Your project "${data.projectName}" has been updated`,
+        'info',
+        `/client/projects/${projectId}`
+    );
+
     revalidatePath('/[locale]/admin/projects', 'page');
+    revalidatePath('/[locale]/client/dashboard', 'page');
     return { success: true };
 }
 
@@ -122,9 +132,11 @@ export async function createProject(data: {
 
     console.log('Creating project with data:', projectData);
 
-    const { error } = await (adminSupabase
+    const { data: insertedProject, error } = await (adminSupabase
         .from('client_projects') as any)
-        .insert(projectData);
+        .insert(projectData)
+        .select()
+        .single();
 
     if (error) {
         console.error('Error creating project:', error);
@@ -132,6 +144,16 @@ export async function createProject(data: {
         return { error: error.message };
     }
 
+    // Create notification for client about new project
+    await createNotification(
+        data.clientId,
+        'New Project Created',
+        `A new project "${data.projectName}" has been created for you`,
+        'info',
+        `/client/projects/${insertedProject.id}`
+    );
+
     revalidatePath('/[locale]/admin/projects', 'page');
+    revalidatePath('/[locale]/client/dashboard', 'page');
     return { success: true };
 }
