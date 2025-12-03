@@ -226,11 +226,27 @@ export default function AdminIdeasPage() {
                                             </p>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                                         {getStatusIcon(inquiry.status)}
-                                        <span className={getStatusBadge(inquiry.status)}>
-                                            {inquiry.status}
-                                        </span>
+                                        <select
+                                            value={inquiry.status}
+                                            onChange={(e) => updateStatus(inquiry.id, e.target.value)}
+                                            className={`text-xs font-semibold rounded-full px-2 py-1 border-none focus:ring-2 focus:ring-primary cursor-pointer ${inquiry.status === 'new' ? 'bg-blue-100 text-blue-800' :
+                                                    inquiry.status === 'reviewing' ? 'bg-yellow-100 text-yellow-800' :
+                                                        inquiry.status === 'contacted' ? 'bg-purple-100 text-purple-800' :
+                                                            inquiry.status === 'responded' ? 'bg-green-100 text-green-800' :
+                                                                inquiry.status === 'converted' ? 'bg-green-200 text-green-900' :
+                                                                    'bg-red-100 text-red-800'
+                                                }`}
+                                        >
+                                            <option value="new">New</option>
+                                            <option value="reviewing">Reviewing</option>
+                                            <option value="contacted">Contacted</option>
+                                            <option value="responded">Responded</option>
+                                            <option value="converted">Converted</option>
+                                            <option value="closed">Closed</option>
+                                            <option value="spam">Spam</option>
+                                        </select>
                                     </div>
                                 </div>
 

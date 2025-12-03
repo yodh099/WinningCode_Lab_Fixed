@@ -47,7 +47,7 @@ export default async function AdminDashboard() {
             supabase.from('client_projects').select('id, status', { count: 'exact' }),
             supabase.from('profiles').select('id, role, is_active', { count: 'exact' }),
             supabase.from('inquiries')
-                .select('id, name, email, project_idea, budget, status, created_at')
+                .select('id, full_name, email, project_idea, budget, status, created_at')
                 .order('created_at', { ascending: false })
                 .limit(10)
         ]);
@@ -169,7 +169,7 @@ export default async function AdminDashboard() {
                                 recentInquiries.map((inquiry) => (
                                     <tr key={inquiry.id} className="hover:bg-muted/30 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="font-medium">{inquiry.name}</div>
+                                            <div className="font-medium">{inquiry.full_name}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-muted-foreground">{inquiry.email}</div>
