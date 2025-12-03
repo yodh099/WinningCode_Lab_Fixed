@@ -18,8 +18,8 @@ export async function submitInquiry(formData: {
     // Use Admin Client to bypass RLS for public submissions
     const supabase = createAdminClient();
 
-    const { error } = await supabase
-        .from('inquiries')
+    const { error } = await (supabase
+        .from('inquiries') as any)
         .insert({
             full_name: formData.name, // Schema uses full_name
             email: formData.email,
